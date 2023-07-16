@@ -1,0 +1,26 @@
+{% extends 'baseBack.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Start Update Category Area -->
+    <section class="login-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="login-content">
+                        <h2>Update Category</h2>
+                        <form class="login-form" action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form }}
+                            </div>
+                            <button class="default-btn" type="submit">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Update Category Area -->
+
+{% endblock %}

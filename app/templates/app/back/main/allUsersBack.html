@@ -1,0 +1,141 @@
+{% extends 'baseBack.html' %}
+{% load static %}
+{% block content %}
+        <!-- Start Page Title -->
+        <div class="page-title-area">
+            <div class="container">
+                <div class="page-title-content">
+                    <h2>All Users</h2>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li>Login</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+                <!-- Start Categories List Area -->
+                <section class="ptb-100">
+                    <div class="container">
+                        <div id="fuflex" class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="login-content">
+                                    <h2>All Users List</h2>
+                                    <div>
+                                        {% for x in allUsers %}
+                                        <div class="containerUsersList">
+                                            <div class="ligneUsers">
+                                                <div class="usersLeft"> 
+                                                    <p class="txtList">{{x.first_name}}</p>
+                                                </div>
+                                                <div class="usersMid">
+                                                    <p class="txtList">{{x.last_name}}</p>
+                                                </div>
+                                                <form method="POST" action="{% url 'update_user' x.id %}" class="usersRight curPoint">
+                                                    <a href="{% url 'userDetailsBack' x.id %}" class="txtBtn">SHOW</a>
+                                                </form>
+                                            </div>
+                                            <form method="POST" action="{% url 'update_user' x.id %}" class="ligneUsers">
+                                                {% csrf_token %}
+                                                <div class="usersLeft"> 
+                                                    <p class="txtList">{{x.username}}</p>
+                                                </div>
+                                                
+                                                <select name="role" class="usersMid role-select" data-user-id="{{ x.id }}">
+                                                    <option value="{{ x.role }}" selected>{{ x.role }}</option>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="web">Web</option>
+                                                    <option value="stock">Stock</option>
+                                                    <option value="membre">Membre</option>
+                                                </select>
+                                                <div class="usersRight curPoint">
+                                                    <button type="submit" class="txtBtn">UPDATE</button>
+                                                </div>
+                                                {% comment %} <div class="containerSelect">
+
+                                                </div> {% endcomment %}
+                                            </form>
+                                            <div class="ligneUsers">
+                                                <div class="usersLeft"> 
+                                                    <p class="txtList">{{x.email}}</p>
+                                                </div>
+                                                <div class="usersMid">
+                                                    <p class="txtList">{{x.phone}}</p>
+                                                </div>
+                                                <div class="usersRight curPoint">
+                                                    <form method="POST" action="{% url 'delete_user' x.id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="txtBtn">DELETE</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </section>
+                <!-- End Caetgories List Area --> 
+        
+                <!-- Start Facility Area -->
+                <section class="facility-area pb-70">
+                    <div class="container">
+                        <div class="facility-slides owl-carousel owl-theme">
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-tracking'></i>
+                                </div>
+                                <h3>Free Shipping Worldwide</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-return'></i>
+                                </div>
+                                <h3>Easy Return Policy</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-shuffle'></i>
+                                </div>
+                                <h3>7 Day Exchange Policy</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-sale'></i>
+                                </div>
+                                <h3>Weekend Discount Coupon</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-credit-card'></i>
+                                </div>
+                                <h3>Secure Payment Methods</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-location'></i>
+                                </div>
+                                <h3>Track Your Package</h3>
+                            </div>
+        
+                            <div class="single-facility-box">
+                                <div class="icon">
+                                    <i class='flaticon-customer-service'></i>
+                                </div>
+                                <h3>24/7 Customer Support</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Facility Area -->
+
+{% endblock  %}

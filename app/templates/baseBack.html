@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="zxx">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Links of CSS files -->
+        <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/boxicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/magnific-popup.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/nice-select.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/slick.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/meanmenu.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/rangeSlider.min.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/dark.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/responsive.css' %}">
+
+        <title>Xton - eCommerce HTML Template</title>
+
+        <link rel="icon" type="image/png" href="{% static 'app/img/favicon.png' %}">
+    </head>
+
+    <body>
+        {% include 'app/back/nav/nav.html' %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% include 'app/front/modals/sideBar.html' %}
+        {% include 'app/front/modals/quickView.html' %}
+        {% include 'app/front/modals/shoppingCart.html' %}
+        {% include 'app/front/modals/wishlist.html' %}
+        {% include 'app/front/modals/sizeGuide.html' %}
+        {% include 'app/front/modals/shipping.html' %}
+        {% include 'app/front/modals/productsFilter.html' %}
+
+        {% include 'app/back/footer/footer.html' %}
+
+        <div class="go-top"><i class='bx bx-up-arrow-alt'></i></div>
+
+        <!-- Links of JS files -->
+        <script src="{% static 'app/js/jquery.min.js' %}"></script>
+        <script src="{% static 'app/js/popper.min.js' %}"></script>
+        <script src="{% static 'app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'app/js/magnific-popup.min.js' %}"></script>
+        <script src="{% static 'app/js/parallax.min.js' %}"></script>
+        {% comment %} <script src="{% static 'app/js/rangeSlider.min.js' %}"></script> {% endcomment %}
+        <script src="{% static 'app/js/nice-select.min.js' %}"></script>
+        <script src="{% static 'app/js/meanmenu.min.js' %}"></script>
+        <script src="{% static 'app/js/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'app/js/slick.min.js' %}"></script>
+        <script src="{% static 'app/js/sticky-sidebar.min.js' %}"></script>
+        <script src="{% static 'app/js/wow.min.js' %}"></script>
+        <script src="{% static 'app/js/form-validator.min.js' %}"></script>
+        <script src="{% static 'app/js/contact-form-script.js' %}"></script>
+        <script src="{% static 'app/js/ajaxchimp.min.js' %}"></script>
+        <script src="{% static 'app/js/main.js' %}"></script>
+    </body>
+</html> 
