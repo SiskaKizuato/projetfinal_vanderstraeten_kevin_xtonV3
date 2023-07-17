@@ -97,9 +97,10 @@ def logout_view(request):
 
 
 def blog5(request):
+    allBlogs = Blog.objects.all()
     categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
     tags = Tag.objects.annotate(blog_count=Count('blog'))
-    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags})
+    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'allBlogs':allBlogs})
 
 def singleBlog1(request):
     return render(request, 'app/front/main/single-blog-1.html')

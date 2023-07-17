@@ -119,100 +119,37 @@ def seed_tags():
 
 seed_tags()
 
-
-
 def seed_blogs():
-    User = get_user_model()
-
-    # Création de l'auteur
-    author = User.objects.get(username='admin1')
-
-    # Création des catégories
-    category_ideas = CategoryBlog.objects.get(name='Ideas')
-    category_social = CategoryBlog.objects.get(name='Social')
-    category_boy = CategoryBlog.objects.get(name='Boy')
-    category_platform = CategoryBlog.objects.get(name='Platform')
-    category_shipping = CategoryBlog.objects.get(name='Shipping')
-
-    # Création des tags
-    tag_business = Tag.objects.get(name='Business')
-    tag_design = Tag.objects.get(name='Design')
-    tag_xton = Tag.objects.get(name='Xton')
-    tag_fashion = Tag.objects.get(name='Fashion')
-    tag_travel = Tag.objects.get(name='Travel')
-    tag_smart = Tag.objects.get(name='Smart')
-    tag_marketing = Tag.objects.get(name='Marketing')
-    tag_tips = Tag.objects.get(name='Tips')
-
-    # Liste des détails des blogs à créer
-    blog_details = [
+    seeder= Seed.seeder()
+    datas= [
         {
-            'title': "The #1 eCommerce blog to grow your business",
-            'category': category_ideas,
-            'tags': [tag_design, tag_xton],
-            'image_path': 'path/to/image1.jpg'
-        },
-        {
-            'title': "Latest ecommerce trend: The rise of shoppable posts",
-            'category': category_ideas,
-            'tags': [tag_business, tag_design],
-            'image_path': 'path/to/image2.jpg'
-        },
-        {
-            'title': "Building eCommerce wave: Social media shopping",
-            'category': category_social,
-            'tags': [tag_marketing, tag_xton],
-            'image_path': 'path/to/image3.jpg'
-        },
-        {
-            'title': "The best eCommerce blogs for online retailers",
-            'category': category_boy,
-            'tags': [tag_fashion, tag_smart],
-            'image_path': 'path/to/image4.jpg'
-        },
-        {
-            'title': "The best ecommerce platform for growing sales",
-            'category': category_platform,
-            'tags': [tag_business, tag_design],
-            'image_path': 'path/to/image5.jpg'
-        },
-        {
-            'title': "Shipping impacts your customer’s experience",
-            'category': category_shipping,
-            'tags': [tag_shipping, tag_tips],
-            'image_path': 'path/to/image6.jpg'
-        },
-        {
-            'title': "Discount shipping: faster and cheaper than ever",
-            'category': category_platform,
-            'tags': [tag_shipping, tag_tips],
-            'image_path': 'path/to/image7.jpg'
-        },
-        {
-            'title': "A green brand finding roots in sustainability",
-            'category': category_shipping,
-            'tags': [tag_business, tag_marketing],
-            'image_path': 'path/to/image8.jpg'
-        },
-        # Ajoutez les détails pour les autres blogs ici
+        "categoryBlog": random.choice(CategorisBlog.objects.all()),
+        "date_added": datetime.now(),
+        "title": "Mon titre",
+        "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
+        "image": "blog_images/3_ZhLLWyM.jpg",
+        "author": "mohamed",
+        'tags': [
+                Tag.objects.get(name='Business'),
+                Tag.objects.get(name='Travel'),
+                Tag.objects.get(name='Colors'),
+            ], 
+        },    
+        
+        
     ]
-
-    for details in blog_details:
-        # Création du blog
-        blog = Blog.objects.create(
-            title=details['title'],
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            date_added=make_aware(datetime(2021, 1, 29)),
-            author=author,
-            categoryBlog=details['category']
+    
+    for item in datas:
+        post = Blog.objects.create(
+            categoryBlog=item['categoryBlog'],
+            date_added=item['date_added'],
+            title=item['title'],
+            content=item['content'],
+            image=item['image'],
+            articlesImg=item['articlesImg'],
+            author=item['author'],
         )
-
-        # Ajout des tags au blog
-        blog.tags.set(details['tags'])
-
-        # Chargement de l'image
-        with open(details['image_path'], 'rb') as f:
-            image = File(f)
-            blog.image.save('image.jpg', image)
-
-    print("Seed blogs completed.")
+        post.tag.set(item['tag'])
+        
+    print("Seed completed successfully.")
+seed_blogs()
