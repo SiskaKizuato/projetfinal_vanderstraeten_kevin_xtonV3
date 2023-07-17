@@ -20,6 +20,12 @@
     <!-- Start Blog Area -->
     <section class="blog-area ptb-100">
         <div class="container">
+            {% if user.is_authenticated %}
+            <div class="containerLinkAddBlog" >
+                <a href="{% url 'create_blog' %}">+ | Create A Blog</a>
+            </div>
+            {% endif %}
+            
             <div class="row">
                 <div class="col-lg-8 col-md-12">
                     <div class="row">

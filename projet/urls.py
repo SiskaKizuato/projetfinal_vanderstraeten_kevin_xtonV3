@@ -19,8 +19,8 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
-    path('create-blog/', views.create_blog, name='create_blog'),
-
+    path('create-blog/', views.create_blog, name='create_blog'),  # Nouvelle URL ajoutée
+    
     path('track-order/', views.trackOrder, name="trackOrder"),
     
     # XXXXX BACK XXXXX
@@ -44,5 +44,4 @@ urlpatterns = [
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),
-
 ]

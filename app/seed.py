@@ -1,8 +1,9 @@
 import random
 from django_seed import Seed
 from django.contrib.auth.hashers import make_password
-from .models import Profile, ContactInfo, Category
+from .models import Profile, ContactInfo, Category, CategoryBlog, Tag
 
+# XXXXX PARTIE USER XXXXX
 def run():
     seeder = Seed.seeder()
     phone_numbers = ['+1234567890', '+9876543210', '+32435879564', '+33475802930']  # Liste de numéros de téléphone
@@ -51,7 +52,7 @@ def run():
     print(inserted_pks)
 
 
-
+# XXXXX PARTIE CONTTACT XXXXX
 def seed_contact_info():
     location = "Wonder Street, USA, New York"
     phone = "+01 321 654 214"
@@ -65,6 +66,8 @@ def seed_contact_info():
 
 # Appelez cette fonction dans votre méthode seed_database()
 seed_contact_info()
+
+# XXXXX PARTIE ARTICLE XXXXX
 
 def seed_categories():
     seeder = Seed.seeder()
@@ -88,3 +91,25 @@ def seed_categories():
 seed_categories()
 
 
+# XXXXX PARTIE BLOG XXXXX
+def seed_category_blogs():
+    category_names = ['Fashion', 'Advice', 'Tips', 'News', 'Promo', 'Event', 'Ideas', 'Social', 'Platform', 'Shipping', 'Design', 'Lifestyle', 'Device']
+
+    for category_name in category_names:
+        category, _ = CategoryBlog.objects.get_or_create(name=category_name)
+        print(f"CategoryBlog created: {category}")
+
+    print("CategoryBlogs seeded.")
+
+# Appelez cette fonction dans votre méthode seed_database()
+seed_category_blogs()
+
+def seed_tags():
+    tags = ['Business', 'Travel', 'Smart', 'Marketing', 'Colors']
+
+    for tag_name in tags:
+        Tag.objects.get_or_create(name=tag_name)
+
+    print("Seed completed.")
+
+seed_tags()

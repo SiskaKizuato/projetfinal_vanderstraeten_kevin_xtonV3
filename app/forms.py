@@ -1,6 +1,7 @@
 from django import forms
 from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag
 
+# XXXXX PARTIE BLOG XXXXX
 class CategoryBlogForm(forms.ModelForm):
     class Meta:
         model = CategoryBlog
@@ -12,16 +13,23 @@ class TagForm(forms.ModelForm):
         fields = '__all__'
 
 class BlogForm(forms.ModelForm):
-    CATEGORY_CHOICES = [
-        ('Fashion', 'Fashion'),
-        ('Advice', 'Advice'),
-        ('Tips', 'Tips'),
-        ('News', 'News'),
-        ('Promo', 'Promo'),
-        ('Event', 'Event'),
-    ]
+    categoryBlog = forms.ModelChoiceField(
+        queryset=CategoryBlog.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
-    categoryBlog = forms.ChoiceField(choices=CATEGORY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    tags = forms.MultipleChoiceField(
+        choices=[],
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
+    )
+
+    new_tags = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Add new tags (separated by comma)'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tags'].choices = [(tag.id, tag.name) for tag in Tag.objects.all()]
 
     class Meta:
         model = Blog
@@ -30,7 +38,7 @@ class BlogForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'categoryBlog': forms.Select(attrs={'class': 'form-control'}),
         }
 
 
@@ -43,6 +51,7 @@ class CommentForm(forms.ModelForm):
         }
 
 
+# XXXXX PARTIE USER XXXXX
 class SignupForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -51,18 +60,18 @@ class SignupForm(forms.ModelForm):
             'password': forms.PasswordInput(),
         }
 
-
+# XXXXX PARTIE ARTICLE XXXXX
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = '__all__'
-
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
 
+# XXXXX PARTIE CONTACT XXXXX
 class ContactInfoForm(forms.ModelForm):
     class Meta:
         model = ContactInfo

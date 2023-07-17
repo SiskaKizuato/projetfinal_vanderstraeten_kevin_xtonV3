@@ -1,12 +1,13 @@
 {% extends 'baseFront.html' %}
 {% load static %}
 
+
 {% block content %}
     <!-- Start Page Title -->
     <div class="page-title-area">
         <div class="container">
             <div class="page-title-content">
-                <h2>Create Blog</h2>
+                <h2>Create A Blog</h2>
                 <ul>
                     <li><a href="{% url 'index' %}">Home</a></li>
                     <li>Create A Blog</li>
@@ -24,9 +25,40 @@
                     <div class="create-blog-form">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Create A Blog</button>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="{{ form.title.id_for_label }}">Title:</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="error">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="{{ form.content.id_for_label }}">Content:</label>
+                                {{ form.content }}
+                                {% if form.content.errors %}
+                                    <div class="error">{{ form.content.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="{{ form.image.id_for_label }}">Image:</label>
+                                {{ form.image }}
+                                {% if form.image.errors %}
+                                    <div class="error">{{ form.image.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="{{ form.categoryBlog.id_for_label }}">Category:</label>
+                                {{ form.categoryBlog }}
+                                {% if form.categoryBlog.errors %}
+                                    <div class="error">{{ form.categoryBlog.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="new_tags">New Tags:</label>
+                                <input type="text" name="new_tags" id="new_tags" class="form-control" placeholder="Add new tags (separated by comma)">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <button type="submit" class="default-btn">Create A Blog</button>
                             </div>
                         </form>
                     </div>
@@ -34,7 +66,17 @@
 
                 <div class="col-lg-4 col-md-12">
                     <aside class="widget-area">
-                        <!-- Sidebar Widgets Here -->
+                        <div class="widget">
+                            <h3 class="widget-title">Tags</h3>
+                            <ul>
+                                {% for tag in tags %}
+                                    <li>
+                                        <input type="checkbox" id="tag_{{ tag.id }}" name="selected_tags" value="{{ tag.id }}">
+                                        <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </aside>
                 </div>
             </div>
@@ -42,61 +84,61 @@
     </section>
     <!-- End Create Blog Area -->
 
-            <!-- Start Facility Area -->
-            <section class="facility-area pb-70">
-                <div class="container">
-                    <div class="facility-slides owl-carousel owl-theme">
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-tracking'></i>
-                            </div>
-                            <h3>Free Shipping Worldwide</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-return'></i>
-                            </div>
-                            <h3>Easy Return Policy</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-shuffle'></i>
-                            </div>
-                            <h3>7 Day Exchange Policy</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-sale'></i>
-                            </div>
-                            <h3>Weekend Discount Coupon</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-credit-card'></i>
-                            </div>
-                            <h3>Secure Payment Methods</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-location'></i>
-                            </div>
-                            <h3>Track Your Package</h3>
-                        </div>
-    
-                        <div class="single-facility-box">
-                            <div class="icon">
-                                <i class='flaticon-customer-service'></i>
-                            </div>
-                            <h3>24/7 Customer Support</h3>
-                        </div>
+    <!-- Start Facility Area -->
+    <section class="facility-area pb-70">
+        <div class="container">
+            <div class="facility-slides owl-carousel owl-theme">
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-tracking'></i>
                     </div>
+                    <h3>Free Shipping Worldwide</h3>
                 </div>
-            </section>
-            <!-- End Facility Area -->
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-return'></i>
+                    </div>
+                    <h3>Easy Return Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-shuffle'></i>
+                    </div>
+                    <h3>7 Day Exchange Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-sale'></i>
+                    </div>
+                    <h3>Weekend Discount Coupon</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-credit-card'></i>
+                    </div>
+                    <h3>Secure Payment Methods</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-location'></i>
+                    </div>
+                    <h3>Track Your Package</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-customer-service'></i>
+                    </div>
+                    <h3>24/7 Customer Support</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Facility Area -->
 
 {% endblock %}

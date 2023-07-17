@@ -61,6 +61,16 @@ body {
   font-size: 15px;
 }
 
+.containerLinkAddBlog{
+  margin-bottom: 30px;
+}
+
+.containerLinkAddBlog a {
+  color: #f53f85;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 ::selection {
   background-color: #f53f85;
   color: #ffffff; /* Couleur du texte */

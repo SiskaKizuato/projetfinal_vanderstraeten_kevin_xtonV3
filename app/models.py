@@ -3,6 +3,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.exceptions import ValidationError
 
+
+# XXXXX PARTIE USER XXXXX
+
 class Profile(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = 'admin'
@@ -19,7 +22,7 @@ class Profile(AbstractUser):
     def __str__(self):
         return self.username
 
-
+# XXXXX PARTIE ARTICLE XXXXX
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -28,7 +31,7 @@ class Category(models.Model):
 
 class Article(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ManyToManyField(Category)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     size = models.CharField(max_length=10)
     availability = models.BooleanField()
@@ -53,23 +56,23 @@ class Article(models.Model):
         if clothing_count > 0 and shoes_count > 0:
             raise ValidationError("An article cannot be both 'Clothing' and 'Shoes'.")
 
-
-
-
-
-# XXXXX CONTACT BACK XXXXX
+# XXXXX PARTIE CONTACT XXXXX
 class ContactInfo(models.Model):
     location = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
     fax = models.CharField(max_length=20)
 
-
     def __str__(self):
         return self.location
     
-    
-# XXXXX BLOG XXXXX
+# XXXXX PARTIE BLOG XXXXX
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Blog(models.Model):
     title = models.CharField(max_length=100)
@@ -78,18 +81,12 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blog_images/')
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     categoryBlog = models.ForeignKey('CategoryBlog', on_delete=models.CASCADE, default=None)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
     
 class CategoryBlog(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-class Tag(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -103,6 +100,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
-    
-
-

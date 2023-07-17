@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # xxxxxxxxxxxxxxxxx
 # XXXXX FRONT XXXXX
@@ -99,17 +100,39 @@ def logout_view(request):
 def singleBlog1(request):
     return render(request, 'app/front/main/single-blog-1.html')
 
+
+@login_required
 def create_blog(request):
+    tags = Tag.objects.all()
+    author_username = request.user.username
+
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
-            blog = form.save()
-            # Faire quelque chose avec l'objet blog créé, par exemple, rediriger vers la page de détails du blog
-            return redirect('blog_details', pk=blog.pk)
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+
+            selected_tags = request.POST.getlist('tags')
+            new_tags = request.POST.get('new_tags')
+
+            # Créer des instances de Tag pour chaque nouveau tag et les associer au blog
+            if new_tags:
+                new_tags_list = [tag.strip() for tag in new_tags.split(',')]
+                for tag_name in new_tags_list:
+                    tag, _ = Tag.objects.get_or_create(name=tag_name)
+                    blog.tags.add(tag)
+
+            return redirect('blog5')
+        else:
+            form.add_error('tags', 'Please select at least one tag or add a new tag.')
     else:
         form = BlogForm()
-    
-    return render(request, 'app/front/main/createBlog.html', {'form': form})
+
+    tag_form = TagForm()
+
+    return render(request, 'app/front/main/createBlog.html', {'form': form, 'tags': tags, 'tag_form': tag_form})
+
 
 
 def trackOrder(request):
