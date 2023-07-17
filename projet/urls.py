@@ -1,6 +1,8 @@
 from django.urls import path
 from app import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # XXXXX FRONT XXXXX
@@ -44,4 +46,6 @@ urlpatterns = [
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

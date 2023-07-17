@@ -118,38 +118,44 @@ def seed_tags():
     print("Seed completed.")
 
 seed_tags()
-
 def seed_blogs():
-    seeder= Seed.seeder()
-    datas= [
+    User = get_user_model()
+    seeder = Seed.seeder()
+    datas = [
         {
-        "categoryBlog": random.choice(CategorisBlog.objects.all()),
-        "date_added": datetime.now(),
-        "title": "Mon titre",
-        "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
-        "image": "blog_images/3_ZhLLWyM.jpg",
-        "author": "mohamed",
-        'tags': [
+            "categoryBlog": random.choice(CategoryBlog.objects.all()),
+            "date_added": datetime.now(),
+            "title": "Mon titre",
+            "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
+            "image": "blog_images/3_ZhLLWyM.jpg",
+            "author": None,  # Utilisation de None pour l'instant
+            'tags': [
                 Tag.objects.get(name='Business'),
                 Tag.objects.get(name='Travel'),
                 Tag.objects.get(name='Colors'),
-            ], 
-        },    
-        
-        
+            ],
+        },
     ]
-    
+
     for item in datas:
+        profile = Profile.objects.create(
+            id=1,  # Spécification de l'ID 1
+            username='admin1',
+            password=make_password('1234'),
+            email='admin1@example.com',
+            first_name='Admin',
+            last_name='Role',
+            role=Profile.Role.ADMIN,
+            phone=random.choice(phone_numbers)
+        )
         post = Blog.objects.create(
             categoryBlog=item['categoryBlog'],
             date_added=item['date_added'],
             title=item['title'],
             content=item['content'],
             image=item['image'],
-            articlesImg=item['articlesImg'],
-            author=item['author'],
+            author=profile,
         )
-        post.tag.set(item['tag'])
-        
+        post.tags.set(item['tags'])
+
     print("Seed completed successfully.")
-seed_blogs()
