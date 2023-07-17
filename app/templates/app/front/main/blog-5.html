@@ -32,7 +32,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single-blog-post">
                                 <div class="post-image">
-                                    <a href="#">
+                                    <a href="{% url 'singleBlog1' %}">
                                         <img src="{% static 'app/img/blog/img1.jpg' %}" alt="image">
                                     </a>
                                     <div class="date">
@@ -42,7 +42,7 @@
 
                                 <div class="post-content">
                                     <span class="category">Ideas</span>
-                                    <h3><a href="#">The #1 eCommerce blog to grow your business</a></h3>
+                                    <h3><a href="{% url 'singleBlog1' %}">The #1 eCommerce blog to grow your business</a></h3>
                                     <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
                                 </div>
                             </div>
@@ -253,11 +253,9 @@
                             <h3 class="widget-title">Categories</h3>
 
                             <ul>
-                                <li><a href="#">Design <span class="post-count">(03)</span></a></li>
-                                <li><a href="#">Lifestyle <span class="post-count">(05)</span></a></li>
-                                <li><a href="#">Script <span class="post-count">(10)</span></a></li>
-                                <li><a href="#">Device <span class="post-count">(08)</span></a></li>
-                                <li><a href="#">Tips <span class="post-count">(01)</span></a></li>
+                                {% for category in categories %}
+                                <li><a href="#">{{ category.name }}<span class="post-count">({{ category.blog_count }})</span></a></li>
+                                {% endfor %}
                             </ul>
                         </section>
 
@@ -265,14 +263,9 @@
                             <h3 class="widget-title">Xton Tags</h3>
 
                             <div class="tagcloud">
-                                <a href="#">Business <span class="tag-link-count"> (3)</span></a>
-                                <a href="#">Design <span class="tag-link-count"> (3)</span></a>
-                                <a href="#">Xton <span class="tag-link-count"> (2)</span></a>
-                                <a href="#">Fashion <span class="tag-link-count"> (2)</span></a>
-                                <a href="#">Travel <span class="tag-link-count"> (1)</span></a>
-                                <a href="#">Smart <span class="tag-link-count"> (1)</span></a>
-                                <a href="#">Marketing <span class="tag-link-count"> (1)</span></a>
-                                <a href="#">Tips <span class="tag-link-count"> (2)</span></a>
+                                {% for tag in tags %}
+                                <a href="#">{{ tag.name }} <span class="tag-link-count"> ({{ tag.blog_count }})</span></a>
+                                {% endfor %}
                             </div>
                         </section>
                     </aside>

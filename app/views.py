@@ -5,6 +5,7 @@ from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, Category
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 # xxxxxxxxxxxxxxxxx
 # XXXXX FRONT XXXXX
@@ -12,9 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'app/front/main/index.html')
-
-def blog5(request):
-    return render(request, 'app/front/main/blog-5.html')
 
 def cart(request):
     return render(request, 'app/front/main/cart.html')
@@ -97,9 +95,14 @@ def logout_view(request):
 
 # XXXXX BLOG FRONT XXXXX
 
+
+def blog5(request):
+    categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
+    tags = Tag.objects.annotate(blog_count=Count('blog'))
+    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags})
+
 def singleBlog1(request):
     return render(request, 'app/front/main/single-blog-1.html')
-
 
 @login_required
 def create_blog(request):
