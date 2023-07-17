@@ -2,6 +2,11 @@ import random
 from django_seed import Seed
 from django.contrib.auth.hashers import make_password
 from .models import Profile, ContactInfo, Category, CategoryBlog, Tag
+from django.contrib.auth import get_user_model
+from django.core.files import File
+from django.utils.timezone import make_aware
+from datetime import datetime
+from .models import Blog, CategoryBlog, Tag
 
 # XXXXX PARTIE USER XXXXX
 def run():
@@ -113,3 +118,101 @@ def seed_tags():
     print("Seed completed.")
 
 seed_tags()
+
+
+
+def seed_blogs():
+    User = get_user_model()
+
+    # Création de l'auteur
+    author = User.objects.get(username='admin1')
+
+    # Création des catégories
+    category_ideas = CategoryBlog.objects.get(name='Ideas')
+    category_social = CategoryBlog.objects.get(name='Social')
+    category_boy = CategoryBlog.objects.get(name='Boy')
+    category_platform = CategoryBlog.objects.get(name='Platform')
+    category_shipping = CategoryBlog.objects.get(name='Shipping')
+
+    # Création des tags
+    tag_business = Tag.objects.get(name='Business')
+    tag_design = Tag.objects.get(name='Design')
+    tag_xton = Tag.objects.get(name='Xton')
+    tag_fashion = Tag.objects.get(name='Fashion')
+    tag_travel = Tag.objects.get(name='Travel')
+    tag_smart = Tag.objects.get(name='Smart')
+    tag_marketing = Tag.objects.get(name='Marketing')
+    tag_tips = Tag.objects.get(name='Tips')
+
+    # Liste des détails des blogs à créer
+    blog_details = [
+        {
+            'title': "The #1 eCommerce blog to grow your business",
+            'category': category_ideas,
+            'tags': [tag_design, tag_xton],
+            'image_path': 'path/to/image1.jpg'
+        },
+        {
+            'title': "Latest ecommerce trend: The rise of shoppable posts",
+            'category': category_ideas,
+            'tags': [tag_business, tag_design],
+            'image_path': 'path/to/image2.jpg'
+        },
+        {
+            'title': "Building eCommerce wave: Social media shopping",
+            'category': category_social,
+            'tags': [tag_marketing, tag_xton],
+            'image_path': 'path/to/image3.jpg'
+        },
+        {
+            'title': "The best eCommerce blogs for online retailers",
+            'category': category_boy,
+            'tags': [tag_fashion, tag_smart],
+            'image_path': 'path/to/image4.jpg'
+        },
+        {
+            'title': "The best ecommerce platform for growing sales",
+            'category': category_platform,
+            'tags': [tag_business, tag_design],
+            'image_path': 'path/to/image5.jpg'
+        },
+        {
+            'title': "Shipping impacts your customer’s experience",
+            'category': category_shipping,
+            'tags': [tag_shipping, tag_tips],
+            'image_path': 'path/to/image6.jpg'
+        },
+        {
+            'title': "Discount shipping: faster and cheaper than ever",
+            'category': category_platform,
+            'tags': [tag_shipping, tag_tips],
+            'image_path': 'path/to/image7.jpg'
+        },
+        {
+            'title': "A green brand finding roots in sustainability",
+            'category': category_shipping,
+            'tags': [tag_business, tag_marketing],
+            'image_path': 'path/to/image8.jpg'
+        },
+        # Ajoutez les détails pour les autres blogs ici
+    ]
+
+    for details in blog_details:
+        # Création du blog
+        blog = Blog.objects.create(
+            title=details['title'],
+            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            date_added=make_aware(datetime(2021, 1, 29)),
+            author=author,
+            categoryBlog=details['category']
+        )
+
+        # Ajout des tags au blog
+        blog.tags.set(details['tags'])
+
+        # Chargement de l'image
+        with open(details['image_path'], 'rb') as f:
+            image = File(f)
+            blog.image.save('image.jpg', image)
+
+    print("Seed blogs completed.")
