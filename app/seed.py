@@ -110,12 +110,12 @@ def seed_category_blogs():
 seed_category_blogs()
 
 def seed_tags():
-    tags = ['Business', 'Travel', 'Smart', 'Marketing', 'Colors']
+        tags = ['Business', 'Travel', 'Smart', 'Marketing', 'Colors']
 
-    for tag_name in tags:
-        Tag.objects.get_or_create(name=tag_name)
+        for tag_name in tags:
+            Tag.objects.get_or_create(name=tag_name)
 
-    print("Seed completed.")
+        print("Seed completed.")
 
 seed_tags()
 def seed_blogs():

@@ -1,7 +1,6 @@
 {% extends 'baseFront.html' %}
 {% load static %}
 
-
 {% block content %}
     <!-- Start Page Title -->
     <div class="page-title-area">
@@ -53,10 +52,20 @@
                                     <div class="error">{{ form.categoryBlog.errors }}</div>
                                 {% endif %}
                             </div>
+
+                            <div class="form-group" style="margin-bottom: 30px;">
+                                <label style="margin-bottom: 10px;" for="tags">Tags:</label>
+                                {% for tag in tags %}
+                                    <input type="checkbox" id="tag_{{ tag.id }}" name="tags" value="{{ tag.id }}">
+                                    <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
+                                {% endfor %}
+                            </div>
+
                             <div class="form-group" style="margin-bottom: 30px;">
                                 <label style="margin-bottom: 10px;" for="new_tags">New Tags:</label>
                                 <input type="text" name="new_tags" id="new_tags" class="form-control" placeholder="Add new tags (separated by comma)">
                             </div>
+
                             <div class="form-group" style="margin-bottom: 30px;">
                                 <button type="submit" class="default-btn">Create A Blog</button>
                             </div>
@@ -65,19 +74,6 @@
                 </div>
 
                 <div class="col-lg-4 col-md-12">
-                    <aside class="widget-area">
-                        <div class="widget">
-                            <h3 class="widget-title">Tags</h3>
-                            <ul>
-                                {% for tag in tags %}
-                                    <li>
-                                        <input type="checkbox" id="tag_{{ tag.id }}" name="selected_tags" value="{{ tag.id }}">
-                                        <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </aside>
                 </div>
             </div>
         </div>
@@ -140,5 +136,4 @@
         </div>
     </section>
     <!-- End Facility Area -->
-
 {% endblock %}

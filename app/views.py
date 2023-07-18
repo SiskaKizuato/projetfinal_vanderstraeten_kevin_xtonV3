@@ -119,7 +119,13 @@ def create_blog(request):
             blog.author = request.user
             blog.save()
 
-            selected_tags = request.POST.getlist('tags')
+            selected_tags = request.POST.getlist('tags')  # Récupérer les tags sélectionnés
+
+            # Ajouter les tags sélectionnés au blog
+            for tag_id in selected_tags:
+                tag = get_object_or_404(Tag, id=tag_id)
+                blog.tags.add(tag)
+
             new_tags = request.POST.get('new_tags')
 
             # Créer des instances de Tag pour chaque nouveau tag et les associer au blog
@@ -130,14 +136,13 @@ def create_blog(request):
                     blog.tags.add(tag)
 
             return redirect('blog5')
-        else:
-            form.add_error('tags', 'Please select at least one tag or add a new tag.')
     else:
         form = BlogForm()
 
     tag_form = TagForm()
 
     return render(request, 'app/front/main/createBlog.html', {'form': form, 'tags': tags, 'tag_form': tag_form})
+
 
 
 

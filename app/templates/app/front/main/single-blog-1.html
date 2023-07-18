@@ -56,10 +56,9 @@
                             <div class="article-footer">
                                 <div class="article-tags">
                                     <span><i class='bx bx-purchase-tag'></i></span>
-                                    
-                                    <a href="#">Fashion</a>,
-                                    <a href="#">Games</a>,
-                                    <a href="#">Travel</a>
+                                    {% for tag in blog.tags.all %}
+                                        <a href="#">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
                                 </div>
 
                                 <div class="article-share">
@@ -81,7 +80,7 @@
 
                                         <div class="author-profile-title-details d-flex justify-content-between">
                                             <div class="author-profile-details">
-                                                <h4>Chris Orwig</h4>
+                                                <h4>{{blog.author}}</h4>
                                                 <span class="d-block">Photographer, Author, Writer</span>
                                             </div>
 
