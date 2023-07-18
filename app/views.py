@@ -100,8 +100,13 @@ def logout_view(request):
 
 
 def blog5(request):
-    allBlogs = Blog.objects.order_by('-id')  # Trie les blogs par ordre décroissant selon l'ID
-    popular_blogs = Blog.objects.order_by('-views')[:3]  # Récupère les 3 premiers blogs selon le nombre de vues
+    category_param = request.GET.get('category')
+    if category_param == 'all':
+        allBlogs = Blog.objects.order_by('-id')
+    elif category_param:
+        allBlogs = Blog.objects.filter(categoryBlog__name=category_param).order_by('-id')
+    else:
+        allBlogs = Blog.objects.order_by('-id')
 
     paginator = Paginator(allBlogs, 6)
     page_num = request.GET.get('page', 1)
@@ -110,7 +115,7 @@ def blog5(request):
     categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
     tags = Tag.objects.annotate(blog_count=Count('blog'))
 
-    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
+    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page})
 
 def singleBlog1(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
