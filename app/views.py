@@ -101,12 +101,21 @@ def logout_view(request):
 
 def blog5(request):
     category_param = request.GET.get('category')
+    tag_param = request.GET.get('tag')
+    search_query = request.GET.get('search')
+
     if category_param == 'all':
         allBlogs = Blog.objects.order_by('-id')
     elif category_param:
         allBlogs = Blog.objects.filter(categoryBlog__name=category_param).order_by('-id')
     else:
         allBlogs = Blog.objects.order_by('-id')
+
+    if tag_param and tag_param != 'all':
+        allBlogs = allBlogs.filter(tags__name=tag_param)
+
+    if search_query:
+        allBlogs = allBlogs.filter(title__icontains=search_query)
 
     paginator = Paginator(allBlogs, 6)
     page_num = request.GET.get('page', 1)
@@ -117,6 +126,8 @@ def blog5(request):
     popular_blogs = Blog.objects.order_by('-views')[:3]
 
     return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
+
+
 
 
 def singleBlog1(request, blog_id):
