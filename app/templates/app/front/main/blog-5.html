@@ -105,10 +105,10 @@
                         <section class="widget widget_categories">
                             <h3 class="widget-title">Categories</h3>
 
-                            <ul>
+                            <ul class="fwrap">
                                 <li><a href="?category=all">All</a></li>
                                 {% for category in categories %}
-                                <li><a href="?category={{ category.name }}">{{ category.name }}<span class="post-count">({{ category.blog_count }})</span></a></li>
+                                <li><a href="?category={{ category.name }}">{{ category.name }}<span class="post-count">({{ category.blog_count }}) | </span></a></li>
                                 {% endfor %}
                             </ul>
                         </section>

@@ -1,18 +1,202 @@
 {% extends 'baseBack.html' %}
 {% load static %}
 {% block content %}
-        <!-- Start Page Title -->
-        <div class="page-title-area">
-            <div class="container">
-                <div class="page-title-content">
-                    <h2>Blogs Back</h2>
-                    <ul>
-                        <li><a href="{% url 'index' %}">Home</a></li>
-                        <li>Login</li>
-                    </ul>
+
+    <!-- Start Page Title -->
+    <div class="page-title-area">
+        <div class="container">
+            <div class="page-title-content">
+                <h2>Blog</h2>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li>Blog</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Start Blog Area -->
+    <section class="blog-area ptb-100">
+        <div class="container">
+            {% if user.is_authenticated %}
+            <div class="containerLinkAddBlog">
+                <a href="{% url 'create_blog' %}">+ | Create A Blog</a>
+            </div>
+            {% endif %}
+            
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="row">
+                        {% for x in page %}
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-blog-post">
+                                <div class="post-image">
+                                    <a href="{% url 'singleBlog1' x.id %}">
+                                        <img src={{ x.image.url }} alt="image">
+                                    </a>
+                                    <div class="date">
+                                        <span>{{x.date_added}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="post-content">
+                                    <span class="category">{{x.categoryBlog}}</span>
+                                    <h3><a href="{% url 'singleBlog1' x.id %}">{{x.title}}</a></h3>
+                                    <a href="{% url 'singleBlog1' x.id %}" class="details-btn">Read Story</a>
+                                </div>
+                                <div class="containerCrudBlog">
+                                    <div class="btnBlogCrud btnDeleteBlog">
+                                        <form method="POST" action="{% url 'delete_blog' x.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="fontBtnBlog">DELETE</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <a href="{% url 'edit_blog' x.id %}" class="btnBlogCrud btnEditBlog">
+                                        <p class="fontBtnBlog">EDIT</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="pagination-area text-center">
+                                {% if page.has_previous %}
+                                <a href="?page={{ page.previous_page_number }}" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                                {% endif %}
+                                {% for num in page.paginator.page_range %}
+                                    {% if page.number == num %}
+                                        <span class="page-numbers current" aria-current="page">{{ num }}</span>
+                                    {% else %}
+                                        <a href="?page={{ num }}" class="page-numbers">{{ num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page.has_next %}
+                                <a href="?page={{ page.next_page_number }}" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <aside class="widget-area">
+                        <section class="widget widget_search">
+                            <form class="search-form" action="{% url 'blog5Back' %}" method="GET">
+                                <label>
+                                    <span class="screen-reader-text">Search for:</span>
+                                    <input type="search" class="search-field" name="search" placeholder="Search...">
+                                </label>
+                                <button type="submit"><i class="bx bx-search-alt"></i></button>
+                            </form>
+                        </section>
+                        
+
+                        <section class="widget widget_xton_posts_thumb">
+                            <h3 class="widget-title">Popular Posts</h3>
+                        
+                            {% for blog in popular_blogs %}
+                            <article class="item">
+                                <a href="{% url 'singleBlog1' blog.id %}" class="thumb">
+                                    <img src="{{ blog.image.url }}" alt="image">
+                                </a>
+                                <div class="info">
+                                    <span>{{ blog.date_added }}</span>
+                                    <h4 class="title usmall"><a href="{% url 'singleBlog1' blog.id %}">{{ blog.title }}</a></h4>
+                                </div>
+                        
+                                <div class="clear"></div>
+                            </article>
+                            {% endfor %}
+                        </section>
+                        
+
+                        <section class="widget widget_categories">
+                            <h3 class="widget-title">Categories</h3>
+
+                            <ul class="fwrap">
+                                <li><a href="?category=all">All</a></li>
+                                {% for category in categories %}
+                                <li><a href="?category={{ category.name }}">{{ category.name }}<span class="post-count">({{ category.blog_count }})</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </section>
+
+                        <section class="widget widget_tag_cloud">
+                            <h3 class="widget-title">Xton Tags</h3>
+
+                            <div class="tagcloud">
+                                <a href="?tag=all">All</a> <!-- Ajout du tag "all" pour retirer le filtre -->
+                                {% for tag in tags %}
+                                <a href="?tag={{ tag.name }}">{{ tag.name }} <span class="tag-link-count"> ({{ tag.blog_count }})</span></a>
+                                {% endfor %}
+                            </div>
+                        </section>
+                    </aside>
                 </div>
             </div>
         </div>
-        <!-- End Page Title -->
+    </section>
+    <!-- End Blog Area -->
 
-{% endblock  %}
+    <!-- Start Facility Area -->
+    <section class="facility-area pb-70">
+        <div class="container">
+            <div class="facility-slides owl-carousel owl-theme">
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-tracking'></i>
+                    </div>
+                    <h3>Free Shipping Worldwide</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-return'></i>
+                    </div>
+                    <h3>Easy Return Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-shuffle'></i>
+                    </div>
+                    <h3>7 Day Exchange Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-sale'></i>
+                    </div>
+                    <h3>Weekend Discount Coupon</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-credit-card'></i>
+                    </div>
+                    <h3>Secure Payment Methods</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-location'></i>
+                    </div>
+                    <h3>Track Your Package</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-customer-service'></i>
+                    </div>
+                    <h3>24/7 Customer Support</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Facility Area -->
+
+{% endblock %}

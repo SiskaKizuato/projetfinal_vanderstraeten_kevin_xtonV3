@@ -229,7 +229,68 @@ def update_user(request, user_id):
 
 # XXXXX ALL BLOGS XXXXX
 def blog5Back(request):
-    return render(request, 'app/back/main/blog5Back.html')
+    category_param = request.GET.get('category')
+    tag_param = request.GET.get('tag')
+    search_query = request.GET.get('search')
+
+    if category_param == 'all':
+        allBlogs = Blog.objects.order_by('-id')
+    elif category_param:
+        allBlogs = Blog.objects.filter(categoryBlog__name=category_param).order_by('-id')
+    else:
+        allBlogs = Blog.objects.order_by('-id')
+
+    if tag_param and tag_param != 'all':
+        allBlogs = allBlogs.filter(tags__name=tag_param)
+
+    if search_query:
+        allBlogs = allBlogs.filter(title__icontains=search_query)
+
+    paginator = Paginator(allBlogs, 6)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+    categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
+    tags = Tag.objects.annotate(blog_count=Count('blog'))
+    popular_blogs = Blog.objects.order_by('-views')[:3]
+
+    return render(request, 'app/back/main/blog5Back.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
+
+
+def edit_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES, instance=blog)  # Inclure les fichiers dans le formulaire
+        if form.is_valid():
+            if 'update_image' in request.FILES:  # Vérifier si une nouvelle image a été fournie
+                blog.image = request.FILES['update_image']
+            form.save()
+            return redirect('blog5Back')  # Redirige vers la page blog5Back après la mise à jour du blog
+    else:
+        form = BlogForm(instance=blog)
+
+    context = {
+        'form': form,
+        'tags': blog.tags.all(),  # Inclure les tags du blog dans le contexte
+    }
+
+    return render(request, 'app/back/main/single-blog-1-back.html', context)
+
+
+
+
+def singleBlog1Back(request):
+    return render(request, 'app/back/main/single-blog-1-back.html')
+
+def delete_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('blog5Back')  # Redirige vers la page blog5Back après la suppression
+    
+    return redirect('index')  # Redirige vers une autre page si la méthode de requête n'est pas POST
 
 # XXXXX CONTACT BACK XXXXX
 def contactBack(request):

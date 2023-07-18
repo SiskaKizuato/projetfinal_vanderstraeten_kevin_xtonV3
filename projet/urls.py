@@ -21,6 +21,7 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
+    path('single-blog-1-back/', views.singleBlog1Back, name="singleBlog1Back"),
     path('create-blog/', views.create_blog, name='create_blog'),  # Nouvelle URL ajoutée
     
     path('track-order/', views.trackOrder, name="trackOrder"),
@@ -39,10 +40,13 @@ urlpatterns = [
     path('update_category/<int:id>/', views.update_category, name='update_category'),
     path('update_user/<int:user_id>/', views.update_user, name='update_user'),
     path('update_profile/', views.update_profile, name='update_profile'),
+    path('edit_blog/<int:blog_id>/', views.edit_blog, name='edit_blog'),
+
 
     # XXXXX DELETE XXXXX
     path('delete_category/<int:id>', views.delete_category, name='delete_category'),
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
+    path('delete_blog/<int:blog_id>/', views.delete_blog, name='delete_blog'),
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),

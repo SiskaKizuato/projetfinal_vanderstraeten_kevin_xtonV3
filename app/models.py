@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator
 
 
 # XXXXX PARTIE USER XXXXX
@@ -74,7 +75,7 @@ class Tag(models.Model):
         return self.name
 
 class Blog(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, validators=[MinLengthValidator(40)])
     content = models.TextField()
     date_added = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='blog_images/')

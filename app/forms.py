@@ -26,6 +26,8 @@ class BlogForm(forms.ModelForm):
 
     new_tags = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Add new tags (separated by comma)'}))
 
+    # Ajouter un champ de fichier pour la mise à jour de l'image du blog
+    update_image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,6 +42,7 @@ class BlogForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'categoryBlog': forms.Select(attrs={'class': 'form-control'}),
         }
+
 
 
 class CommentForm(forms.ModelForm):
