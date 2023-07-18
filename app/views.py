@@ -114,8 +114,10 @@ def blog5(request):
 
     categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
     tags = Tag.objects.annotate(blog_count=Count('blog'))
+    popular_blogs = Blog.objects.order_by('-views')[:3]
 
-    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page})
+    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
+
 
 def singleBlog1(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
