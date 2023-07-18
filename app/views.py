@@ -102,8 +102,10 @@ def blog5(request):
     tags = Tag.objects.annotate(blog_count=Count('blog'))
     return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'allBlogs':allBlogs})
 
-def singleBlog1(request):
-    return render(request, 'app/front/main/single-blog-1.html')
+def singleBlog1(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    return render(request, 'app/front/main/single-blog-1.html', {'blog': blog})
+
 
 @login_required
 def create_blog(request):

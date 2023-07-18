@@ -33,7 +33,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single-blog-post">
                                 <div class="post-image">
-                                    <a href="{% url 'singleBlog1' %}">
+                                    <a href="{% url 'singleBlog1' x.id %}">
                                         <img src={{ x.image.url }} alt="image">
                                     </a>
                                     <div class="date">
@@ -43,8 +43,8 @@
 
                                 <div class="post-content">
                                     <span class="category">{{x.categoryBlog}}</span>
-                                    <h3><a href="{% url 'singleBlog1' %}">{{x.title}}</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
+                                    <h3><a href="{% url 'singleBlog1' x.id %}">{{x.title}}</a></h3>
+                                    <a href="{% url 'singleBlog1' x.id %}" class="details-btn">Read Story</a>
                                 </div>
                             </div>
                         </div>

@@ -46,6 +46,8 @@ urlpatterns = [
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),
+    path('single-blog-1/<int:blog_id>/', views.singleBlog1, name="singleBlog1"),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

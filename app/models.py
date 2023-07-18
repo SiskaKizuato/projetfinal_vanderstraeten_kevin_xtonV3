@@ -76,7 +76,7 @@ class Tag(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='blog_images/')
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     categoryBlog = models.ForeignKey('CategoryBlog', on_delete=models.CASCADE, default=None)

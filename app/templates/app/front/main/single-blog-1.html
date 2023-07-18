@@ -23,7 +23,7 @@
                     <div class="col-lg-8 col-md-12">
                         <div class="blog-details-desc">
                             <div class="article-image">
-                                <img src="{% static 'app/img/blog/img1.jpg' %}" alt="image">
+                                <img src={{blog.image.url}} alt="image">
                             </div>
 
                             <div class="article-content">
@@ -32,7 +32,7 @@
                                         <li>
                                             <i class='bx bx-folder-open'></i>
                                             <span>Category</span>
-                                            <a href="#">Fashion</a>
+                                            <a href="#">{{blog.categoryBlog}}</a>
                                         </li>
                                         <li>
                                             <i class='bx bx-group'></i>
@@ -42,22 +42,21 @@
                                         <li>
                                             <i class='bx bx-calendar'></i>
                                             <span>Last Updated</span>
-                                            <a href="#">01/14/2021</a>
+                                            <a href="#">{{blog.date_added}}</a>
                                         </li>
                                     </ul>
                                 </div>
 
-                                <h3>The #1 eCommerce blog to grow your business</h3>
+                                <h3>{{blog.title}}</h3>
 
-                                <p>Quuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quia non numquam eius modi tempora incidunt ut labore et dolore magnam dolor sit amet, consectetur adipisicing.</p>
+                                <p>{{blog.content}}</p>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in  sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
                             </div>
 
                             <div class="article-footer">
                                 <div class="article-tags">
                                     <span><i class='bx bx-purchase-tag'></i></span>
-
+                                    
                                     <a href="#">Fashion</a>,
                                     <a href="#">Games</a>,
                                     <a href="#">Travel</a>
