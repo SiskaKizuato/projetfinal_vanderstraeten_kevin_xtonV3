@@ -81,6 +81,7 @@ class Blog(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     categoryBlog = models.ForeignKey('CategoryBlog', on_delete=models.CASCADE, default=None)
     tags = models.ManyToManyField(Tag)
+    views = models.PositiveIntegerField(default=0)  # Champ pour stocker le nombre de vues
 
     def __str__(self):
         return self.title

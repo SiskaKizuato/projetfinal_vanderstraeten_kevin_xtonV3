@@ -113,6 +113,11 @@ def blog5(request):
 
 def singleBlog1(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
+
+    # Incrémenter le compteur de vues du blog
+    blog.views += 1
+    blog.save()
+
     return render(request, 'app/front/main/single-blog-1.html', {'blog': blog})
 
 
