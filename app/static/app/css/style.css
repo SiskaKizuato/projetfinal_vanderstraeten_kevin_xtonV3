@@ -164,6 +164,13 @@ body {
   justify-content: center;
 }
 
+.usersMid option{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .usersRight{
   height: 100%;
   width: 20%;
