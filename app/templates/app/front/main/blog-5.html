@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-
     <!-- Start Page Title -->
     <div class="page-title-area">
         <div class="container">
@@ -29,7 +28,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-12">
                     <div class="row">
-                        {% for x in allBlogs reversed %}
+                        {% for x in page %}
                         <div class="col-lg-6 col-md-6">
                             <div class="single-blog-post">
                                 <div class="post-image">
@@ -49,173 +48,26 @@
                             </div>
                         </div>
                         {% endfor %}
-
-                    </div>
-                    {% comment %} <div class="row"> 
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="{% url 'singleBlog1' %}">
-                                        <img src="{% static 'app/img/blog/img1.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Ideas</span>
-                                    <h3><a href="{% url 'singleBlog1' %}">The #1 eCommerce blog to grow your business</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img2.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Advice</span>
-                                    <h3><a href="#">Latest ecommerce trend: The rise of shoppable posts</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img3.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Social</span>
-                                    <h3><a href="#">Building eCommerce wave: Social media shopping</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img4.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Boy</span>
-                                    <h3><a href="#">The best eCommerce blogs for online retailers</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img5.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Platform</span>
-                                    <h3><a href="#">The best ecommerce platform for growing sales</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img6.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Shipping</span>
-                                    <h3><a href="#">Shipping impacts your customer’s experience</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img7.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Platform</span>
-                                    <h3><a href="#">Discount shipping: faster and cheaper than ever</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-blog-post">
-                                <div class="post-image">
-                                    <a href="#">
-                                        <img src="{% static 'app/img/blog/img8.jpg' %}" alt="image">
-                                    </a>
-                                    <div class="date">
-                                        <span>January 29, 2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <span class="category">Shipping</span>
-                                    <h3><a href="#">A green brand finding roots in sustainability</a></h3>
-                                    <a href="{% url 'singleBlog1' %}" class="details-btn">Read Story</a>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="pagination-area text-center">
-                                <a href="#" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
-                                <span class="page-numbers current" aria-current="page">1</span>
-                                <a href="#" class="page-numbers">2</a>
-                                <a href="#" class="page-numbers">3</a>
-                                <a href="#" class="page-numbers">4</a>
-                                <a href="#" class="page-numbers">5</a>
-                                <a href="#" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                                {% if page.has_previous %}
+                                <a href="?page={{ page.previous_page_number }}" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                                {% endif %}
+                                {% for num in page.paginator.page_range %}
+                                    {% if page.number == num %}
+                                        <span class="page-numbers current" aria-current="page">{{ num }}</span>
+                                    {% else %}
+                                        <a href="?page={{ num }}" class="page-numbers">{{ num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page.has_next %}
+                                <a href="?page={{ page.next_page_number }}" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                                {% endif %}
                             </div>
                         </div>
-                    </div> {% endcomment %}
+
+                    </div>
+                    
                 </div>
 
                 <div class="col-lg-4 col-md-12">

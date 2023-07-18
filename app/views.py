@@ -6,6 +6,8 @@ from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.core.paginator import Paginator
+
 
 # xxxxxxxxxxxxxxxxx
 # XXXXX FRONT XXXXX
@@ -96,11 +98,18 @@ def logout_view(request):
 # XXXXX BLOG FRONT XXXXX
 
 
+
 def blog5(request):
-    allBlogs = Blog.objects.all()
+    allBlogs = Blog.objects.order_by('-id')  # Inverse l'ordre des blogs par leur ID
+    paginator = Paginator(allBlogs, 6)  # Divise les blogs en pages de 6 blogs par page
+    page_num = request.GET.get('page', 1)  # Récupère le numéro de la page à afficher
+    page = paginator.get_page(page_num)  # Obtient les blogs pour la page spécifiée
+
     categories = CategoryBlog.objects.annotate(blog_count=Count('blog'))
     tags = Tag.objects.annotate(blog_count=Count('blog'))
-    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'allBlogs':allBlogs})
+
+    return render(request, 'app/front/main/blog-5.html', {'categories': categories, 'tags': tags, 'page': page})
+
 
 def singleBlog1(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
