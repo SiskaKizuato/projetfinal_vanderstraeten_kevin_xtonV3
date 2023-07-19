@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm
+from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,7 +14,8 @@ from django.core.paginator import Paginator
 # xxxxxxxxxxxxxxxxx
 
 def index(request):
-    return render(request, 'app/front/main/index.html')
+    popular_blogs = Blog.objects.order_by('-views')[:3]
+    return render(request, 'app/front/main/index.html', {'popular_blogs' : popular_blogs})
 
 def cart(request):
     return render(request, 'app/front/main/cart.html')
@@ -398,3 +399,14 @@ def update_category(request, id):
         form = CategoryForm(instance=category)
 
     return render(request, 'app/back/main/update_category.html', {'form': form, 'category': category})
+
+# XXXXX PRODUCTSBACK XXXXX
+def new_product(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')  # Remplacez 'product_list' par le nom de l'URL de la liste des produits
+    else:
+        form = ArticleForm()
+    return render(request, 'app/back/main/newProduct.html', {'form': form})

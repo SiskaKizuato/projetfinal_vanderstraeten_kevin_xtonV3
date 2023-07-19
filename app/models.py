@@ -30,32 +30,57 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Article(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    size = models.CharField(max_length=10)
     availability = models.BooleanField()
-    quantity = models.IntegerField()
     ranking_user = models.IntegerField(null=True, blank=True)
     ranking_global = models.DecimalField(max_digits=3, decimal_places=2)
-    image_url = models.URLField()
-    color = models.CharField(max_length=100)
+    image1 = models.ImageField(upload_to='article_images/', null=True, blank=True)
+    image2 = models.ImageField(upload_to='article_images/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='article_images/', null=True, blank=True)    
+    colors = models.CharField(max_length=255, blank=True)  # Champs pour les couleurs (séparées par des virgules)
 
     def __str__(self):
         return self.name
 
+    def get_available_sizes(self):
+        if self.category.name == "Shoes":
+            return ["28", "29", "30", "31", "32"]
+        elif self.category.name == "Clothing":
+            return ["S", "M", "L", "XL"]
+        else:
+            return []
+
     def clean(self):
-        men_count = self.category.filter(name="Men's").count()
-        women_count = self.category.filter(name="Women's").count()
-        clothing_count = self.category.filter(name='Clothing').count()
-        shoes_count = self.category.filter(name='Shoes').count()
+        men_count = Article.objects.filter(category__name="Men's").count()
+        women_count = Article.objects.filter(category__name="Women's").count()
+        clothing_count = Article.objects.filter(category__name='Clothing').count()
+        shoes_count = Article.objects.filter(category__name='Shoes').count()
 
         if men_count > 0 and women_count > 0:
             raise ValidationError("An article cannot be both 'Men' and 'Women'.")
         
         if clothing_count > 0 and shoes_count > 0:
             raise ValidationError("An article cannot be both 'Clothing' and 'Shoes'.")
+
+        # Vérifier si la taille est valide pour la catégorie
+        if self.size_stock:
+            available_sizes = self.get_available_sizes()
+            for size, quantity in self.size_stock.items():
+                if size not in available_sizes:
+                    raise ValidationError(f"Invalid size '{size}' for this category.")
+
+class Stock(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    size = models.CharField(max_length=10)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.article.name} - Size: {self.size} - Quantity: {self.quantity}"
+
 
 # XXXXX PARTIE CONTACT XXXXX
 class ContactInfo(models.Model):

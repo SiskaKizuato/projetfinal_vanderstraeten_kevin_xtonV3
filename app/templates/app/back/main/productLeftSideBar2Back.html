@@ -1,18 +1,924 @@
-{% extends 'baseBack.html' %}
+{% extends 'baseFront.html' %}
 {% load static %}
 {% block content %}
-        <!-- Start Page Title -->
-        <div class="page-title-area">
-            <div class="container">
-                <div class="page-title-content">
-                    <h2>Producs Back</h2>
-                    <ul>
-                        <li><a href="{% url 'index' %}">Home</a></li>
-                        <li>Login</li>
-                    </ul>
+
+    <!-- Start Page Title -->
+    <div class="page-title-area">
+        <div class="container">
+            <div class="page-title-content">
+                <h2>Products Back</h2>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li>Products</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Start Products Area -->
+    <section class="products-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <div class="woocommerce-widget-area">
+
+                        <div class="woocommerce-widget collections-list-widget">
+                            <h3 class="woocommerce-widget-title">Collections</h3>
+
+                            <ul class="collections-list-row">
+                                <li><a href="#">Men's</a></li>
+                                <li class="active"><a href="#" class="active">Women’s</a></li>
+                                <li><a href="#">Clothing</a></li>
+                                <li><a href="#">Shoes</a></li>
+                                <li><a href="#">Accessories</a></li>
+                                <li><a href="#">Uncategorized</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="woocommerce-widget price-list-widget">
+                            <h3 class="woocommerce-widget-title">Price</h3>
+
+                            <div class="collection-filter-by-price">
+                                <input class="js-range-of-price" type="text" data-min="0" data-max="1055"
+                                    name="filter_by_price" data-step="10">
+                            </div>
+                        </div>
+
+                        <div class="woocommerce-widget size-list-widget">
+                            <h3 class="woocommerce-widget-title">Size</h3>
+
+                            <ul class="size-list-row">
+                                <li><a href="#">20</a></li>
+                                <li><a href="#">24</a></li>
+                                <li class="active"><a href="#">36</a></li>
+                                <li><a href="#">30</a></li>
+                                <li><a href="#">XS</a></li>
+                                <li><a href="#">S</a></li>
+                                <li><a href="#">M</a></li>
+                                <li><a href="#">L</a></li>
+                                <li><a href="#">L</a></li>
+                                <li><a href="#">XL</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-md-12">
+                    <div class="products-filter-options">
+                        <div class="row align-items-center">
+                            <div class="containerLinkAddBlog">
+                                <a href="{% url 'new_product' %}">+ | Add A Product</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                
+                                <div class="d-lg-flex d-md-flex align-items-center">
+                                    <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#productsFilterModal"><i class='bx bx-filter-alt'></i>
+                                            Filter</a></span>
+
+                                    <span class="sub-title d-none d-lg-block d-md-block">View:</span>
+
+                                    <div class="view-list-row d-none d-lg-block d-md-block">
+                                        <div class="view-column">
+                                            <a href="#" class="icon-view-one">
+                                                <span></span>
+                                            </a>
+
+                                            <a href="#" class="icon-view-two active">
+                                                <span></span>
+                                                <span></span>
+                                            </a>
+
+                                            <a href="#" class="icon-view-three">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </a>
+
+                                            <a href="#" class="view-grid-switch">
+                                                <span></span>
+                                                <span></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4">
+                                <p>Showing 1 – 18 of 100</p>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4">
+                                <div class="products-ordering-list">
+                                    <select>
+                                        <option>Sort by Price: Low to High</option>
+                                        <option>Default Sorting</option>
+                                        <option>Sort by Popularity</option>
+                                        <option>Sort by Average Rating</option>
+                                        <option>Sort by Latest</option>
+                                        <option>Sort by Price: High to Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="products-collections-filter" class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img13.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover13.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="new-tag">New!</div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">T-Shirt</span>
+                                    <h3><a href="#">Long Sleeve Leopard T-Shirt</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$321</span>
+                                        <span class="new-price">$250</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+
+                                <span class="products-discount">
+                                    <span>
+                                        20% OFF
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img14.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover14.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">T-Shirt</span>
+                                    <h3><a href="#">Causal V-Neck Soft Raglan</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$210</span>
+                                        <span class="new-price">$200</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img15.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover15.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Shirt</span>
+                                    <h3><a href="#">Hanes Men's Pullover</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="new-price">$200</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img16.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover16.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="sale-tag">Sale!</div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Twist Shirt</span>
+                                    <h3><a href="#">Gildan Men's Crew T-Shirt</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="new-price">$150</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img17.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover17.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Smart Shirt</span>
+                                    <h3><a href="#">Yidarton Women's Comfy</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="new-price">$240</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+
+                                <span class="products-discount">
+                                    <span>
+                                        15% OFF
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img18.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover18.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">EcoSmart</span>
+                                    <h3><a href="#">Womens Tops Color</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$150</span>
+                                        <span class="new-price">$100</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img7.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover7.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="new-tag">New!</div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">T-Shirt</span>
+                                    <h3><a href="#">Tbmpoy Men's Tapered</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$321</span>
+                                        <span class="new-price">$250</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+
+                                <span class="products-discount">
+                                    <span>
+                                        20% OFF
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img8.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover8.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">T-Shirt</span>
+                                    <h3><a href="#">Sunnyme Women's Ponchos</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$210</span>
+                                        <span class="new-price">$200</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img9.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover9.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Shirt</span>
+                                    <h3><a href="#">Open Front Knit Sweaters</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$210</span>
+                                        <span class="new-price">$200</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img10.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover10.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="sale-tag">Sale!</div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Twist Shirt</span>
+                                    <h3><a href="#">Block Striped Draped</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="new-price">$150</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img11.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover11.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">Smart Shirt</span>
+                                    <h3><a href="#">Fleece Hooded Sweatshirt</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="new-price">$240</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+
+                                <span class="products-discount">
+                                    <span>
+                                        15% OFF
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{% static 'app/img/products/img12.jpg' %}" class="main-image" alt="image">
+                                        <img src="{% static 'app/img/products/img-hover12.jpg' %}" class="hover-image" alt="image">
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">EcoSmart</span>
+                                    <h3><a href="#">Women's Modern-Skinny</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="old-price">$150</span>
+                                        <span class="new-price">$100</span>
+                                    </div>
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination-area text-center">
+                        <a href="#" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                        <span class="page-numbers current" aria-current="page">1</span>
+                        <a href="#" class="page-numbers">2</a>
+                        <a href="#" class="page-numbers">3</a>
+                        <a href="#" class="page-numbers">4</a>
+                        <a href="#" class="page-numbers">5</a>
+                        <a href="#" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- End Page Title -->
+    </section>
+    <!-- End Products Area -->
+
+    <!-- Start Facility Area -->
+    <section class="facility-area pb-70">
+        <div class="container">
+            <div class="facility-slides owl-carousel owl-theme">
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-tracking'></i>
+                    </div>
+                    <h3>Free Shipping Worldwide</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-return'></i>
+                    </div>
+                    <h3>Easy Return Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-shuffle'></i>
+                    </div>
+                    <h3>7 Day Exchange Policy</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-sale'></i>
+                    </div>
+                    <h3>Weekend Discount Coupon</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-credit-card'></i>
+                    </div>
+                    <h3>Secure Payment Methods</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-location'></i>
+                    </div>
+                    <h3>Track Your Package</h3>
+                </div>
+
+                <div class="single-facility-box">
+                    <div class="icon">
+                        <i class='flaticon-customer-service'></i>
+                    </div>
+                    <h3>24/7 Customer Support</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Facility Area -->
 
 {% endblock  %}

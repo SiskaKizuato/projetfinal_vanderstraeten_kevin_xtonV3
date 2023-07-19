@@ -941,62 +941,28 @@
             </div>
 
             <div class="row">
+                {% for blog in popular_blogs %}
+                {% if blog.validated %}  
                 <div class="col-lg-4 col-md-6">
                     <div class="single-blog-post">
                         <div class="post-image">
-                            <a href="single-blog-1.html">
-                                <img src="{% static 'app/img/blog/img1.jpg' %}" alt="image">
+                            <a href="{% url 'singleBlog1' blog.id %}" class="thumb">
+                                <img src="{{ blog.image.url }}" alt="image">
                             </a>
                             <div class="date">
-                                <span>January 29, 2021</span>
+                                <span>{{ blog.date_added }}</span>
                             </div>
                         </div>
 
                         <div class="post-content">
-                            <span class="category">Ideas</span>
-                            <h3><a href="single-blog-1.html">The #1 eCommerce blog to grow your business</a></h3>
-                            <a href="single-blog-1.html" class="details-btn">Read Story</a>
+                            <span class="category">{{ blog.categoryBlog }}</span>
+                            <h3><a href="{% url 'singleBlog1' blog.id %}">{{ blog.title }}</a></h3>
+                            <a href="{% url 'singleBlog1' blog.id %}" class="details-btn">Read Story</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog-post">
-                        <div class="post-image">
-                            <a href="single-blog-1.html">
-                                <img src="{% static 'app/img/blog/img2.jpg' %}" alt="image">
-                            </a>
-                            <div class="date">
-                                <span>January 29, 2021</span>
-                            </div>
-                        </div>
-
-                        <div class="post-content">
-                            <span class="category">Advice</span>
-                            <h3><a href="single-blog-1.html">Latest ecommerce trend: The rise of shoppable posts</a></h3>
-                            <a href="single-blog-1.html" class="details-btn">Read Story</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog-post">
-                        <div class="post-image">
-                            <a href="single-blog-1.html">
-                                <img src="{% static 'app/img/blog/img3.jpg' %}" alt="image">
-                            </a>
-                            <div class="date">
-                                <span>January 29, 2021</span>
-                            </div>
-                        </div>
-
-                        <div class="post-content">
-                            <span class="category">Social</span>
-                            <h3><a href="single-blog-1.html">Building eCommerce wave: Social media shopping</a></h3>
-                            <a href="single-blog-1.html" class="details-btn">Read Story</a>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </section>

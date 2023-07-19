@@ -40,6 +40,8 @@ urlpatterns = [
     path('productLeftSideBar2Back/', views.productLeftSideBar2Back, name="productLeftSideBar2Back"),
     path('profileBack/', views.profileBack, name="profileBack"),
     path('validationBlogBack/', views.validationBlogBack, name="validationBlogBack"),
+    path('new_product/', views.new_product, name='new_product'),
+
         
     # XXXXX UPDATE XXXXX
     path('update_contact_info/', views.update_contact_info, name='update_contact_info'),

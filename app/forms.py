@@ -43,8 +43,6 @@ class BlogForm(forms.ModelForm):
             'categoryBlog': forms.Select(attrs={'class': 'form-control'}),
         }
 
-
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -52,7 +50,6 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'class': 'form-control'}),
         }
-
 
 # XXXXX PARTIE USER XXXXX
 class SignupForm(forms.ModelForm):
@@ -64,10 +61,13 @@ class SignupForm(forms.ModelForm):
         }
 
 # XXXXX PARTIE ARTICLE XXXXX
+
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ['name', 'category', 'price', 'availability', 'ranking_user', 'ranking_global', 'image1', 'image2', 'image3', 'colors', 'size_stock']
+
+    size_stock = forms.JSONField(required=False, widget=forms.HiddenInput())
 
 class CategoryForm(forms.ModelForm):
     class Meta:
