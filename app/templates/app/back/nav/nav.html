@@ -86,10 +86,12 @@
                                         <li class="nav-item megamenu"><a href="{% url 'contactBack' %}" class="nav-link">Contact Us</a></li>
                                     {% elif request.user.role == 'web' %}
                                     <!-- Affichage des boutons pour l'utilisateur web -->
+                                        <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
                                         <li class="nav-item megamenu"><a href="{% url 'blog5Back' %}" class="nav-link">Blog</a></li>
                                         <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
                                     {% elif request.user.role == 'stock' %}
                                     <!-- Affichage des boutons pour l'utilisateur avec le rôle stock -->
+                                        <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>   
                                         <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
                                         <li class="nav-item megamenu"><a href="{% url 'productLeftSideBar2Back' %}" class="nav-link">Products</a></li>
                                         <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
@@ -139,30 +141,32 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item"><a href="{% url 'index' %}" class="nav-link active">Home</a></li>
                                 {% if user.is_authenticated %}
-                                    {% if request.user.role == 'admin' %}
-                                    <!-- Affichage des boutons pour l'administrateur -->
-                                        <li class="nav-item megamenu"><a href="{% url 'allUsersBack' %}" class="nav-link">All Users</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'productLeftSideBar2Back' %}" class="nav-link">Products</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'blog5Back' %}" class="nav-link">Blog</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'contactBack' %}" class="nav-link">Contact Us</a></li>
-                                    {% elif request.user.role == 'web' %}
-                                    <!-- Affichage des boutons pour l'utilisateur web -->
-                                        <li class="nav-item megamenu"><a href="{% url 'blog5Back' %}" class="nav-link">Blog</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
-                                    {% elif request.user.role == 'stock' %}
-                                    <!-- Affichage des boutons pour l'utilisateur avec le rôle stock -->
-                                        <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'productLeftSideBar2Back' %}" class="nav-link">Products</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
-                                    {% elif request.user.role == 'membre' %}
-                                    <!-- Affichage des boutons pour l'utilisateur membre -->
-                                        <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
-                                        <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
-                                    {% endif %}
+                                {% if request.user.role == 'admin' %}
+                                <!-- Affichage des boutons pour l'administrateur -->
+                                    <li class="nav-item megamenu"><a href="{% url 'allUsersBack' %}" class="nav-link">All Users</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'productLeftSideBar2Back' %}" class="nav-link">Products</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'blog5Back' %}" class="nav-link">Blog</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'contactBack' %}" class="nav-link">Contact Us</a></li>
+                                {% elif request.user.role == 'web' %}
+                                <!-- Affichage des boutons pour l'utilisateur web -->
+                                    <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'blog5Back' %}" class="nav-link">Blog</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
+                                {% elif request.user.role == 'stock' %}
+                                <!-- Affichage des boutons pour l'utilisateur avec le rôle stock -->
+                                    <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>   
+                                    <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'productLeftSideBar2Back' %}" class="nav-link">Products</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'categoriesBack' %}" class="nav-link">Categories</a></li>
+                                {% elif request.user.role == 'membre' %}
+                                <!-- Affichage des boutons pour l'utilisateur membre -->
+                                    <li class="nav-item megamenu"><a href="{% url 'profileBack' %}" class="nav-link">Profile</a></li>
+                                    <li class="nav-item megamenu"><a href="{% url 'ordersBack' %}" class="nav-link">Orders</a></li>
                                 {% endif %}
+                            {% endif %}
                             </ul>
 
                             <div class="others-option">

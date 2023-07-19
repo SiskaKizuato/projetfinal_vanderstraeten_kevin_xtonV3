@@ -174,7 +174,7 @@ def seed_blogs():
             "title": "La beaute selon l'histoire europeenne et ta grand-mere !",
             "content": "bla bkablablabladlbwob  bwofbo o'fe  newfn eoie f",
             "date_added": "2023-07-17",
-            "image": "blog_images/mami.jpg",
+            "image": "blog_images/glamour.webp",
             "author_id": 1,
             "categoryBlog_id": 1,
             "tags_ids": [1, 2, 3],
@@ -276,7 +276,8 @@ def seed_blogs():
             image=blog_data['image'],
             author=author,
             categoryBlog=category,
-            views=blog_data['views']
+            views=blog_data['views'],
+            validated=True,
         )
 
         # Copier les images dans le répertoire 'media/blog_images/'
