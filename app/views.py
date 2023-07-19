@@ -150,6 +150,11 @@ def create_blog(request):
         if form.is_valid():
             blog = form.save(commit=False)
             blog.author = request.user
+
+            # Vérifier si le rôle de l'auteur est admin ou web
+            if request.user.role in [Profile.Role.ADMIN, Profile.Role.WEB]:
+                blog.validated = True  # Définir le champ validated à True
+
             blog.save()
 
             selected_tags = request.POST.getlist('tags')  # Récupérer les tags sélectionnés
@@ -175,6 +180,7 @@ def create_blog(request):
     tag_form = TagForm()
 
     return render(request, 'app/front/main/createBlog.html', {'form': form, 'tags': tags, 'tag_form': tag_form})
+
 
 
 
@@ -257,6 +263,7 @@ def blog5Back(request):
     return render(request, 'app/back/main/blog5Back.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
 
 
+
 def edit_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
 
@@ -278,7 +285,21 @@ def edit_blog(request, blog_id):
     return render(request, 'app/back/main/single-blog-1-back.html', context)
 
 
+def singleBlogValidation(request, blog_id):
+    # Retrieve the blog based on its identifier
+    try:
+        blog = Blog.objects.get(pk=blog_id)
+    except Blog.DoesNotExist:
+        # Handle the case where the blog does not exist
+        # You can display an error or redirect to another page
+        return redirect('index')
 
+    # Update the 'validated' field of the blog to True
+    blog.validated = True
+    blog.save()
+
+    # Redirect to the blog listing page (validationBlogBack)
+    return redirect('validationBlogBack')
 
 def singleBlog1Back(request):
     return render(request, 'app/back/main/single-blog-1-back.html')
@@ -291,6 +312,11 @@ def delete_blog(request, blog_id):
         return redirect('blog5Back')  # Redirige vers la page blog5Back après la suppression
     
     return redirect('index')  # Redirige vers une autre page si la méthode de requête n'est pas POST
+
+def validationBlogBack(request):
+    non_validated_blogs = Blog.objects.filter(validated=False)
+
+    return render(request, 'app/back/main/validationBlogBack.html', {'non_validated_blogs': non_validated_blogs})
 
 # XXXXX CONTACT BACK XXXXX
 def contactBack(request):

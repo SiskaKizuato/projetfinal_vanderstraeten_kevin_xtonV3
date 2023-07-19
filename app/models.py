@@ -83,6 +83,8 @@ class Blog(models.Model):
     categoryBlog = models.ForeignKey('CategoryBlog', on_delete=models.CASCADE, default=None)
     tags = models.ManyToManyField(Tag)
     views = models.PositiveIntegerField(default=0)  # Champ pour stocker le nombre de vues
+    validated = models.BooleanField(default=False)  # New field for validation status
+
 
     def __str__(self):
         return self.title

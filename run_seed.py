@@ -7,5 +7,4 @@ django.setup()
 
 from app.seed import run, seed_contact_info, seed_category_blogs, seed_tags, seed_blogs
 
-if __name__== '__main__':
-    run()
+

@@ -23,6 +23,11 @@ urlpatterns = [
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
     path('single-blog-1-back/', views.singleBlog1Back, name="singleBlog1Back"),
     path('create-blog/', views.create_blog, name='create_blog'),  # Nouvelle URL ajoutée
+    # URL pour la vue validate_blog
+
+    # URL pour la vue singleBlogValidation
+    path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
+    path('singleBlogValidation/<int:blog_id>/', views.singleBlogValidation, name='singleBlogValidation'),
     
     path('track-order/', views.trackOrder, name="trackOrder"),
     
@@ -34,7 +39,8 @@ urlpatterns = [
     path('ordersBack/', views.ordersBack, name="ordersBack"),
     path('productLeftSideBar2Back/', views.productLeftSideBar2Back, name="productLeftSideBar2Back"),
     path('profileBack/', views.profileBack, name="profileBack"),
-    
+    path('validationBlogBack/', views.validationBlogBack, name="validationBlogBack"),
+        
     # XXXXX UPDATE XXXXX
     path('update_contact_info/', views.update_contact_info, name='update_contact_info'),
     path('update_category/<int:id>/', views.update_category, name='update_category'),

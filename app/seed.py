@@ -1,12 +1,18 @@
+import os
 import random
 from django_seed import Seed
 from django.contrib.auth.hashers import make_password
-from .models import Profile, ContactInfo, Category, CategoryBlog, Tag
+from .models import Profile, ContactInfo, Category, CategoryBlog, Tag,  Blog
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.utils.timezone import make_aware
 from datetime import datetime
-from .models import Blog, CategoryBlog, Tag
+from django.core.files.images import ImageFile
+from shutil import copyfile
+from django.conf import settings
+BASE_DIR = settings.BASE_DIR
+MEDIA_ROOT = settings.MEDIA_ROOT
+
 
 # XXXXX PARTIE USER XXXXX
 def run():
@@ -55,6 +61,7 @@ def run():
 
     inserted_pks = seeder.execute()
     print(inserted_pks)
+run()
 
 
 # XXXXX PARTIE CONTTACT XXXXX
@@ -116,46 +123,170 @@ def seed_tags():
             Tag.objects.get_or_create(name=tag_name)
 
         print("Seed completed.")
-
 seed_tags()
+
+# seed_tags()
+# def seed_blogs():
+#     User = get_user_model()
+#     seeder = Seed.seeder()
+#     datas = [
+#         {
+#             "categoryBlog": random.choice(CategoryBlog.objects.all()),
+#             "date_added": datetime.now(),
+#             "title": "Mon titre",
+#             "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
+#             "image": "blog_images/3_ZhLLWyM.jpg",
+#             "author": None,  # Utilisation de None pour l'instant
+#             'tags': [
+#                 Tag.objects.get(name='Business'),
+#                 Tag.objects.get(name='Travel'),
+#                 Tag.objects.get(name='Colors'),
+#             ],
+#         },
+#     ]
+
+#     for item in datas:
+#         profile = Profile.objects.create(
+#             id=1,  # Spécification de l'ID 1
+#             username='admin1',
+#             password=make_password('1234'),
+#             email='admin1@example.com',
+#             first_name='Admin',
+#             last_name='Role',
+#             role=Profile.Role.ADMIN,
+#             phone=random.choice(phone_numbers)
+#         )
+#         post = Blog.objects.create(
+#             categoryBlog=item['categoryBlog'],
+#             date_added=item['date_added'],
+#             title=item['title'],
+#             content=item['content'],
+#             image=item['image'],
+#             author=profile,
+#         )
+#         post.tags.set(item['tags'])
+
+#     print("Seed completed successfully.")
+
 def seed_blogs():
-    User = get_user_model()
-    seeder = Seed.seeder()
-    datas = [
+    blog_data = [
         {
-            "categoryBlog": random.choice(CategoryBlog.objects.all()),
-            "date_added": datetime.now(),
-            "title": "Mon titre",
-            "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
-            "image": "blog_images/3_ZhLLWyM.jpg",
-            "author": None,  # Utilisation de None pour l'instant
-            'tags': [
-                Tag.objects.get(name='Business'),
-                Tag.objects.get(name='Travel'),
-                Tag.objects.get(name='Colors'),
-            ],
+            "title": "La beaute selon l'histoire europeenne et ta grand-mere !",
+            "content": "bla bkablablabladlbwob  bwofbo o'fe  newfn eoie f",
+            "date_added": "2023-07-17",
+            "image": "blog_images/mami.jpg",
+            "author_id": 1,
+            "categoryBlog_id": 1,
+            "tags_ids": [1, 2, 3],
+            "views": 5
         },
+        {
+            "title": "Voyage sur Tatooine en Crocs Banlenciaga",
+            "content": "Anakin se promenait dans les rues arides de Tatooine, portant fièrement ses Crocs Balenciaga, un mélange inattendu de style galactique et de confort terrestre. Les habitants locaux le regardaient avec étonnement, mais il se sentait à l'aise dans cette fusion unique. Ses pas légers sur le sable chaud témoignaient de son parcours de Jedi autrefois craint et respecté, maintenant imprégné d'un brin d'ironie mode. Un choix audacieux pour un homme qui a connu des ténèbres profondes, mais qui maintenant embrassait la légèreté. Tatooine était un rappel de son passé, mais ses Crocs Balenciaga lui offraient un avenir inattendu, où le style et l'aventure se rejoignaient dans une galaxie lointaine, très lointaine.",
+            "date_added": "2023-07-18",
+            "image": "blog_images/crocs2.jpg",
+            "author_id": 1,
+            "categoryBlog_id": 1,
+            "tags_ids": [2, 4, 5],
+            "views": 14
+        },
+        
+	{
+		"id" : 3,
+		"title" : "Guccimane  ne porte t'il vraiment que du Gucci ??",
+		"content" : "Vous vous  etes surement deja demande si Guccimane ne porte vraiment que du Gucci ? He bien non. Voila voilouuu...",
+		"date_added" : "2023-07-18",
+        "image": "blog_images/gucci3.webp",
+		"author_id" : 1,
+		"categoryBlog_id" : 1,
+        "tags_ids": [1, 3],
+		"views" : 7
+	},
+	{
+		"id" : 4,
+		"title" : "Future vient-il vraiment du futur ?? Pas si sur...",
+		"content" : "En fait non, il vient du passe.",
+		"date_added" : "2023-07-18",
+        "image": "blog_images/future2.jpg",
+		"author_id" : 1,
+		"categoryBlog_id" : 4,
+        "tags_ids": [3],
+		"views" : 33
+	},
+	{
+		"id" : 5,
+		"title" : "Les  paparazzis meritent ils la peine de mort par chatouille ?",
+		"content" : "pas si sur.",
+		"date_added" : "2023-07-18",
+        "image": "blog_images/test.jpg",
+		"author_id" : 1,
+		"categoryBlog_id" : 6,
+        "tags_ids": [2],
+		"views" : 19
+	},
+	{
+		"id" : 6,
+		"title" : "Karl Lagerfeld, ce créateur de mode emblématique !",
+		"content" : "Karl Lagerfeld était un créateur de mode emblématique, connu pour son style distinctif et sa contribution indéniable à l'industrie de la mode. Né le 10 septembre 1933 en Allemagne, Lagerfeld a laissé une empreinte durable dans le monde de la haute couture jusqu'à sa mort en février 2019.\r\n\r\nAvec son look reconnaissable, Lagerfeld était souvent vêtu de son costume noir, de ses lunettes de soleil et de son catogan argenté. Il était réputé pour son sens aiguisé de l'esthétique et sa créativité sans limites. Pendant plus de trois décennies, il a été directeur artistique de la maison de couture française Chanel, redéfinissant et modernisant la marque emblématique.",
+		"date_added" : "2023-07-18",
+        "image": "blog_images/karl.webp",
+		"author_id" : 1,
+		"categoryBlog_id" : 2,
+        "tags_ids": [1, 4],
+		"views" : 2
+	},
+	{
+		"id" : 8,
+		"title" : "Louis Vignac, bouteille de Vitel, verre de Cognac et Louis Vitton !",
+		"content" : "lknknoinfeno oni onfefno naln nalsdndonw nowon nf jjk nwnw n n leuleu beuh",
+		"date_added" : "2023-07-18",
+        "image": "blog_images/lv.webp",
+		"author_id" : 1,
+		"categoryBlog_id" : 4,
+        "tags_ids": [3, 5],
+		"views" : 0
+	}
+        # Ajoutez d'autres blogs ici
     ]
 
-    for item in datas:
-        profile = Profile.objects.create(
-            id=1,  # Spécification de l'ID 1
-            username='admin1',
-            password=make_password('1234'),
-            email='admin1@example.com',
-            first_name='Admin',
-            last_name='Role',
-            role=Profile.Role.ADMIN,
-            phone=random.choice(phone_numbers)
-        )
-        post = Blog.objects.create(
-            categoryBlog=item['categoryBlog'],
-            date_added=item['date_added'],
-            title=item['title'],
-            content=item['content'],
-            image=item['image'],
-            author=profile,
-        )
-        post.tags.set(item['tags'])
+    for blog_data in blog_data:
+        author_id = blog_data['author_id']
+        category_id = blog_data['categoryBlog_id']
+        tags_ids = blog_data['tags_ids']
 
-    print("Seed completed successfully.")
+        # Vérifier si l'auteur, la catégorie et les tags existent dans la base de données
+        try:
+            author = Profile.objects.get(id=author_id)
+            category = CategoryBlog.objects.get(id=category_id)
+            tags = Tag.objects.filter(id__in=tags_ids)
+        except Profile.DoesNotExist:
+            print(f"L'auteur avec l'id {author_id} n'existe pas.")
+            continue
+        except CategoryBlog.DoesNotExist:
+            print(f"La catégorie avec l'id {category_id} n'existe pas.")
+            continue
+        except Tag.DoesNotExist:
+            print(f"Un ou plusieurs tags avec les ids {tags_ids} n'existent pas.")
+            continue
+
+        blog = Blog(
+            title=blog_data['title'],
+            content=blog_data['content'],
+            date_added=blog_data['date_added'],
+            image=blog_data['image'],
+            author=author,
+            categoryBlog=category,
+            views=blog_data['views']
+        )
+
+        # Copier les images dans le répertoire 'media/blog_images/'
+        
+        # Sauvegarder le blog dans la base de données
+        blog.save()
+
+        # Ajouter les tags associés au blog
+        blog.tags.add(*tags)
+
+    print("Seed completed.")
+
+seed_blogs()

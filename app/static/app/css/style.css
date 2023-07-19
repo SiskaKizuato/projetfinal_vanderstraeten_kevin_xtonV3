@@ -74,6 +74,7 @@ body {
   justify-content: center;
 }
 
+
 .btnBlogCrud{
   width: 50%;
   height: 100%;
@@ -82,6 +83,7 @@ body {
   justify-content: center;
   background-color: #f53f85;
 }
+
 
 .btnDeleteBlog{
   border-bottom-left-radius: 5px;
@@ -93,6 +95,26 @@ body {
   border-left: 2px solid #ffffff;
   border-bottom-right-radius: 5px;
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+#idCtnShow{
+  background-color: #f53f85;
+  border-bottom-right-radius: 5px;
+}
+#idCtnShow:hover{
+  background-color: #ffffff;
+  border: 1px solid black;
+}
+
+#idCtnShow:hover #idBtnShow{
+  color: black;
+}
+
+#idCtnShow #idBtnShow{
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
   transition: 0.2s ease-in-out;
 }
 

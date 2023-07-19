@@ -1,0 +1,126 @@
+{% extends 'baseBack.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Start Page Title -->
+    <div class="page-title-area">
+        <div class="container">
+            <div class="page-title-content">
+                <h2>Blog Details</h2>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li>Blog Details</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Start Blog Details Area -->
+    <section class="blog-details-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="blog-details-desc">
+                        <div class="article-image">
+                            <img src={{blog.image.url}} alt="image">
+                        </div>
+
+                        <div class="article-content">
+                            <div class="entry-meta">
+                                <ul>
+                                    <li>
+                                        <i class='bx bx-folder-open'></i>
+                                        <span>Category</span>
+                                        <a href="#">{{blog.categoryBlog}}</a>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-group'></i>
+                                        <span>View</span>
+                                        <a href="#">{{blog.views}}</a>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-calendar'></i>
+                                        <span>Last Updated</span>
+                                        <a href="#">{{blog.date_added}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <h3>{{blog.title}}</h3>
+
+                            <p>{{blog.content}}</p>
+
+                        </div>
+
+                        <div class="article-footer">
+                            <div class="article-tags">
+                                <span><i class='bx bx-purchase-tag'></i></span>
+                                {% for tag in blog.tags.all %}
+                                    <a href="#">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+
+                            <div class="article-share">
+                                <ul class="social">
+                                    <li><span>Share:</span></li>
+                                    <li><a href="#" class="facebook" target="_blank"><i class='bx bxl-facebook'></i></a></li>
+                                    <li><a href="#" class="twitter" target="_blank"><i class='bx bxl-twitter'></i></a></li>
+                                    <li><a href="#" class="linkedin" target="_blank"><i class='bx bxl-linkedin'></i></a></li>
+                                    <li><a href="#" class="instagram" target="_blank"><i class='bx bxl-instagram'></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="article-author">
+                            <div class="author-profile-header"></div>
+                            <div class="author-profile">
+                                <div class="author-profile-title">
+                                    <img src="{% static 'app/img/user1.jpg' %}" class="shadow-sm" alt="image">
+
+                                    <div class="author-profile-title-details d-flex justify-content-between">
+                                        <div class="author-profile-details">
+                                            <h4>{{blog.author}}</h4>
+                                        </div>
+
+                                        <div class="author-profile-raque-profile">
+                                            <a href="#" class="d-inline-block">View profile on Xton</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>{{blog.author}} is a celebrated loremor, chatGPTer, and coder who brings passion to everything he does.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <!-- Add the REFUSE and VALIDATE buttons here -->
+                    <div class="btnBlogCrud btnDeleteBlog">
+                        <form method="POST" action="{% url 'delete_blog' x.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="fontBtnBlog">DELETE</button>
+                        </form>
+                    </div>
+
+                    <div class="btnBlogCrud btnEditBlog">
+                        <a href="{% url 'singleBlogValidation' x.id %}" class="fontBtnBlog">VALIDATE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Details Area -->
+
+    <!-- Start Facility Area -->
+    <section class="facility-area pb-70">
+        <div class="container">
+            <div class="facility-slides owl-carousel owl-theme">
+                <!-- ... -->
+            </div>
+        </div>
+    </section>
+    <!-- End Facility Area -->
+
+{% endblock %}
