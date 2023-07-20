@@ -1,0 +1,52 @@
+{% extends 'baseBack.html' %} 
+{% block content %} 
+{%load static %}
+<div style="height: 75vh">
+  {% comment %} <div>
+    <button><a href={% url 'profilesList' %}>back</a></button>
+  </div> {% endcomment %}
+  <h3>Mail non lu</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 100px;" scope="col">id</th>
+        <th style="width: 100px;" scope="col">nom</th>
+        <th style="width: 100px;" scope="col">adresse mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mail in mails %} {% if not mail.lu %}
+      <tr class="bg-danger">
+        <th scope="row">{{mail.id}}</th>
+        <td style="width: 100px;">{{mail.psodo}}</td>
+        <td style="width: 100px;">{{mail.email}}</td>
+        <td style="width: 100px;"><a href="{% url 'lireMail' mail.id %}">OPEN</a></td>
+      </tr>
+      {% endif %} {% endfor %}
+    </tbody>
+  </table>
+  <h3>Mail lu</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 100px;" scope="col">id</th>
+        <th style="width: 100px;" scope="col">nom</th>
+        <th style="width: 100px;" scope="col">adresse mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mail in mails %} {% if mail.lu %}
+      <tr class="bg-success">
+        <th scope="row">{{mail.id}}</th>
+        <td style="width: 100px;">{{mail.psodo}}</td>
+        <td style="width: 100px;">{{mail.email}}</td>
+        <td style="width: 50px;"><a href="{% url 'lireMail' mail.id %}">OPEN</a></td>
+        <td style="width: 50px;"><a href="{% url 'response' mail.id %}">RESPOND</a></td>
+        <td style="width: 50px;"><a class="text-danger" href="{% url 'deleMail' mail.id %}">DELETE</a></td>
+      </tr>
+      {% endif %} {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

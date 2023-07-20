@@ -42,7 +42,10 @@ urlpatterns = [
     path('validationBlogBack/', views.validationBlogBack, name="validationBlogBack"),
     path('new_product/', views.new_product, name='new_product'),
     path('partnersBack/', views.partnersBack, name='partnersBack'),
-
+    path("mailbox/", views.mailbox, name="mailbox"),
+    path("lireMail/<int:id>", views.lireMail, name="lireMail"),
+    path("deleMail/<int:id>", views.deleMail, name="deleMail"),
+    path("response/<int:id>", views.response, name="response"),
 
         
     # XXXXX UPDATE XXXXX

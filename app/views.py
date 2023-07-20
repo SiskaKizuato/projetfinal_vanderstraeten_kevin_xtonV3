@@ -477,3 +477,29 @@ def delete_partner(request, id):
     partner = get_object_or_404(Partners, id=id)
     partner.delete()
     return redirect('partnersBack')
+
+def mailbox(request):
+    mails = Contact.objects.all()
+    return render(request, "app/back/main/mailBox.html" , {"mails":mails})
+
+def lireMail(request, id):
+    mail = Contact.objects.get(id=id)
+    mail.lu = True
+    mail.save()
+    return render(request, "app/back/main/lireValiderMail.html" , {"mail":mail})
+
+def deleMail(request, id):
+    destroy = Contact(id)
+    destroy.delete()
+    return redirect('mailbox')
+
+def response(request, id):
+    contact = Contact.objects.get(id=id)
+    if request.method == 'POST':
+        email = request.POST.get('mailadresse')
+        text_message = request.POST.get('message')
+        sujet = request.POST.get('sujet')
+        send_mail(sujet, text_message, "xtonbackoffice@gmail.com", [email])
+        print("erreur")
+        return redirect('mailbox')
+    return render(request, "app/back/main/responce.html", {"contact":contact})
