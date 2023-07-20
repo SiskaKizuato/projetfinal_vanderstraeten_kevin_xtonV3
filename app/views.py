@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners
+from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.http import HttpResponse
 
 
 # xxxxxxxxxxxxxxxxx
@@ -27,6 +32,25 @@ def checkout(request):
 def contact(request):
     # contact_info = ContactInfo.objects.first()
     # context = {'contact_info': contact_info}
+    if request.method =="POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            sujet = "Xton contact"
+            messagetexte = f"message recu du formulaire de contact"
+            expediteur = 'xtonbackoffice@gmail.com'
+            to = "xtonbackoffice@gmail.com"
+            mailMsg = EmailMultiAlternatives(sujet,messagetexte,expediteur,[to])
+            mailMsg.send()
+            user = form.save()
+            #send mail notification
+            subject = "avis de reception"
+            message = f'Hello {{user.psodo}}, nous avons bien recu votre meail et nous vous repondrons dans les plus bref délé'
+            from_email = 'xtonbacbackoffice@gmail.com'
+            to_email = user.email
+            msg = EmailMultiAlternatives(
+                subject, message, from_email, [to_email])
+            msg.send()
     return render(request, 'app/front/main/contact.html')
 
 def error404(request):

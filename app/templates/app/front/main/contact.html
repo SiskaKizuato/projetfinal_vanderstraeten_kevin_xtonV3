@@ -55,16 +55,18 @@
                     </div>
 
                     <div class="col-lg-7 col-md-12">
+                        
                         <div class="contact-form">
                             <h3>Drop Us A Line</h3>
                             <p>We're happy to answer any questions you have or provide you with an estimate. Just send us a message in the form below with any questions you may have.</p>
 
-                            <form id="contactForm">
+                            <form id="" method="POST">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-12 col-md-6">
                                         <div class="form-group">
                                             <label>Name <span>*</span></label>
-                                            <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name" placeholder="Your name">
+                                            <input type="text" name="psodo" id="name" class="form-control" required data-error="Please enter your name" placeholder="Your name">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>

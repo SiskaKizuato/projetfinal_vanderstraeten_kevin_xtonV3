@@ -134,3 +134,4 @@ EMAIL_HOST_USER = 'xtonbackoffice@gmail.com'
 EMAIL_HOST_PASSWORD = 'yfbmezccivtwtwds'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'xtobackoffice@gmail.com'
+
