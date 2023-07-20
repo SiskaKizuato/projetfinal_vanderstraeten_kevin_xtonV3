@@ -30,9 +30,9 @@
             <p class="infoMail">User Message :</p>
             <p class="dataMail">{{mail.message}}</p>            
         </div>
-        <button type="submit" class="default-btn hello">
-            <a class="world" href={% url 'mailbox' %}>back</a>
-        </button>
+        <a href="{% url 'mailbox' %}" type="submit" class="default-btn hello">
+            <p class="world" >back</p>
+        </a>
     </div>
 
        
