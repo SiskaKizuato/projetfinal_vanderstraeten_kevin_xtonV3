@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag
+from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
@@ -14,8 +14,9 @@ from django.core.paginator import Paginator
 # xxxxxxxxxxxxxxxxx
 
 def index(request):
+    partners = Partners.objects.all()
     popular_blogs = Blog.objects.order_by('-views')[:3]
-    return render(request, 'app/front/main/index.html', {'popular_blogs' : popular_blogs})
+    return render(request, 'app/front/main/index.html', {'popular_blogs' : popular_blogs, 'partners': partners})
 
 def cart(request):
     return render(request, 'app/front/main/cart.html')
@@ -410,3 +411,45 @@ def new_product(request):
     else:
         form = ArticleForm()
     return render(request, 'app/back/main/newProduct.html', {'form': form})
+
+
+def partnersBack(request):
+    if request.method == 'POST':
+        form = PartnersForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('partnersBack')  # Redirige vers la page partnersBack après l'ajout du partenaire
+    else:
+        form = PartnersForm()
+
+    allPartners = Partners.objects.all()
+
+    context = {
+        'form': form,
+        'allPartners': allPartners,
+    }
+
+    return render(request, 'app/back/main/partnersBack.html', context)
+
+
+def update_partner(request, partner_id):
+    partner = get_object_or_404(Partner, id=partner_id)
+
+    if request.method == 'POST':
+        form = PartnerForm(request.POST, request.FILES, instance=partner)
+        if form.is_valid():
+            form.save()
+            return redirect('partnersBack')
+    else:
+        form = PartnerForm(instance=partner)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'app/back/main/partnersBack.html', context)
+
+
+def delete_partner(request, id):
+    partner = get_object_or_404(Partners, id=id)
+    partner.delete()
+    return redirect('partnersBack')

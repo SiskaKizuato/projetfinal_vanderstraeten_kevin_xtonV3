@@ -904,7 +904,12 @@
             </div>
             
             <div class="partner-slides owl-carousel owl-theme">
+                {% for x in partners %}
                 <div class="partner-item">
+                    <a class="" href="#"><img src="{{ x.logo.url }}" alt="image"></a>
+                </div>
+                {% endfor %}
+                {% comment %} <div class="partner-item">
                     <a href="#"><img src="{% static 'app/img/partner/partner1.png' %}" alt="image"></a>
                 </div>
 
@@ -926,7 +931,7 @@
 
                 <div class="partner-item">
                     <a href="#"><img src="{% static 'app/img/partner/partner6.png' %}" alt="image"></a>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </div>

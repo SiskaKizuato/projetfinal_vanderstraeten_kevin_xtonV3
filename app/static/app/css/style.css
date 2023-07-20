@@ -5540,14 +5540,26 @@ Partner CSS
 
 .partner-item {
   text-align: center;
+ height: 80px;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .partner-item a {
   display: block;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .partner-item a img {
-  width: auto !important;
+  height: 100% !important;
+  width: auto;
   display: inline-block !important;
 }
 

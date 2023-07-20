@@ -1,0 +1,67 @@
+{% extends 'baseBack.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Start Page Title -->
+<!-- ... Contenu de la balise <div class="page-title-area"> ... -->
+<!-- End Page Title -->
+
+<!-- Start Create Partner Area -->
+
+
+<section class="login-area ptb-100">
+    <div class="container">
+        <div id="fuflex" class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="login-content">
+                    <h2>Create a Partner</h2>
+                    <form class="login-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form }}
+                        </div>
+                        <button class="default-btn" type="submit">SAVE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Create Partner Area -->
+
+<!-- Start Partners List Area -->
+<section class="mb-100">
+    <div class="container">
+        <div id="fuflex" class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="login-content">
+                    <h2>Partners List</h2>
+                    <div class="containerCategoryList">
+                        {% for partner in allPartners %}
+                            <div class="categoryCadre">
+                                <div class="leftPartCatList">
+                                    <p class="catNameList">{{partner.name}}</p>
+                                </div>
+                                <div class="rightPartCatList">
+                                    
+                                    <a class="deleteBtnCategory btnAnimation curPoint" href="{% url 'delete_partner' partner.id %}">
+                                        <p class="txtBtn">DELETE</p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Start Facility Area -->
+<!-- ... Contenu de la balise <section class="facility-area pb-70"> ... -->
+<!-- End Facility Area -->
+
+{% endblock %}

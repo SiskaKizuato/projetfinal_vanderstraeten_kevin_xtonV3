@@ -41,6 +41,8 @@ urlpatterns = [
     path('profileBack/', views.profileBack, name="profileBack"),
     path('validationBlogBack/', views.validationBlogBack, name="validationBlogBack"),
     path('new_product/', views.new_product, name='new_product'),
+    path('partnersBack/', views.partnersBack, name='partnersBack'),
+
 
         
     # XXXXX UPDATE XXXXX
@@ -49,12 +51,15 @@ urlpatterns = [
     path('update_user/<int:user_id>/', views.update_user, name='update_user'),
     path('update_profile/', views.update_profile, name='update_profile'),
     path('edit_blog/<int:blog_id>/', views.edit_blog, name='edit_blog'),
+    path('update_partner/<int:partner_id>/', views.update_partner, name='update_partner'),
+
 
 
     # XXXXX DELETE XXXXX
     path('delete_category/<int:id>', views.delete_category, name='delete_category'),
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
     path('delete_blog/<int:blog_id>/', views.delete_blog, name='delete_blog'),
+    path('delete_partner/<int:id>/', views.delete_partner, name='delete_partner'),
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),

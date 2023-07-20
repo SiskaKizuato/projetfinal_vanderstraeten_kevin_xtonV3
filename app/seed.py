@@ -2,7 +2,7 @@ import os
 import random
 from django_seed import Seed
 from django.contrib.auth.hashers import make_password
-from .models import Profile, ContactInfo, Category, CategoryBlog, Tag,  Blog
+from .models import Profile, ContactInfo, Category, CategoryBlog, Tag,  Blog, Partners
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.utils.timezone import make_aware
@@ -291,3 +291,45 @@ def seed_blogs():
     print("Seed completed.")
 
 seed_blogs()
+
+
+def seed_partners():
+    partners_data = [
+        {
+            "name": "Balenciaga",
+            "logo": "partners_logos/logoBalenciaga.jpg",
+        },
+        {
+            "name": "Givenchy",
+            "logo": "partners_logos/logoGivenchy.png",
+        },
+        {
+            "name": "Lacoste",
+            "logo": "partners_logos/logoLacoste.webp",
+        },
+        {
+            "name": "Gucci",
+            "logo": "partners_logos/logoGucci.webp",
+        },
+        {
+            "name": "Louis Vitton",
+            "logo": "partners_logos/logoLV.jpg",
+        },
+        {
+            "name": "Ralph Lauren",
+            "logo": "partners_logos/logoRalflo.jpg",
+        },
+          {
+            "name": "Adidas",
+            "logo": "partners_logos/logoAdidas.jpg",
+        },
+        # Ajoutez d'autres données ici si nécessaire
+    ]
+
+    for partner_info in partners_data:
+        name = partner_info["name"]
+        logo = partner_info["logo"]
+        Partners.objects.create(name=name, logo=logo)
+        
+    print("Seed completed.")
+seed_partners()

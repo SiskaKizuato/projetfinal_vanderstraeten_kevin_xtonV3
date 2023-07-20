@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag
+from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners
 
 # XXXXX PARTIE BLOG XXXXX
 class CategoryBlogForm(forms.ModelForm):
@@ -80,3 +80,13 @@ class ContactInfoForm(forms.ModelForm):
         model = ContactInfo
         fields = ['location', 'phone', 'email', 'fax']
         
+# XXXXX PARTNERS XXXXX
+
+class PartnersForm(forms.ModelForm):
+    class Meta:
+        model = Partners
+        fields = ['name', 'logo']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['logo'].widget.attrs['accept'] = 'image/*'
