@@ -61,6 +61,26 @@ body {
   font-size: 15px;
 }
 
+
+.containerTypeMail{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.containerTable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 70px 120px 70px 120px;
+}
+
+.table{
+  border: 1px solid black;
+}
+
 .containerInfoMail{
   width: 400px;
   padding-bottom: 10px;

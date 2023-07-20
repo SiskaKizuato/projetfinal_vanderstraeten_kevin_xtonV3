@@ -47,7 +47,7 @@ urlpatterns = [
     path("deleMail/<int:id>", views.deleMail, name="deleMail"),
     path("response/<int:id>", views.response, name="response"),
 
-        
+        # f"/url/{view_kwargs.get("id")}/"
     # XXXXX UPDATE XXXXX
     path('update_contact_info/', views.update_contact_info, name='update_contact_info'),
     path('update_category/<int:id>/', views.update_category, name='update_category'),
