@@ -63,12 +63,15 @@ class SignupForm(forms.ModelForm):
 # XXXXX PARTIE ARTICLE XXXXX
 
 class ArticleForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['main_category'].queryset = Category.objects.filter(name__in=["Men's", "Women's"])
+        self.fields['category'].queryset = Category.objects.exclude(name__in=["Men's", "Women's"])
+
     class Meta:
         model = Article
-        fields = ['name', 'category', 'price', 'availability', 'ranking_user', 'ranking_global', 'image1', 'image2', 'image3', 'colors', 'size_stock']
-
-    size_stock = forms.JSONField(required=False, widget=forms.HiddenInput())
-
+        fields = '__all__'
+        
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category

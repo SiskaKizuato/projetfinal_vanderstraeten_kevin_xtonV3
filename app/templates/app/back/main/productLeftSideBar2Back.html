@@ -1,4 +1,4 @@
-{% extends 'baseFront.html' %}
+{% extends 'baseBack.html' %}
 {% load static %}
 {% block content %}
 
@@ -27,12 +27,9 @@
                             <h3 class="woocommerce-widget-title">Collections</h3>
 
                             <ul class="collections-list-row">
-                                <li><a href="#">Men's</a></li>
-                                <li class="active"><a href="#" class="active">Women’s</a></li>
-                                <li><a href="#">Clothing</a></li>
-                                <li><a href="#">Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Uncategorized</a></li>
+                                {% for category in categories %}
+                                <li><a href="#" class="category-link">{{ category.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
 
@@ -48,17 +45,13 @@
                         <div class="woocommerce-widget size-list-widget">
                             <h3 class="woocommerce-widget-title">Size</h3>
 
-                            <ul class="size-list-row">
-                                <li><a href="#">20</a></li>
-                                <li><a href="#">24</a></li>
-                                <li class="active"><a href="#">36</a></li>
-                                <li><a href="#">30</a></li>
-                                <li><a href="#">XS</a></li>
-                                <li><a href="#">S</a></li>
-                                <li><a href="#">M</a></li>
-                                <li><a href="#">L</a></li>
-                                <li><a href="#">L</a></li>
-                                <li><a href="#">XL</a></li>
+                            <ul class="size-list-row">          
+                                <li class="category-link"><a href="#">ALL</a></li>      
+                                <li class="category-link"><a href="#">XS</a></li>
+                                <li class="category-link"><a href="#">S</a></li>
+                                <li class="category-link"><a href="#">M</a></li>
+                                <li class="category-link"><a href="#">L</a></li>
+                                <li class="category-link"><a href="#">XL</a></li>
                             </ul>
                         </div>
                     </div>
@@ -125,7 +118,82 @@
                     </div>
 
                     <div id="products-collections-filter" class="row">
+                        {% for product in products %}
                         <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
+                            <div class="products-box">
+                                <div class="products-image">
+                                    <a href="#">
+                                        <img src="{{product.image1.url }}" class="main-image" alt="image" />
+                                        <img src="{{product.image1.url }}" class="hover-image" alt="image" />
+                                    </a>
+
+                                    <div class="products-button">
+                                        <ul>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart'></i>
+                                                        <span class="tooltip-label">Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="compare-btn">
+                                                    <a href="#">
+                                                        <i class='bx bx-refresh'></i>
+                                                        <span class="tooltip-label">Compare</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="quick-view-btn">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#productsQuickView">
+                                                        <i class='bx bx-search-alt'></i>
+                                                        <span class="tooltip-label">Quick View</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    {% comment %} <div class="new-tag">New!</div> {% endcomment %}
+                                </div>
+
+                                <div class="products-content">
+                                    <span class="category">{{product.category}}</span>
+                                    <h3><a href="#">{{product.name}}</a></h3>
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
+                                    {% if product.promo > 0 %}
+                                        <div class="price">
+                                            <span class="old-price">$ {{ product.price }} </span>
+                                            <span class="new-price">$ {{ product.get_discounted_price }} </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="price">
+                                            <span class="new-price">$ {{ product.price }} </span>
+                                        </div>
+                                    {% endif %}
+                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                </div>
+
+                                {% if product.promo > 0 %}
+                                <span class="products-discount">
+                                    <span>
+                                        {{product.promo}}% OFF
+                                    </span>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% comment %} <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
                             <div class="products-box">
                                 <div class="products-image">
                                     <a href="#">
@@ -846,7 +914,7 @@
                                     <a href="#" class="add-to-cart">Add to Cart</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
 
                     <div class="pagination-area text-center">
@@ -920,5 +988,26 @@
         </div>
     </section>
     <!-- End Facility Area -->
+    <script>
+        // Récupérer tous les liens de catégorie
+        const categoryLinks = document.querySelectorAll('.category-link');
+    
+        // Ajouter un gestionnaire d'événement "click" à chaque lien
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Empêcher le comportement par défaut du lien (naviguer vers une autre page)
+                event.preventDefault();
+    
+                // Supprimer la classe "active" de tous les liens
+                categoryLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+    
+                // Ajouter la classe "active" au lien cliqué
+                this.classList.add('active');
+            });
+        });
+    </script>
+    
 
 {% endblock  %}

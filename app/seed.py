@@ -84,17 +84,18 @@ seed_contact_info()
 def seed_categories():
     seeder = Seed.seeder()
 
-    # Seed for men category
     seeder.add_entity(Category, 1, {'name': "Men's"})
-
-    # Seed for women category
     seeder.add_entity(Category, 1, {'name': "Women's"})
-
-    # Seed for clothing category
-    seeder.add_entity(Category, 1, {'name': 'Clothing'})
-
-    # Seed for shoes category
-    seeder.add_entity(Category, 1, {'name': 'Shoes'})
+    seeder.add_entity(Category, 1, {'name': 'T-shirts'})
+    seeder.add_entity(Category, 1, {'name': 'Shirts'})
+    seeder.add_entity(Category, 1, {'name': 'Pants'})
+    seeder.add_entity(Category, 1, {'name': 'Dresses'})
+    seeder.add_entity(Category, 1, {'name': 'Jackets'})
+    seeder.add_entity(Category, 1, {'name': 'Sweaters'})
+    seeder.add_entity(Category, 1, {'name': 'Skirts'})
+    seeder.add_entity(Category, 1, {'name': 'Shorts'})
+    seeder.add_entity(Category, 1, {'name': 'Hoodies'})
+    seeder.add_entity(Category, 1, {'name': 'Accessories'})
 
     seeder.execute()
     print("Categories seeded.")
@@ -125,49 +126,6 @@ def seed_tags():
         print("Seed completed.")
 seed_tags()
 
-# seed_tags()
-# def seed_blogs():
-#     User = get_user_model()
-#     seeder = Seed.seeder()
-#     datas = [
-#         {
-#             "categoryBlog": random.choice(CategoryBlog.objects.all()),
-#             "date_added": datetime.now(),
-#             "title": "Mon titre",
-#             "content": "azeroiughgdsiujvheiujvbhzeoifihjvbzeoivhjbeohuhvbaouihihvbaoehbvaoejhjbvozjdjhbv ozeuhvbzeijhvbeouhvbzouhvbozeurhbv",
-#             "image": "blog_images/3_ZhLLWyM.jpg",
-#             "author": None,  # Utilisation de None pour l'instant
-#             'tags': [
-#                 Tag.objects.get(name='Business'),
-#                 Tag.objects.get(name='Travel'),
-#                 Tag.objects.get(name='Colors'),
-#             ],
-#         },
-#     ]
-
-#     for item in datas:
-#         profile = Profile.objects.create(
-#             id=1,  # Spécification de l'ID 1
-#             username='admin1',
-#             password=make_password('1234'),
-#             email='admin1@example.com',
-#             first_name='Admin',
-#             last_name='Role',
-#             role=Profile.Role.ADMIN,
-#             phone=random.choice(phone_numbers)
-#         )
-#         post = Blog.objects.create(
-#             categoryBlog=item['categoryBlog'],
-#             date_added=item['date_added'],
-#             title=item['title'],
-#             content=item['content'],
-#             image=item['image'],
-#             author=profile,
-#         )
-#         post.tags.set(item['tags'])
-
-#     print("Seed completed successfully.")
-
 def seed_blogs():
     blog_data = [
         {
@@ -194,7 +152,7 @@ def seed_blogs():
 	{
 		"id" : 3,
 		"title" : "Guccimane  ne porte t'il vraiment que du Gucci ??",
-		"content" : "Vous vous  etes surement deja demande si Guccimane ne porte vraiment que du Gucci ? He bien non. Voila voilouuu...",
+		"content" : "Vous vous etes surement deja demande si Guccimane ne porte vraiment que du Gucci ? He bien non. Voila voilouuu...",
 		"date_added" : "2023-07-18",
         "image": "blog_images/gucci3.webp",
 		"author_id" : 1,

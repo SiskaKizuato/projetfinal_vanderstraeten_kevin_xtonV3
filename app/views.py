@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
 from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
@@ -371,7 +371,9 @@ def profileBack(request):
     return render(request, 'app/back/main/profileBack.html')
 
 def productLeftSideBar2Back(request):
-    return render(request, 'app/back/main/productLeftSideBar2Back.html')
+    categories = Category.objects.all()
+    products = Article.objects.all()
+    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': products})
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):
@@ -431,7 +433,7 @@ def new_product(request):
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('product_list')  # Remplacez 'product_list' par le nom de l'URL de la liste des produits
+            return redirect('productLeftSideBar2Back')
     else:
         form = ArticleForm()
     return render(request, 'app/back/main/newProduct.html', {'form': form})

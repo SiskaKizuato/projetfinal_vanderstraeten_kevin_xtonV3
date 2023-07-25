@@ -1,4 +1,4 @@
-{% extends 'baseFront.html' %}
+{% extends 'baseBack.html' %}
 {% load static %}
 
 {% block content %}
@@ -25,50 +25,66 @@
                         <div class="section-title">
                             <h2>Create a New Product</h2>
                         </div>
-                        <form method="post" enctype="multipart/form-data">
+                        <form action="" method="POST" enctype='multipart/form-data'>
                             {% csrf_token %}
-                            <label for="name">Product Name:</label>
-                            <input type="text" id="name" name="name" placeholder="Enter product name" required><br>
-    
-                            <label for="category">Category:</label>
-                            <select id="category" name="category" required>
-                                <option value="" selected disabled>Select category</option>
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.name }}</option>
-                                {% endfor %}
-                            </select><br>
-    
-                            <label for="price">Price:</label>
-                            <input type="number" id="price" name="price" min="0" step="0.01" required><br>
-    
-                            <label for="availability">Availability:</label>
-                            <input type="checkbox" id="availability" name="availability"><br>
-    
-                            <label for="ranking_user">User Ranking:</label>
-                            <input type="number" id="ranking_user" name="ranking_user" min="0" max="5" step="1"><br>
-    
-                            <label for="ranking_global">Global Ranking:</label>
-                            <input type="number" id="ranking_global" name="ranking_global" min="0" max="5" step="0.01" required><br>
-    
-                            <label for="image1">Image 1:</label>
-                            <input type="file" id="image1" name="image1" accept="image/*" required><br>
-    
-                            <label for="image2">Image 2:</label>
-                            <input type="file" id="image2" name="image2" accept="image/*"><br>
-    
-                            <label for="image3">Image 3:</label>
-                            <input type="file" id="image3" name="image3" accept="image/*"><br>
-    
-                            <label for="colors">Colors:</label>
-                            <input type="text" id="colors" name="colors" placeholder="Add colors separated by commas" required><br>
-    
-                            <h2>Stock:</h2>
-                            {% for size in sizes %}
-                                <label for="size_{{ size }}">{{ size }}:</label>
-                                <input type="number" id="size_{{ size }}" name="size_{{ size }}" min="0" required><br>
-                            {% endfor %}
-    
-                            <button type="submit" name="create_product">CREATE THE PRODUCT</button>
+                            
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">Product Name</label>
+                                {{form.name}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">XS Stock</label>
+                                {{form.stock_XS}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">S Stock</label>
+                                {{form.stock_S}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">M Stock</label>
+                                {{form.stock_M}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">L Stock</label>
+                                {{form.stock_L}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">XL Stock</label>
+                                {{form.stock_XL}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">Product Price</label>
+                                {{form.price}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">image1</label>
+                                {{form.image1}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">image2</label>
+                                {{form.image2}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">image3</label>
+                                {{form.image3}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">promo</label>
+                                {{form.promo}}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">Main Category</label>
+                                {{ form.main_category }}
+                            </div>
+                            
+                            <div class="mb-3" style="display: flex; justify-content:space-between; width: 500px; " >
+                                <label for="exampleInputEmail1" class="form-label">Category</label>
+                                {{ form.category }}
+                            </div>
+                            <div class="mb-3" style="display: flex; justify-content:center; width: 500px; " >
+                                <button type="submit" class="btn btn-primary w-25">valider</button>
+                            </div>
+            
                         </form>
                     </div>
                 </div>
