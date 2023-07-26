@@ -1,7 +1,8 @@
 {% load static %}
 
+    {% for product in products %}
     <!-- Start QuickView Modal Area -->
-    <div class="modal fade productsQuickView" id="productsQuickView" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade productsQuickView" id="productsQuickView{{product.id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -11,18 +12,24 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="products-image">
-                            <img src="{% static 'app/img/quick-view-img.jpg' %}" alt="image">
+                            <img src="{{product.image1.url }}" alt="image">
                         </div>
                     </div>
 
                     <div class="col-lg-6 col-md-6">
                         <div class="products-content">
-                            <h3><a href="#">Long Sleeve Leopard T-Shirt</a></h3>
+                            <h3><a href="#">{{product.name}}</a></h3>
 
+                            {% if product.promo > 0 %}
                             <div class="price">
-                                <span class="old-price">$210.00</span>
-                                <span class="new-price">$200.00</span>
+                                <span class="old-price">$ {{ product.price }} </span>
+                                <span class="new-price">$ {{ product.get_discounted_price }} </span>
                             </div>
+                            {% else %}
+                            <div class="price">
+                                <span class="new-price">$ {{ product.price }} </span>
+                            </div>
+                            {% endif %}
                             <div class="products-review">
                                 <div class="rating">
                                     <i class='bx bxs-star'></i>
@@ -82,3 +89,4 @@
         </div>
     </div>
     <!-- End QuickView Modal Area -->
+    {% endfor %}
