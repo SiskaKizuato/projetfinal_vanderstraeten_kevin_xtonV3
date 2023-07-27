@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, MaxValueValidator, MinValueValidator
 from decimal import Decimal
+from django.utils import timezone
+from datetime import datetime
 
 
 # XXXXX PARTIE USER XXXXX
@@ -51,6 +53,8 @@ class Article(models.Model):
     stock_XL = models.IntegerField()
     promo = models.PositiveIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=0)
+    date_added = models.DateField(default=timezone.now)
+
 
     def __str__(self):
         return self.name

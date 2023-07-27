@@ -2,7 +2,7 @@ import os
 import random
 from django_seed import Seed
 from django.contrib.auth.hashers import make_password
-from .models import Profile, ContactInfo, Category, CategoryBlog, Tag,  Blog, Partners
+from .models import Profile, ContactInfo, Category, CategoryBlog, Tag,  Blog, Partners, Article 
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.utils.timezone import make_aware
@@ -291,3 +291,101 @@ def seed_partners():
         
     print("Seed completed.")
 seed_partners()
+
+
+# seed des articles  : 
+
+def seed_articles():
+    article_data = [
+        {
+            "id": 1,
+            "name": "3B SPORTS ICON T-SHIRT MEDIUM FIT IN BLACK FADED",
+            "price": 695.00,
+            "category_id": 3,
+            "image1": "article_images/tshirt1A.jpg",
+            "image2": "article_images/tshirt1B.jpg",
+            "image3": "article_images/tshirt1C.jpg",
+            "promo": 0,
+            "stock_L": 10,
+            "stock_M": 25,
+            "stock_S": 6,
+            "stock_XL": 5,
+            "stock_XS": 4,
+            "main_category_id": 1,
+            "date_added": "2023-07-17",
+        },
+        {
+            "id": 2,
+            "name": "3B SPORTS ICON T-SHIRT MEDIUM FIT IN WHITE",
+            "price": 695.00,
+            "category_id": 3,
+            "image1": "article_images/tshirt2A.jpg",
+            "image2": "article_images/tshirt2B.jpg",
+            "image3": "article_images/tshirt2C.jpg",
+            "promo": 10,
+            "stock_L": 22,
+            "stock_M": 18,
+            "stock_S": 7,
+            "stock_XL": 8,
+            "stock_XS": 0,
+            "main_category_id": 1,
+            "date_added": "2023-07-15",
+        },
+        {
+            "id": 3,
+            "name": "SKATER T-SHIRT OVERSIZED IN BLACK FADED",
+            "price": 750.00,
+            "category_id": 3,
+            "image1": "article_images/tshirt3A.jpg",
+            "image2": "article_images/tshirt3B.jpg",
+            "image3": "article_images/tshirt3C.jpg",
+            "promo": 5,
+            "stock_L": 17,
+            "stock_M": 7,
+            "stock_S": 0,
+            "stock_XL": 12,
+            "stock_XS": 0,
+            "main_category_id": 1,
+            "date_added": "2023-07-17",
+        }
+        # Ajoutez d'autres articles ici
+    ]
+
+
+    for data in article_data:
+        category_id = data['category_id']
+        main_category_id = data['main_category_id']
+
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            print(f"La catégorie avec l'id {category_id} n'existe pas.")
+            continue
+
+        try:
+            main_category = Category.objects.get(id=main_category_id)
+        except Category.DoesNotExist:
+            print(f"La catégorie avec l'id {main_category_id} n'existe pas.")
+            continue
+
+        article = Article(
+            name=data['name'],
+            category=category,
+            main_category=main_category,
+            price=data['price'],
+            image1=data['image1'],
+            image2=data['image2'],
+            image3=data['image3'],
+            stock_XS=data['stock_XS'],
+            stock_S=data['stock_S'],
+            stock_L=data['stock_L'],
+            stock_M=data['stock_M'],
+            stock_XL=data['stock_XL'],
+            promo=data['promo'],
+            date_added=data['date_added'],
+        )
+        article.save()
+
+    print("Articles seeded.")
+
+seed_articles()

@@ -156,8 +156,11 @@
                                             </li>
                                         </ul>
                                     </div>
-
-                                    {% comment %} <div class="new-tag">New!</div> {% endcomment %}
+                                    {% with seven_days_ago=now|date:"Y-m-d" %}
+                                        {% if product.date_added|date:"Y-m-d" <= seven_days_ago %}
+                                            <div class="new-tag">New!</div>
+                                        {% endif %}
+                                    {% endwith %}
                                 </div>
 
                                 <div class="products-content">
