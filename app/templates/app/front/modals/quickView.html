@@ -1,92 +1,93 @@
 {% load static %}
 
-    {% for product in products %}
-    <!-- Start QuickView Modal Area -->
-    <div class="modal fade productsQuickView" id="productsQuickView{{product.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class='bx bx-x'></i></span>
-                </button>
+{% for product in products %}
+<!-- Start QuickView Modal Area -->
+<div class="modal fade productsQuickView" id="productsQuickView{{product.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class='bx bx-x'></i></span>
+            </button>
 
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="products-image">
-                            <img src="{{product.image1.url }}" alt="image">
-                        </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6">
+                    <div class="products-image">
+                        <img src="{{product.image1.url }}" alt="image">
                     </div>
+                </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <div class="products-content">
-                            <h3><a href="#">{{product.name}}</a></h3>
+                <div class="col-lg-6 col-md-6">
+                    <div class="products-content">
+                        <h3><a href="#">{{product.name}}</a></h3>
 
-                            {% if product.promo > 0 %}
-                            <div class="price">
-                                <span class="old-price">$ {{ product.price }} </span>
-                                <span class="new-price">$ {{ product.get_discounted_price }} </span>
-                            </div>
-                            {% else %}
-                            <div class="price">
-                                <span class="new-price">$ {{ product.price }} </span>
-                            </div>
-                            {% endif %}
-                            <div class="products-review">
-                                <div class="rating">
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                </div>
-                                <a href="#" class="rating-count">3 reviews</a>
-                            </div>
-
-                            <ul class="products-info">
-                                <li><span>Vendor:</span> <a href="#">Lereve</a></li>
-                                <li><span>Availability:</span> <a href="#">In stock (7 items)</a></li>
-                                <li><span>Products Type:</span> <a href="#">T-Shirt</a></li>
-                            </ul>
-
-                            <div class="products-color-switch">
-                                <h4>Color:</h4>
-
-                                <ul>
-                                    <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Black" class="color-black"></a></li>
-                                    <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="White" class="color-white"></a></li>
-                                    <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Green" class="color-green"></a></li>
-                                    <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Yellow Green" class="color-yellowgreen"></a></li>
-                                    <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Teal" class="color-teal"></a></li>
-                                </ul>
-                            </div>
-
-                            <div class="products-size-wrapper">
-                                <h4>Size:</h4>
-
-                                <ul>
-                                    <li><a href="#">XS</a></li>
-                                    <li class="active"><a href="#">S</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">XL</a></li>
-                                    <li><a href="#">XXL</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="products-add-to-cart">
-                                <div class="input-counter">
-                                    <span class="minus-btn"><i class='bx bx-minus'></i></span>
-                                    <input type="text" value="1">
-                                    <span class="plus-btn"><i class='bx bx-plus'></i></span>
-                                </div>
-
-                                <button type="submit" class="default-btn">Add to Cart</button>
-                            </div>
-
-                            <a href="#" class="view-full-info">View Full Info</a>
+                        {% if product.promo > 0 %}
+                        <div class="price">
+                            <span class="old-price">$ {{ product.price }} </span>
+                            <span class="new-price">$ {{ product.get_discounted_price }} </span>
                         </div>
+                        {% else %}
+                        <div class="price">
+                            <span class="new-price">$ {{ product.price }} </span>
+                        </div>
+                        {% endif %}
+                        <div class="products-review">
+                            <div class="rating">
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                            </div>
+                            <a href="#" class="rating-count">3 reviews</a>
+                        </div>
+
+                        <ul class="products-info">
+                            <!-- La div "availability" spécifique à l'article -->
+                            <li><span>Availability:</span> <a class="stockQuantity availability-{{product.id}}" href="#">In stock ({{ product.stock_XS }} items)</a></li>
+                            <li><span>Products Type:</span> <a href="#">T-Shirt</a></li>
+                        </ul>
+
+                        <div class="products-size-wrapper">
+                            <h4>Size:</h4>
+
+                            <ul>
+                                <li class="category-link btnXs" data-size="{{ product.stock_XS }}" data-product-id="{{ product.id }}"><a href="#">XS</a></li>
+                                <li class="category-link btnS" data-size="{{ product.stock_S }}" data-product-id="{{ product.id }}"><a href="#">S</a></li>
+                                <li class="category-link btnM" data-size="{{ product.stock_M }}" data-product-id="{{ product.id }}"><a href="#">M</a></li>
+                                <li class="category-link btnL" data-size="{{ product.stock_L }}" data-product-id="{{ product.id }}"><a href="#">L</a></li>
+                                <li class="category-link btnXl" data-size="{{ product.stock_XL }}" data-product-id="{{ product.id }}"><a href="#">XL</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="products-add-to-cart">
+                            <div class="input-counter">
+                                <span class="minus-btn"><i class='bx bx-minus'></i></span>
+                                <input type="text" value="1">
+                                <span class="plus-btn"><i class='bx bx-plus'></i></span>
+                            </div>
+
+                            <button type="submit" class="default-btn">Add to Cart</button>
+                        </div>
+
+                        <a href="#" class="view-full-info">View Full Info</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End QuickView Modal Area -->
-    {% endfor %}
+</div>
+<!-- End QuickView Modal Area -->
+{% endfor %}
+
+<script>
+    const sizeButtons = document.querySelectorAll('.category-link');
+
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const size = this.dataset.size;
+            const productId = this.dataset.productId;
+            const availabilityElement = document.querySelector(`.availability-${productId}`);
+            availabilityElement.textContent = `In stock (${size} items)`;
+        });
+    });
+</script>
