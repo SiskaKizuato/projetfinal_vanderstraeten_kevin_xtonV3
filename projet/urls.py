@@ -19,6 +19,9 @@ urlpatterns = [
     path('products-left-sidebar-2/', views.productLeftSideBar2, name="productLeftSideBar2"),
     path('products-type-1/', views.productsType1, name="productsType1"),
     path('signup/', views.signup, name="signup"),
+    # path('add-to-wishlist/<int:article_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    # path('remove-from-wishlist/<int:wish_item_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+    
     
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
     path('single-blog-1-back/', views.singleBlog1Back, name="singleBlog1Back"),

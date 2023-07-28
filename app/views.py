@@ -5,13 +5,19 @@ from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, Category
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.http import HttpResponse
+from datetime import datetime
+from django.conf import settings
+from django.http import (HttpResponse, HttpResponseBadRequest, 
+                         HttpResponseForbidden)
+from django.db import transaction
+from django.db.models import ProtectedError
 
 
 # xxxxxxxxxxxxxxxxx
@@ -374,28 +380,33 @@ def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
     partners = Partners.objects.all()
-
-    # Vérifier si les paramètres de filtre ont été envoyés dans la requête
-    selected_sex = request.GET.get('sex')
-    selected_type = request.GET.get('type')
-
-    # Vérifier si les paramètres de filtre sont valides, sinon les définir par défaut
-    valid_sex_values = ['Both', "Men's", "Women's"]
-    valid_type_values = ['All', 'T-shirts', 'Shirts', 'Pants', 'Dresses', 'Jackets', 'Sweaters', 'Skirts', 'Shorts', 'Hoodies', 'Accessories']
-
-    if selected_sex not in valid_sex_values:
-        selected_sex = 'Both'
-
-    if selected_type not in valid_type_values:
-        selected_type = 'All'
-
-    return render(request, 'app/back/main/productLeftSideBar2Back.html', {
-        'categories': categories,
-        'products': products,
-        'partners': partners,
-        'selected_sex': selected_sex,
-        'selected_type': selected_type,
-    })
+    
+    category = request.GET.get("category")
+    main_category = request.GET.get("main_category")
+    partner = request.GET.get("partner")
+    size = request.GET.get("size")    
+    search = request.GET.get('search', '')
+    
+    if search:
+        products = products.filter(Q(name__icontains=search))
+    
+    if main_category and main_category != "All":
+        products = products.filter(main_category__name=main_category)
+        products = products.order_by("price")
+    
+    if category and category != "All":
+        products = products.filter(category__name=category)
+        products = products.order_by("price")
+    
+    if partner and partner != "All":
+        products = products.filter(partner__name=partner)
+        products = products.order_by("price")
+    
+    if size:
+        monStock = 'stock_' + size.upper()
+        products = products.filter(**{monStock + "__gt": 0})
+    
+    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': products, "partners": partners})
 
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
@@ -528,3 +539,34 @@ def response(request, id):
         print("erreur")
         return redirect('mailbox')
     return render(request, "app/back/main/responce.html", {"contact":contact})
+
+
+@login_required(login_url='login')
+def add_to_wishlist(request, product_id):
+    product = Article.objects.get(pk=product_id)
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    try:
+        wish_item = WishlistItem.objects.get(wishlist=wishlist, product=product)
+        item_created = False
+    except WishlistItem.DoesNotExist:
+        wish_item = WishlistItem.objects.create(wishlist=wishlist, product=product)
+        item_created = True
+
+    # Récupérer l'URL de la page précédente (page actuelle)
+    previous_page = request.META.get('HTTP_REFERER')
+    # Redirect user to previous_page (if not None)
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine previous page.")
+
+
+@login_required(login_url='login')
+def remove_from_wishlist(request, wish_item_id):
+    wish_item = WishlistItem.objects.get(pk=wish_item_id)
+    wish_item.delete()
+    previous_page = request.META.get('HTTP_REFERER')
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine previous page.")
