@@ -373,7 +373,30 @@ def profileBack(request):
 def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
-    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': products})
+    partners = Partners.objects.all()
+
+    # Vérifier si les paramètres de filtre ont été envoyés dans la requête
+    selected_sex = request.GET.get('sex')
+    selected_type = request.GET.get('type')
+
+    # Vérifier si les paramètres de filtre sont valides, sinon les définir par défaut
+    valid_sex_values = ['Both', "Men's", "Women's"]
+    valid_type_values = ['All', 'T-shirts', 'Shirts', 'Pants', 'Dresses', 'Jackets', 'Sweaters', 'Skirts', 'Shorts', 'Hoodies', 'Accessories']
+
+    if selected_sex not in valid_sex_values:
+        selected_sex = 'Both'
+
+    if selected_type not in valid_type_values:
+        selected_type = 'All'
+
+    return render(request, 'app/back/main/productLeftSideBar2Back.html', {
+        'categories': categories,
+        'products': products,
+        'partners': partners,
+        'selected_sex': selected_sex,
+        'selected_type': selected_type,
+    })
+
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):

@@ -53,8 +53,6 @@ class Article(models.Model):
     stock_XL = models.IntegerField()
     promo = models.PositiveIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=0)
-    date_added = models.DateField(default=timezone.now)
-
 
     def __str__(self):
         return self.name

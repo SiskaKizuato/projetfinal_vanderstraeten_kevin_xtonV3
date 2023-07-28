@@ -80,6 +80,12 @@ body {
 .table{
   border: 1px solid black;
 }
+#aieaie{
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .containerInfoMail{
   width: 400px;
