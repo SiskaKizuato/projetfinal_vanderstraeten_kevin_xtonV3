@@ -313,6 +313,7 @@ def seed_articles():
             "stock_XL": 5,
             "stock_XS": 4,
             "main_category_id": 1,
+            "partner": 1,
         },
         {
             "id": 2,
@@ -329,6 +330,7 @@ def seed_articles():
             "stock_XL": 8,
             "stock_XS": 0,
             "main_category_id": 1,
+            "partner": 1,
         },
         {
             "id": 3,
@@ -345,6 +347,7 @@ def seed_articles():
             "stock_XL": 12,
             "stock_XS": 0,
             "main_category_id": 1,
+            "partner": 1,
         },
         {
             "id": 4,
@@ -361,6 +364,7 @@ def seed_articles():
             "stock_XL": 10,
             "stock_XS": 17,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 5,
@@ -377,6 +381,7 @@ def seed_articles():
             "stock_XL": 11,
             "stock_XS": 10,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 6,
@@ -393,6 +398,7 @@ def seed_articles():
             "stock_XL": 14,
             "stock_XS": 16,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 7,
@@ -409,6 +415,7 @@ def seed_articles():
             "stock_XL": 2,
             "stock_XS": 2,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 8,
@@ -425,6 +432,7 @@ def seed_articles():
             "stock_XL": 2,
             "stock_XS": 2,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 9,
@@ -441,6 +449,7 @@ def seed_articles():
             "stock_XL": 2,
             "stock_XS": 2,
             "main_category_id": 2,
+            "partner": 1,
         },
         {
             "id": 10,
@@ -457,6 +466,7 @@ def seed_articles():
             "stock_XL": 6,
             "stock_XS": 2,
             "main_category_id": 1,
+            "partner": 1,
         },
         {
             "id": 11,
@@ -473,6 +483,7 @@ def seed_articles():
             "stock_XL": 6,
             "stock_XS": 1,
             "main_category_id": 1,
+            "partner": 1,
         },
         {
             "id": 12,
@@ -489,6 +500,7 @@ def seed_articles():
             "stock_XL": 6,
             "stock_XS": 1,
             "main_category_id": 1,
+            "partner": 1,
         }
     ]
 
@@ -496,6 +508,7 @@ def seed_articles():
     for data in article_data:
         category_id = data['category_id']
         main_category_id = data['main_category_id']
+        partner_id = data['partner']
 
         try:
             category = Category.objects.get(id=category_id)
@@ -507,6 +520,12 @@ def seed_articles():
             main_category = Category.objects.get(id=main_category_id)
         except Category.DoesNotExist:
             print(f"La catégorie avec l'id {main_category_id} n'existe pas.")
+            continue
+        
+        try:
+            partner = Partners.objects.get(id=partner_id)
+        except Partners.DoesNotExist:
+            print(f"Le partenaire avec l'id {partner_id} n'existe pas.")
             continue
 
         article = Article(
@@ -523,6 +542,7 @@ def seed_articles():
             stock_M=data['stock_M'],
             stock_XL=data['stock_XL'],
             promo=data['promo'],
+            partner=partner,
         )
         article.save()
 

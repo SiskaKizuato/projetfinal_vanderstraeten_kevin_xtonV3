@@ -32,15 +32,23 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Partners(models.Model):
+    name = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='partners_logos/')
+
+    def __str__(self):
+        return self.name
 
 
 class Article(models.Model):
     name = models.CharField(max_length=100)
     # Spécifiez un related_name différent pour le champ category
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='articles')
-
+    
     # Spécifiez un related_name différent pour le champ main_category
     main_category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='main_articles')
+    partner = models.ForeignKey(Partners, on_delete=models.SET_NULL, null=True, blank=True, related_name='partners')
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image1 = models.ImageField(upload_to='article_images/', null=True, blank=True)
@@ -112,14 +120,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
-# XXXXX PARTNERS XXXXX
-
-class Partners(models.Model):
-    name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='partners_logos/')
-
-    def __str__(self):
-        return self.name
+# XXXXX CONTACT XXXXX
     
 class Contact(models.Model):
     psodo = models.CharField(max_length=50)
