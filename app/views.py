@@ -5,7 +5,7 @@ from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, Category
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
@@ -407,6 +407,7 @@ def ordersBack(request):
 
 def profileBack(request):
     return render(request, 'app/back/main/profileBack.html')
+
 def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
@@ -436,15 +437,30 @@ def productLeftSideBar2Back(request):
         products = products.filter(**{monStock + "__gt": 0})
 
     if filter_by_price:
-        min_price, max_price = map(int, filter_by_price.split(";"))  # Utilisez le point-virgule comme séparateur
+        min_price, max_price = map(int, filter_by_price.split(";"))
         products = products.filter(price__gte=min_price, price__lte=max_price)
 
     paginator = Paginator(products, 18)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
 
-    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': page, "partners": partners})
+    if page:
+        # Obtenir le numéro d'ID du premier article affiché sur la page
+        first_id = (page.number - 1) * paginator.per_page + 1
 
+        # Obtenir le numéro d'ID du dernier article affiché sur la page
+        last_id = min(first_id + paginator.per_page - 1, products.count())
+
+        return render(request, 'app/back/main/productLeftSideBar2Back.html', {
+            'categories': categories,
+            'products': page,
+            'partners': partners,
+            'first_id': first_id,
+            'last_id': last_id,
+        })
+    else:
+        # Gérer le cas où la page demandée est invalide
+        return HttpResponse("Page not found", status=404)
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):
