@@ -330,7 +330,7 @@ def seed_articles():
             "stock_S": 7,
             "stock_XL": 8,
             "stock_XS": 0,
-            "created_at": datetime(2023, 9, 10),
+            "created_at": datetime(2023, 7, 10),
             "main_category_id": 1,
             "partner": 1,
         },

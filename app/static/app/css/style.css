@@ -61,6 +61,31 @@ body {
   font-size: 15px;
 }
 
+/* Assurez-vous d'ajuster le sélecteur CSS si nécessaire pour cibler la classe img-with-background */
+.img-with-background {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Assurez-vous que l'image est ajustée pour remplir la balise */
+}
+
+
+/* .recentIndexContainer{
+  border: 1px solid red;
+  height: 425px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recentIndex{
+  border: 1px solid green;
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat:  no-repeat;
+} */
+
 
 #heyYo1{
   height: 195px;

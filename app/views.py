@@ -40,12 +40,16 @@ def index(request):
     # Fetch products with promo greater than 0
     promo_products = Article.objects.filter(promo__gt=0)
     max_promo = promo_products.aggregate(Max('promo'))['promo__max']
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    recent_articles = Article.objects.filter(created_at__gte=seven_days_ago).order_by('-created_at')[:6]
+
     
     return render(request, 'app/front/main/index.html', {
         'popular_blogs': popular_blogs,
         'partners': partners,
         'promo_products': promo_products,
         'max_promo': max_promo,  # Passer la promotion maximale au template
+        'recent_articles': recent_articles,
     })
 
 def cart(request):
