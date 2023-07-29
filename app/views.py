@@ -5,7 +5,7 @@ from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, Category
 from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q, F
+from django.db.models import Count, Q, F, Max
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
@@ -38,11 +38,13 @@ def index(request):
     
     # Fetch products with promo greater than 0
     promo_products = Article.objects.filter(promo__gt=0)
+    max_promo = promo_products.aggregate(Max('promo'))['promo__max']
     
     return render(request, 'app/front/main/index.html', {
         'popular_blogs': popular_blogs,
         'partners': partners,
         'promo_products': promo_products,
+        'max_promo': max_promo,  # Passer la promotion maximale au template
     })
 
 def cart(request):
@@ -118,7 +120,7 @@ def productLeftSideBar2(request):
     else:
         promo_products = None  # Si le filtre promo n'est pas présent ou a une autre valeur, promo_products est None
 
-
+    
 
     category = request.GET.get("category")
     main_category = request.GET.get("main_category")

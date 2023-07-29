@@ -884,7 +884,7 @@ def seed_articles():
             "image1": "article_images/accessory4A.jpg",
             "image2": "article_images/accessory4B.jpg",
             "image3": "article_images/accessory4C.jpg",
-            "promo": 25,
+            "promo": 55,
             "stock_L": 8,
             "stock_M": 12,
             "stock_S": 13,
