@@ -70,7 +70,7 @@
 
                         <div class="content">
                             <span>Hoodini!</span>
-                            <h3>Our Pants</h3>
+                            <h3>Our Hoodies</h3>
                             <a href="{% url 'productLeftSideBar2' %}?category=Hoodies" class="default-btn">Discover Now</a>
                         </div>
                     </div>
@@ -80,9 +80,9 @@
                     <div class="single-categories-box">
                         <div id="heyYo2" alt="image"></div>
 
-                        <div class="content text-white">
+                        <div class="content ">
                             <span>Dress Code Time!</span>
-                            <h3>Our Dresses</h3>
+                            <h3 class="text-white">Our Dresses</h3>
                             <a href="{% url 'productLeftSideBar2' %}?category=Dresses" class="default-btn">Discover Now</a>
                         </div>
                     </div>
@@ -92,9 +92,9 @@
                     <div class="single-categories-box">
                         <div id="heyYo3" alt="image"></div>
 
-                        <div class="content text-white">
+                        <div class="content">
                             <span>Yeah!</span>
-                            <h3>Our Jackets</h3>
+                            <h3 class="text-white">Our Jackets</h3>
                             <a href="{% url 'productLeftSideBar2' %}?category=Jackets" class="default-btn">Discover Now</a>
                         </div>
                     </div>
@@ -903,7 +903,8 @@
             <div class="partner-slides owl-carousel owl-theme">
                 {% for x in partners %}
                 <div class="partner-item">
-                    <a class="" href="#"><img src="{{ x.logo.url }}" alt="image"></a>
+
+                    <a href="{% url 'productLeftSideBar2' %}?partner={{x.name}}" class="" href="#"><img src="{{ x.logo.url }}" alt="image"></a>
                 </div>
                 {% endfor %}
             </div>
