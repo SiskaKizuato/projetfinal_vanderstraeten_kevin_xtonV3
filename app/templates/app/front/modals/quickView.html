@@ -18,7 +18,7 @@
 
                 <div class="col-lg-6 col-md-6">
                     <div class="products-content">
-                        <h3><a href="{% url 'productsType5Back' product.id %}">{{product.name}}</a></h3>
+                        <h3><a href="{% url 'productsType5' product.id %}">{{product.name}}</a></h3>
 
                         {% if product.promo > 0 %}
                         <div class="price">
@@ -70,7 +70,7 @@
                             <button type="submit" class="default-btn">Add to Cart</button>
                         </div>
 
-                        <a href="{% url 'productsType5Back' product.id %}" class="view-full-info">View Full Info</a>
+                        <a href="{% url 'productsType5' product.id %}" class="view-full-info">View Full Info</a>
                     </div>
                 </div>
             </div>

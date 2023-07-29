@@ -57,20 +57,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h3>Newsletter</h3>
-
-                            <div class="footer-newsletter-box">
-                                <p>To get the latest news and latest updates from us.</p>
-
-                                <form class="newsletter-form" data-bs-toggle="validator">
-                                    <label>Your E-mail Address:</label>
-                                    <input type="email" class="input-newsletter" placeholder="Enter your email" name="EMAIL" required autocomplete="off">
-                                    <button type="submit">Subscribe</button>
-                                    <div id="validator-newsletter" class="form-result"></div>
-                                </form>
-                            </div>
-                        </div>
+                        {% include 'app/front/main/newsLettre.html' %}
                     </div>
                 </div>
 

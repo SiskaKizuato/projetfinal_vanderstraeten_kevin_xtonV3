@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact
+from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact, Newsletter
 
 # XXXXX PARTIE BLOG XXXXX
 class CategoryBlogForm(forms.ModelForm):
@@ -98,3 +98,8 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ["psodo" , "email" , "message"]
+        
+class NewsletterForm(forms.ModelForm):
+    class Meta:
+        model = Newsletter
+        fields = '__all__'    

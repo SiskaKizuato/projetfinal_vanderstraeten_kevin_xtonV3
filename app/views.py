@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article
+from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm, NewsletterForm
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, F
@@ -23,6 +23,14 @@ from django.db.models import ProtectedError
 # xxxxxxxxxxxxxxxxx
 # XXXXX FRONT XXXXX
 # xxxxxxxxxxxxxxxxx
+def newsletter(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        html_message = render_to_string('app/front/main/mail.html')
+        text_message = strip_tags(html_message)
+        Newsletter.objects.create(email=email)
+        send_mail('Newsletter', text_message, settings.DEFAULT_FROM_EMAIL, [email])
+    return redirect('index')
 
 def index(request):
     partners = Partners.objects.all()
@@ -89,7 +97,62 @@ def lostPassword(request):
 
 
 def productLeftSideBar2(request):
-    return render(request, 'app/front/main/products-left-sidebar-2.html')
+    categories = Category.objects.all()
+    products = Article.objects.all()
+    partners = Partners.objects.all()
+
+    category = request.GET.get("category")
+    main_category = request.GET.get("main_category")
+    partner = request.GET.get("partner")
+    size = request.GET.get("size")
+    search = request.GET.get('search', '')
+    filter_by_price = request.GET.get('filter_by_price')
+
+    if search:
+        products = products.filter(Q(name__icontains=search))
+
+    if main_category and main_category != "All":
+        products = products.filter(main_category__name=main_category)
+
+    if category and category != "All":
+        products = products.filter(category__name=category)
+
+    if partner and partner != "All":
+        products = products.filter(partner__name=partner)
+
+    if size:
+        monStock = 'stock_' + size.upper()
+        products = products.filter(**{monStock + "__gt": 0})
+
+    if filter_by_price:
+        min_price, max_price = map(int, filter_by_price.split(";"))
+        products = products.filter(price__gte=min_price, price__lte=max_price)
+
+    # Trier les articles par ordre de prix croissant
+    products = products.order_by('price')
+
+    paginator = Paginator(products, 18)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+    if page:
+        # Obtenir le numéro d'ID du premier article affiché sur la page
+        first_id = (page.number - 1) * paginator.per_page + 1
+
+        # Obtenir le numéro d'ID du dernier article affiché sur la page
+        last_id = min(first_id + paginator.per_page - 1, products.count())
+
+        return render(request, 'app/front/main/products-left-sidebar-2.html', {
+            'categories': categories,
+            'products': page,
+            'partners': partners,
+            'first_id': first_id,
+            'last_id': last_id,
+        })
+    else:
+        # Gérer le cas où la page demandée est invalide
+        return HttpResponse("Page not found", status=404)
+
 
 def productsType1(request):
     return render(request, 'app/front/main/products-type-1.html')
@@ -103,6 +166,15 @@ def productsType5Back(request, product_id):
     related_articles = Article.objects.filter(category=product.category)
 
     return render(request, 'app/back/main/productsType5Back.html', {'product': product, 'related_articles': related_articles})
+
+def productsType5(request, product_id):
+    # Retrieve the product using the product_id parameter
+    product = get_object_or_404(Article, id=product_id)
+
+    # Get all articles with the same category as the product
+    related_articles = Article.objects.filter(category=product.category)
+
+    return render(request, 'app/front/main/productsType5.html', {'product': product, 'related_articles': related_articles})
 
 # XXXXX COMPTE FRONT XXXXX
 

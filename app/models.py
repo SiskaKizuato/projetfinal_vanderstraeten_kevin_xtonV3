@@ -154,3 +154,7 @@ class Wishlist(models.Model):
 class WishlistItem(models.Model):
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE)
     product = models.ForeignKey(Article, on_delete=models.CASCADE)
+    
+class Newsletter(models.Model):
+    email = models.EmailField(max_length=500,unique=True)
+    # subscribe = models.BooleanField(default=False)

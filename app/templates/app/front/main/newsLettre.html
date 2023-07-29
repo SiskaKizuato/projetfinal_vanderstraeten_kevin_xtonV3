@@ -1,0 +1,15 @@
+<div class="single-footer-widget">
+    <h3>Newsletter</h3>
+
+    <div class="footer-newsletter-box">
+        <p>To get the latest news and latest updates from us.</p>
+
+        <form method="POST" action='/envoimail/' class="newsletter-forme" data-bs-toggle="validator">
+            {% csrf_token %}
+            <label>Your E-mail Address:</label>
+            <input type="email" class="input-newsletter" placeholder="Enter your email" name="email" required autocomplete="off">
+            <button type="submit">Subscribe</button>
+            <div id="validator-newsletter" class="form-result"></div>
+        </form>
+    </div>
+</div>
