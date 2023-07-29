@@ -1,15 +1,39 @@
+{% load static %}
+
 <div class="single-footer-widget">
     <h3>Newsletter</h3>
 
     <div class="footer-newsletter-box">
         <p>To get the latest news and latest updates from us.</p>
 
-        <form method="POST" action='/envoimail/' class="newsletter-forme" data-bs-toggle="validator">
+        <form method="POST" action='/envoimail/' class="newsletter-forme position-relative mt-n5" data-bs-toggle="validator">
             {% csrf_token %}
-            <label>Your E-mail Address:</label>
-            <input type="email" class="input-newsletter" placeholder="Enter your email" name="email" required autocomplete="off">
-            <button type="submit">Subscribe</button>
+            <label class="text-white fw-bold mb-3">Your E-mail Address:</label>
+            <input id="input-newsletter" type="email" class="input-newsletter" placeholder="Enter your email" name="email" required autocomplete="off">
+
+            <button class="default-btn w-100 rounded mt-3 btn-with-white-bg" type="submit">Subscribe</button>
             <div id="validator-newsletter" class="form-result"></div>
         </form>
     </div>
 </div>
+
+<style>
+    #input-newsletter {
+        width: 100%;
+        background-color: transparent !important;
+        border: 1px solid #848282;
+        border-radius: 0;
+        height: 45px;
+        padding-left: 10px;
+        color: #ffffff !important;
+        font-size: 15px;
+        border-radius: .25rem;
+    }
+
+    .btn-with-white-bg:hover {
+        background-color: #ffffff;
+        color: black;
+        transition: background-color 0.2s ease-in-out;
+    }
+</style>
+
