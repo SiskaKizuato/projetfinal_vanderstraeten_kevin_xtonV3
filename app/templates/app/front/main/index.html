@@ -133,12 +133,13 @@
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="single-products-box">
                         <div class="products-image">
-                            <a class="recentIndexContainer" style="height: 425px;" href="{% url 'productsType1' %}">
+                            <a class="recentIndexContainer" style="height: 425px;" href="{% url 'productsType5' x.id %}">
                                 <img src="{{ x.image1.url }}" class="main-image img-with-background" alt="image">
                                 <img src="{{ x.image1.url }}" class="hover-image img-with-background" alt="image">
-                            </a>
+                            </href=>
                             <div class="products-button">
                                 <ul>
+                                    {% if request.user.is_authenticated %}
                                     <li>
                                         <div class="wishlist-btn">
                                             <a href="#">
@@ -147,29 +148,24 @@
                                             </a>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="compare-btn">
-                                            <a href="#">
-                                                <i class='bx bx-refresh'></i>
-                                                <span class="tooltip-label">Compare</span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
+                                    {% endif %}
+                                    {% comment %} <li>
                                         <div class="quick-view-btn">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productsQuickView">
+                                            <a data-bs-toggle="modal"
+                                            data-bs-target="#productsQuickView{{product.id}}">
                                                 <i class='bx bx-search-alt'></i>
                                                 <span class="tooltip-label">Quick View</span>
                                             </a>
                                         </div>
-                                    </li>
+                                    </li> {% endcomment %}
                                 </ul>
                             </div>
                             <div class="new-tag">New!</div>
                         </div>
 
                         <div class="products-content">
-                            <h3><a href="{% url 'productsType1' %}">{{x.name}}</a></h3>
+
+                            <h3><a href="{% url 'productsType5' x.id %}">{{x.name}}</a></h3>
                             {% if product.promo > 0 %}
                                 <div class="price">
                                     <span class="old-price">$ {{ x.price }} </span>
