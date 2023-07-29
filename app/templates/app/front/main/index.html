@@ -66,55 +66,52 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="single-categories-box">
-                        <img src="{% static 'app/img/categories/img1.jpg' %}" alt="image">
-
-                        <div class="content text-white">
-                            <span>Don’t Miss Today</span>
-                            <h3>50% OFF</h3>
-                            <a href="products-right-sidebar.html" class="default-btn">Discover Now</a>
-                        </div>
-                        <a href="products-right-sidebar.html" class="link-btn"></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-categories-box">
-                        <img src="{% static 'app/img/categories/img2.jpg' %}" alt="image">
+                        <div id="heyYo1" alt="image"></div>
 
                         <div class="content">
-                            <span>New Collection</span>
-                            <h3>Need Now</h3>
-                            <a href="products-right-sidebar.html" class="default-btn">Discover Now</a>
+                            <span>Hoodini!</span>
+                            <h3>Our Pants</h3>
+                            <a href="{% url 'productLeftSideBar2' %}?category=Hoodies" class="default-btn">Discover Now</a>
                         </div>
-                        <a href="products-right-sidebar.html" class="link-btn"></a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="single-categories-box">
-                        <img src="{% static 'app/img/categories/img3.jpg' %}" alt="image">
-
-                        <div class="content">
-                            <span>Your Looks</span>
-                            <h3>Must Haves</h3>
-                            <a href="products-right-sidebar.html" class="default-btn">Discover Now</a>
-                        </div>
-                        <a href="products-right-sidebar.html" class="link-btn"></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-categories-box">
-                        <img src="{% static 'app/img/categories/img4.jpg' %}" alt="image">
+                        <div id="heyYo2" alt="image"></div>
 
                         <div class="content text-white">
-                            <span>Take 20% OFF</span>
-                            <h3>Winter Spring!</h3>
-                            <a href="products-right-sidebar.html" class="default-btn">Discover Now</a>
+                            <span>Dress Code Time!</span>
+                            <h3>Our Dresses</h3>
+                            <a href="{% url 'productLeftSideBar2' %}?category=Dresses" class="default-btn">Discover Now</a>
                         </div>
-                        <a href="products-right-sidebar.html" class="link-btn"></a>
                     </div>
                 </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-categories-box">
+                        <div id="heyYo3" alt="image"></div>
+
+                        <div class="content text-white">
+                            <span>Yeah!</span>
+                            <h3>Our Jackets</h3>
+                            <a href="{% url 'productLeftSideBar2' %}?category=Jackets" class="default-btn">Discover Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-categories-box">
+                        <div id="heyYo4" alt="image"></div>
+
+                        <div class="content">
+                            <span>Nice Legs!</span>
+                            <h3>Our Pants</h3>
+                            <a href="{% url 'productLeftSideBar2' %}?category=Pants" class="default-btn">Discover Now</a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -489,7 +486,7 @@
     <!-- End Offer Area -->
 
     <!-- Start Facility Area -->
-    <section class="facility-area pb-70">
+    <section class="facility-area pt-70 pb-70">
         <div class="container">
             <div class="facility-slides owl-carousel owl-theme">
                 <div class="single-facility-box">

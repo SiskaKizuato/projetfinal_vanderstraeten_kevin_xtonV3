@@ -60,9 +60,63 @@ body {
   font-family: "Lato";
   font-size: 15px;
 }
+
+
+#heyYo1{
+  height: 195px;
+  background-image: url("../../../../media/article_images/hoodie3B.avif");
+  background-position: 50% 65%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 5px;
+}
+
+#heyYo2{
+  height: 195px;
+  background-image: url("../../../../media/article_images/dresses1c.jpg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 5px;
+}
+
+#heyYo3{
+  height: 195px;
+  background-image: url("../../../../media/article_images/jacket3B.jpg");
+  background-position: 50% 15%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 5px;
+}
+
+#heyYo4{
+  height: 195px;
+  background-image: url("../../../../media/article_images/pants4A.avif");
+  background-position: 50% 65%;
+  background-repeat: no-repeat;
+  background-size: 170%;
+  border-radius: 5px;
+}
+
+/* #containerDiscover4{
+  height: 195px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+
+}
+
+#containerBisDiscover4{
+  border: 1px solid red ;
+  position: absolute;
+  bottom : -15.5%;
+  width: 90%;
+}
+
 .debug{
   border: 1px solid red;
-}
+} */
 
 a{cursor: pointer;}
 .cadreImgProducts{
