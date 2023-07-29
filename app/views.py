@@ -380,34 +380,34 @@ def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
     partners = Partners.objects.all()
-    
+
     category = request.GET.get("category")
     main_category = request.GET.get("main_category")
     partner = request.GET.get("partner")
-    size = request.GET.get("size")    
+    size = request.GET.get("size")
     search = request.GET.get('search', '')
-    
+
     if search:
         products = products.filter(Q(name__icontains=search))
-    
+
     if main_category and main_category != "All":
         products = products.filter(main_category__name=main_category)
-        products = products.order_by("price")
-    
+
     if category and category != "All":
         products = products.filter(category__name=category)
-        products = products.order_by("price")
-    
+
     if partner and partner != "All":
         products = products.filter(partner__name=partner)
-        products = products.order_by("price")
-    
+
     if size:
         monStock = 'stock_' + size.upper()
         products = products.filter(**{monStock + "__gt": 0})
-    
-    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': products, "partners": partners})
 
+    paginator = Paginator(products, 18)  # Show 18 products per page
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+    return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': page, "partners": partners})
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):

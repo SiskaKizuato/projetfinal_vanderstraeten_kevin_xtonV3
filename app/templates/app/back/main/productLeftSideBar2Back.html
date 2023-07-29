@@ -227,14 +227,22 @@
 
                     </div>
 
-                    <div class="pagination-area text-center">
-                        <a href="#" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
-                        <span class="page-numbers current" aria-current="page">1</span>
-                        <a href="#" class="page-numbers">2</a>
-                        <a href="#" class="page-numbers">3</a>
-                        <a href="#" class="page-numbers">4</a>
-                        <a href="#" class="page-numbers">5</a>
-                        <a href="#" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="pagination-area text-center">
+                            {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                            {% endif %}
+                            {% for num in products.paginator.page_range %}
+                                {% if products.number == num %}
+                                    <span class="page-numbers current" aria-current="page">{{ num }}</span>
+                                {% else %}
+                                    <a href="?page={{ num }}" class="page-numbers">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
