@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.html import strip_tags
 from django.http import HttpResponse
 from datetime import datetime
@@ -105,7 +106,6 @@ def lostPassword(request):
     else:
         return render(request, 'app/front/main/lostPassword.html')
 
-
 def productLeftSideBar2(request):
     categories = Category.objects.all()
     products = Article.objects.all()
@@ -119,8 +119,6 @@ def productLeftSideBar2(request):
         promo_products = products  # Assigner les produits en promotion à une variable séparée
     else:
         promo_products = None  # Si le filtre promo n'est pas présent ou a une autre valeur, promo_products est None
-
-    
 
     category = request.GET.get("category")
     main_category = request.GET.get("main_category")
@@ -152,6 +150,9 @@ def productLeftSideBar2(request):
     # Trier les articles par ordre de prix croissant
     products = products.order_by('price')
 
+    # Obtenir la date d'il y a 7 jours
+    date_seuil = timezone.now() - timezone.timedelta(days=7)
+
     paginator = Paginator(products, 18)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
@@ -170,6 +171,7 @@ def productLeftSideBar2(request):
             'first_id': first_id,
             'last_id': last_id,
             'promo_products': promo_products,  # Pass the promo products to the template
+            'date_seuil': date_seuil,  # Pass the date_seuil to the template
         })
     else:
         # Gérer le cas où la page demandée est invalide
@@ -537,6 +539,9 @@ def productLeftSideBar2Back(request):
     # Trier les articles par ordre de prix croissant
     products = products.order_by('price')
 
+    # Obtenir la date d'il y a 7 jours
+    date_seuil = timezone.now() - timezone.timedelta(days=7)
+
     paginator = Paginator(products, 18)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
@@ -554,10 +559,12 @@ def productLeftSideBar2Back(request):
             'partners': partners,
             'first_id': first_id,
             'last_id': last_id,
+            'date_seuil': date_seuil,  # Pass the date_seuil to the template
         })
     else:
         # Gérer le cas où la page demandée est invalide
         return HttpResponse("Page not found", status=404)
+
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):
@@ -612,11 +619,15 @@ def update_category(request, id):
     return render(request, 'app/back/main/update_category.html', {'form': form, 'category': category})
 
 # XXXXX PRODUCTSBACK XXXXX
+
 def new_product(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            # Ajoutez la date du jour à l'instance de l'article avant de le sauvegarder
+            article = form.save(commit=False)
+            article.created_at = datetime.now()
+            article.save()
             return redirect('productLeftSideBar2Back')
     else:
         form = ArticleForm()

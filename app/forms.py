@@ -63,6 +63,8 @@ class SignupForm(forms.ModelForm):
 # XXXXX PARTIE ARTICLE XXXXX
 
 class ArticleForm(forms.ModelForm):
+    created_at = forms.DateTimeField(widget=forms.HiddenInput, required=False)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['main_category'].queryset = Category.objects.filter(name__in=["Men's", "Women's"])

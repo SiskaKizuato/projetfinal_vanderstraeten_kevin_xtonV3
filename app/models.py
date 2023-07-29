@@ -59,6 +59,7 @@ class Article(models.Model):
     stock_L = models.IntegerField()
     stock_M = models.IntegerField()
     stock_XL = models.IntegerField()
+    created_at = models.DateTimeField(null=True, blank=True)
     promo = models.PositiveIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=0)
 
