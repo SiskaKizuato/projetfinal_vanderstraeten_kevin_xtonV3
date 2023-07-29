@@ -407,7 +407,6 @@ def ordersBack(request):
 
 def profileBack(request):
     return render(request, 'app/back/main/profileBack.html')
-
 def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
@@ -418,6 +417,7 @@ def productLeftSideBar2Back(request):
     partner = request.GET.get("partner")
     size = request.GET.get("size")
     search = request.GET.get('search', '')
+    filter_by_price = request.GET.get('filter_by_price')
 
     if search:
         products = products.filter(Q(name__icontains=search))
@@ -435,11 +435,16 @@ def productLeftSideBar2Back(request):
         monStock = 'stock_' + size.upper()
         products = products.filter(**{monStock + "__gt": 0})
 
-    paginator = Paginator(products, 18)  # Show 18 products per page
+    if filter_by_price:
+        min_price, max_price = map(int, filter_by_price.split(";"))  # Utilisez le point-virgule comme séparateur
+        products = products.filter(price__gte=min_price, price__lte=max_price)
+
+    paginator = Paginator(products, 18)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
 
     return render(request, 'app/back/main/productLeftSideBar2Back.html', {'categories': categories, 'products': page, "partners": partners})
+
 
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):

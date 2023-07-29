@@ -75,9 +75,17 @@
                             <h3 class="woocommerce-widget-title">Price</h3>
 
                             <div class="collection-filter-by-price">
+                                <form method="get">
+                                    <input class="js-range-of-price" type="text" data-min="0" data-max="2000" name="filter_by_price" data-step="10">
+                                    <br>
+                                    <button class="default-btn w-100" type="submit">Filter by Price</button>
+                                </form>
+                            </div>
+
+                            {% comment %} <div class="collection-filter-by-price">
                                 <input class="js-range-of-price" type="text" data-min="0" data-max="1055"
                                     name="filter_by_price" data-step="10">
-                            </div>
+                            </div> {% endcomment %}
                         </div>
 
                         
