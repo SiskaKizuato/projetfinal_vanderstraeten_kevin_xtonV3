@@ -440,6 +440,9 @@ def productLeftSideBar2Back(request):
         min_price, max_price = map(int, filter_by_price.split(";"))
         products = products.filter(price__gte=min_price, price__lte=max_price)
 
+    # Trier les articles par ordre de prix croissant
+    products = products.order_by('price')
+
     paginator = Paginator(products, 18)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
