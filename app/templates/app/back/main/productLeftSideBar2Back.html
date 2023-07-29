@@ -28,20 +28,25 @@
 
                             <ul class="collections-list-row">
                                 <li>
-                                    <a href="{% url 'productLeftSideBar2Back' %}" {% if not request.GET.category and not request.GET.main_category %}class="active"{% endif %}>All</a>
+                                    <a href="{% url 'productLeftSideBar2' %}" {% if not request.GET.category and not request.GET.main_category and not request.GET.promo %}class="active"{% endif %}>All</a>
                                 </li>
                                 {% for categorys in categories %}
                                     {% if forloop.counter < 3 %}
                                     <li>
-                                        <a href="{% url 'productLeftSideBar2Back' %}?main_category={{categorys.name}}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" class="type_link {% if request.GET.main_category == categorys.name %} active {% endif %}">{{ categorys.name }}</a>
+                                        <a href="{% url 'productLeftSideBar2' %}?main_category={{categorys.name}}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" class="type_link {% if request.GET.main_category == categorys.name and not request.GET.promo %} active {% endif %}">{{ categorys.name }}</a>
                                     </li>
                                     {% else %}
                                     <li>
-                                        <a href="{% url 'productLeftSideBar2Back' %}?category={{categorys.name}}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" class="type_link {% if request.GET.category == categorys.name %} active {% endif %}">{{ categorys.name }}</a>
+                                        <a href="{% url 'productLeftSideBar2' %}?category={{categorys.name}}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" class="type_link {% if request.GET.category == categorys.name and not request.GET.promo %} active {% endif %}">{{ categorys.name }}</a>
                                     </li>
                                     {% endif %}
                                 {% endfor %}
-                            </ul>                            
+                            
+                                <!-- Nouveau lien pour afficher les produits en promo -->
+                                <li>
+                                    <a href="{% url 'productLeftSideBar2Back' %}?promo=true{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" class="type_link {% if request.GET.promo == 'true' %} active {% endif %}">Promo</a>
+                                </li>
+                            </ul>                                                   
                         </div>
 
                         <div class="woocommerce-widget collections-list-widget">

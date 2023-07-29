@@ -35,7 +35,15 @@ def newsletter(request):
 def index(request):
     partners = Partners.objects.all()
     popular_blogs = Blog.objects.order_by('-views')[:3]
-    return render(request, 'app/front/main/index.html', {'popular_blogs' : popular_blogs, 'partners': partners})
+    
+    # Fetch products with promo greater than 0
+    promo_products = Article.objects.filter(promo__gt=0)
+    
+    return render(request, 'app/front/main/index.html', {
+        'popular_blogs': popular_blogs,
+        'partners': partners,
+        'promo_products': promo_products,
+    })
 
 def cart(request):
     return render(request, 'app/front/main/cart.html')
@@ -100,6 +108,17 @@ def productLeftSideBar2(request):
     categories = Category.objects.all()
     products = Article.objects.all()
     partners = Partners.objects.all()
+    promo_products = products.filter(promo__gt=0)
+    promo_filter = request.GET.get('promo')
+
+    if promo_filter == 'true':
+        # Filtrer les produits avec une promotion supérieure à 0
+        products = products.filter(promo__gt=0)
+        promo_products = products  # Assigner les produits en promotion à une variable séparée
+    else:
+        promo_products = None  # Si le filtre promo n'est pas présent ou a une autre valeur, promo_products est None
+
+
 
     category = request.GET.get("category")
     main_category = request.GET.get("main_category")
@@ -148,6 +167,7 @@ def productLeftSideBar2(request):
             'partners': partners,
             'first_id': first_id,
             'last_id': last_id,
+            'promo_products': promo_products,  # Pass the promo products to the template
         })
     else:
         # Gérer le cas où la page demandée est invalide

@@ -46,7 +46,15 @@
                             <h3>Customer Support</h3>
 
                             <ul class="customer-support">
-                                <li><a href="{% url 'login' %}">My Account</a></li>
+                                {% if user.is_authenticated %}
+                                    {% if user.role == 'admin' %}
+                                    <li><a href="{% url 'profileBack' %}">My Account</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'profileBack' %}">My Account</a></li>
+                                    {% endif %}
+                                {% else %}
+                                <li><a href="{% url 'login' %}"></i>My Account</a></li>
+                                {% endif %}
                                 <li><a href="{% url 'checkout' %}">Checkout</a></li>
                                 <li><a href="{% url 'cart' %}">Cart</a></li>
                                 <li><a href="#">FAQ's</a></li>
