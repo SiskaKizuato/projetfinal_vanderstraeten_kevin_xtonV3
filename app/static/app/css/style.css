@@ -63,6 +63,8 @@ body {
 .debug{
   border: 1px solid red;
 }
+
+a{cursor: pointer;}
 .cadreImgProducts{
   width: 355px;
   height: 420px;

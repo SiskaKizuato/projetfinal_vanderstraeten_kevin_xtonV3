@@ -159,7 +159,7 @@
 
                                     <div class="products-button">
                                         <ul>
-                                            {% if request.user.is_authenticated %}
+                                            {% comment %} {% if request.user.is_authenticated %}
                                             <li>
                                                 <div class="wishlist-btn">
                                                     <a href="#">
@@ -168,7 +168,23 @@
                                                     </a>
                                                 </div>
                                             </li>
-                                            {% endif %}
+                                            {% endif %} {% endcomment %}
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="{% url 'edit_product' product.id %}"> <!-- Modification de la ligne ici -->
+                                                        <i class='bx bx-edit-alt' ></i>
+                                                        <span class="tooltip-label">Edit Product</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="wishlist-btn">
+                                                    <a href="{% url 'delete_article' product.id %}">
+                                                        <i class='bx bx-trash'></i>
+                                                        <span class="tooltip-label">Delete Product</span>
+                                                    </a>
+                                                </div>
+                                            </li>
                                             <li>
                                                 <div class="quick-view-btn">
                                                     <a data-bs-toggle="modal"

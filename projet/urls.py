@@ -25,6 +25,7 @@ urlpatterns = [
     
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
     path('single-blog-1-back/', views.singleBlog1Back, name="singleBlog1Back"),
+    path('edit_product/', views.edit_product, name="edit_product"),
     path('create-blog/', views.create_blog, name='create_blog'),  # Nouvelle URL ajoutée
     path('productsType5Back/<int:product_id>/', views.productsType5Back, name='productsType5Back'),
 
@@ -59,6 +60,7 @@ urlpatterns = [
     path('update_user/<int:user_id>/', views.update_user, name='update_user'),
     path('update_profile/', views.update_profile, name='update_profile'),
     path('edit_blog/<int:blog_id>/', views.edit_blog, name='edit_blog'),
+    path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('update_partner/<int:partner_id>/', views.update_partner, name='update_partner'),
 
 
@@ -68,6 +70,8 @@ urlpatterns = [
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
     path('delete_blog/<int:blog_id>/', views.delete_blog, name='delete_blog'),
     path('delete_partner/<int:id>/', views.delete_partner, name='delete_partner'),
+    path('delete_article/<int:id>/', views.delete_article, name='delete_article'),
+
     
     # XXXXX SHOW XXXXX
     path('userDetailsBack/<int:user_id>/', views.userDetailsBack, name='userDetailsBack'),

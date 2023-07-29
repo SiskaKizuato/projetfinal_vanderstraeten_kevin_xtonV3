@@ -94,10 +94,16 @@ def productLeftSideBar2(request):
 def productsType1(request):
     return render(request, 'app/front/main/products-type-1.html')
 
+
 def productsType5Back(request, product_id):
     # Retrieve the product using the product_id parameter
     product = get_object_or_404(Article, id=product_id)
-    return render(request, 'app/back/main/productsType5Back.html', {'product': product})
+
+    # Get all articles with the same category as the product
+    related_articles = Article.objects.filter(category=product.category)
+
+    return render(request, 'app/back/main/productsType5Back.html', {'product': product, 'related_articles': related_articles})
+
 # XXXXX COMPTE FRONT XXXXX
 
 def signup(request):
@@ -323,6 +329,25 @@ def edit_blog(request, blog_id):
 
     return render(request, 'app/back/main/single-blog-1-back.html', context)
 
+def edit_product(request, product_id):
+    product = get_object_or_404(Article, id=product_id)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=product)
+        if form.is_valid():
+            if 'image1' in request.FILES:
+                product.image1 = request.FILES['image1']
+            if 'image2' in request.FILES:
+                product.image2 = request.FILES['image2']
+            if 'image3' in request.FILES:
+                product.image3 = request.FILES['image3']
+            form.save()
+            return redirect('productLeftSideBar2Back')
+    else:
+        form = ArticleForm(instance=product)
+    
+    return render(request, 'app/back/main/editProduct.html', {'form': form, 'product': product})
+
+
 
 def singleBlogValidation(request, blog_id):
     # Retrieve the blog based on its identifier
@@ -515,6 +540,10 @@ def update_partner(request, partner_id):
     }
     return render(request, 'app/back/main/partnersBack.html', context)
 
+def delete_article(request, id):
+    article = get_object_or_404(Article, id=id)
+    article.delete()
+    return redirect('productLeftSideBar2Back')
 
 def delete_partner(request, id):
     partner = get_object_or_404(Partners, id=id)
