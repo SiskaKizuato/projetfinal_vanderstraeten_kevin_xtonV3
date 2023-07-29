@@ -152,9 +152,9 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 products-col-item">
                             <div class="products-box" data-product-id="{{ product.id }}">
                                 <div class="products-image">
-                                    <a href="#">
-                                        <img src="{{product.image1.url }}" class="main-image" alt="image" />
-                                        <img src="{{product.image1.url }}" class="hover-image" alt="image" />
+                                    <a class="cadreImgProducts" href="{% url 'productsType5Back' product.id %}">
+                                        <img src="{{product.image1.url }}" class="imgGoodSize main-image" alt="image" />
+                                        <img src="{{product.image1.url }}" class="imgGoodSize hover-image" alt="image" />
                                     </a>
 
                                     <div class="products-button">
@@ -170,16 +170,8 @@
                                             </li>
                                             {% endif %}
                                             <li>
-                                                <div class="compare-btn">
-                                                    <a href="#">
-                                                        <i class='bx bx-refresh'></i>
-                                                        <span class="tooltip-label">Compare</span>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li>
                                                 <div class="quick-view-btn">
-                                                    <a href="#" data-bs-toggle="modal"
+                                                    <a data-bs-toggle="modal"
                                                         data-bs-target="#productsQuickView{{product.id}}">
                                                         <i class='bx bx-search-alt'></i>
                                                         <span class="tooltip-label">Quick View</span>
@@ -192,7 +184,7 @@
 
                                 <div class="products-content">
                                     <span class="category">{{product.category}}</span>
-                                    <h3><a href="#">{{product.name}}</a></h3>
+                                    <h3><a href="{% url 'productsType5Back' product.id %}">{{product.name}}</a></h3>
 
                                     <div class="star-rating">
                                         <i class='bx bxs-star'></i>

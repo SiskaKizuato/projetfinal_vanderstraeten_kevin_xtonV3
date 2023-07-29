@@ -35,6 +35,8 @@ def cart(request):
 def checkout(request):
     return render(request, 'app/front/main/checkout.html')
 
+
+
 def contact(request):
     # contact_info = ContactInfo.objects.first()
     # context = {'contact_info': contact_info}
@@ -92,6 +94,10 @@ def productLeftSideBar2(request):
 def productsType1(request):
     return render(request, 'app/front/main/products-type-1.html')
 
+def productsType5Back(request, product_id):
+    # Retrieve the product using the product_id parameter
+    product = get_object_or_404(Article, id=product_id)
+    return render(request, 'app/back/main/productsType5Back.html', {'product': product})
 # XXXXX COMPTE FRONT XXXXX
 
 def signup(request):
@@ -170,6 +176,7 @@ def singleBlog1(request, blog_id):
     blog.save()
 
     return render(request, 'app/front/main/single-blog-1.html', {'blog': blog})
+
 
 
 @login_required

@@ -26,6 +26,8 @@ urlpatterns = [
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),
     path('single-blog-1-back/', views.singleBlog1Back, name="singleBlog1Back"),
     path('create-blog/', views.create_blog, name='create_blog'),  # Nouvelle URL ajoutée
+    path('productsType5Back/<int:product_id>/', views.productsType5Back, name='productsType5Back'),
+
     # URL pour la vue validate_blog
 
     # URL pour la vue singleBlogValidation

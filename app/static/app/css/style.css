@@ -60,6 +60,23 @@ body {
   font-family: "Lato";
   font-size: 15px;
 }
+.debug{
+  border: 1px solid red;
+}
+.cadreImgProducts{
+  width: 355px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imgGoodSize{
+  min-height: 100%;
+  min-width: 100%;
+
+}
 
 .size-link.active{
   background-color: #f53f85;

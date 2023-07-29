@@ -18,7 +18,7 @@
 
                 <div class="col-lg-6 col-md-6">
                     <div class="products-content">
-                        <h3><a href="#">{{product.name}}</a></h3>
+                        <h3><a href="{% url 'productsType5Back' product.id %}">{{product.name}}</a></h3>
 
                         {% if product.promo > 0 %}
                         <div class="price">
@@ -43,9 +43,9 @@
 
                         <ul class="products-info">
                             <!-- La div "availability" spécifique à l'article -->
-                            <li><span>Products Brand:</span> <a href="#">{{product.partner}}</a></li>
+                            <li><span>Brand:</span> <a href="#">{{product.partner}}</a></li>
                             <li><span>Availability:</span> <a class="stockQuantity availability-{{product.id}}" href="#">In stock ({{ product.stock_XS }} items)</a></li>
-                            <li><span>Products Type:</span> <a href="#">T-Shirt</a></li>
+                            <li><span>Products Type:</span> <a href="#">{{product.category}}</a></li>
                         </ul>
 
                         <div class="products-size-wrapper">
@@ -70,7 +70,7 @@
                             <button type="submit" class="default-btn">Add to Cart</button>
                         </div>
 
-                        <a href="#" class="view-full-info">View Full Info</a>
+                        <a href="{% url 'productsType5Back' product.id %}" class="view-full-info">View Full Info</>
                     </div>
                 </div>
             </div>
