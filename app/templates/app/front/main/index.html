@@ -163,9 +163,8 @@
                             <div class="new-tag">New!</div>
                         </div>
 
-                        <div class="products-content">
-
-                            <h3><a href="{% url 'productsType5' x.id %}">{{x.name}}</a></h3>
+                        <div class="products-content mb-5">
+                            <h3 class="containereTitreHidden"><a href="{% url 'productsType5' x.id %}">{{x.name}}</a></h3>
                             {% if product.promo > 0 %}
                                 <div class="price">
                                     <span class="old-price">$ {{ x.price }} </span>

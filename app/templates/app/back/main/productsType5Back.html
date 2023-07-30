@@ -69,11 +69,11 @@
                         <span>Size:</span>
 
                         <ul>
-                            <li class="category-link btnXs" data-size="{{ product.stock_XS }}" data-product-id="{{ product.id }}"><a>XS</a></li>
-                            <li class="category-link btnS" data-size="{{ product.stock_S }}" data-product-id="{{ product.id }}"><a>S</a></li>
-                            <li class="category-link btnM" data-size="{{ product.stock_M }}" data-product-id="{{ product.id }}"><a>M</a></li>
-                            <li class="category-link btnL" data-size="{{ product.stock_L }}" data-product-id="{{ product.id }}"><a>L</a></li>
-                            <li class="category-link btnXl" data-size="{{ product.stock_XL }}" data-product-id="{{ product.id }}"><a>XL</a></li>
+                            <li class="size-link btnXs" data-size="{{ product.stock_XS }}" data-product-id="{{ product.id }}"><a>XS</a></li>
+                            <li class="size-link btnS" data-size="{{ product.stock_S }}" data-product-id="{{ product.id }}"><a>S</a></li>
+                            <li class="size-link btnM" data-size="{{ product.stock_M }}" data-product-id="{{ product.id }}"><a>M</a></li>
+                            <li class="size-link btnL" data-size="{{ product.stock_L }}" data-product-id="{{ product.id }}"><a>L</a></li>
+                            <li class="size-link btnXl" data-size="{{ product.stock_XL }}" data-product-id="{{ product.id }}"><a>XL</a></li>
                         </ul>
                     </div>
 
@@ -457,14 +457,42 @@
         <!-- End Facility Area -->
 
         <script>
-            const sizeButtons = document.querySelectorAll('.category-link');
+            document.addEventListener('DOMContentLoaded', function() {
+                // Sélectionnez tous les boutons de taille
+                const sizeButtons = document.querySelectorAll('.size-link');
         
-            sizeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const size = this.dataset.size;
-                    const productId = this.dataset.productId;
-                    const availabilityElement = document.querySelector(`.availability-${productId}`);
-                    availabilityElement.textContent = `In stock (${size} items)`;
+                // Fonction pour mettre à jour les classes lorsqu'un bouton est cliqué
+                function handleButtonClick(clickedButton) {
+                    // Supprimer la classe "active" de tous les boutons de taille
+                    sizeButtons.forEach(button => {
+                        button.classList.remove('active');
+                    });
+        
+                    // Ajouter la classe "active" au bouton cliqué
+                    clickedButton.classList.add('active');
+                }
+        
+                // Ajouter des événements click et mousedown à chaque bouton de taille
+                sizeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const size = this.dataset.size;
+                        const productId = this.dataset.productId;
+                        const availabilityElement = document.querySelector(`.availability-${productId}`);
+                        availabilityElement.textContent = `In stock (${size} items)`;
+        
+                        // Appeler la fonction pour mettre à jour les classes
+                        handleButtonClick(this);
+                    });
+        
+                    button.addEventListener('mousedown', function() {
+                        // Mettre à jour la couleur du texte en blanc (#ffffff)
+                        this.querySelector('a').style.color = '#ffffff';
+                    });
+        
+                    button.addEventListener('mouseup', function() {
+                        // Rétablir la couleur du texte à sa valeur d'origine
+                        this.querySelector('a').style.color = ''; // Laisser la valeur vide pour rétablir la couleur par défaut du texte
+                    });
                 });
             });
         </script>

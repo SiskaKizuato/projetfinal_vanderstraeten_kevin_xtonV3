@@ -214,27 +214,29 @@
                                     {% endif %}
                                 </div>
 
-                                <div class="products-content">
+                                <div class="products-content mb-5">
                                     <span class="category">{{product.category}}</span>
-                                    <h3><a href="{% url 'productsType5Back' product.id %}">{{product.name}}</a></h3>
+                                    <h3><a class="containereTitreHidden" href="{% url 'productsType5Back' product.id %}">{{product.name}}</a></h3>
 
-                                    <div class="star-rating">
-                                        <i class='bx bxs-star'></i>
-                                        <i class='bx bxs-star'></i>
-                                        <i class='bx bxs-star'></i>
-                                        <i class='bx bxs-star'></i>
-                                        <i class='bx bxs-star'></i>
-                                    </div>
-                                    {% if product.promo > 0 %}
+                                    <div class="fleee">
+                                        {% if product.promo > 0 %}
                                         <div class="price">
                                             <span class="old-price">$ {{ product.price }} </span>
                                             <span class="new-price">$ {{ product.get_discounted_price }} </span>
                                         </div>
-                                    {% else %}
+                                        {% else %}
                                         <div class="price">
                                             <span class="new-price">$ {{ product.price }} </span>
                                         </div>
-                                    {% endif %}
+                                        {% endif %}
+                                        <div class="star-rating">
+                                            <i class='bx bxs-star'></i>
+                                            <i class='bx bxs-star'></i>
+                                            <i class='bx bxs-star'></i>
+                                            <i class='bx bxs-star'></i>
+                                            <i class='bx bxs-star'></i>
+                                        </div>
+                                    </div>
                                     <a href="#" class="add-to-cart">Add to Cart</a>
                                 </div>
 
