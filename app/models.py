@@ -129,20 +129,6 @@ class Contact(models.Model):
     message = models.TextField(max_length=500)
     lu = models.BooleanField(default=False)
     
-# XXXXX WISHLIST XXXXX
-# class Wishlist(models.Model):
-#     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-#     products = models.ManyToManyField(Article)
-
-#     def __str__(self):
-#         return f"Wishlist for {self.user.username}"
-    
-
-# class WishlistItem(models.Model):
-#     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Article, on_delete=models.CASCADE)
-
-
 
 class Wishlist(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)

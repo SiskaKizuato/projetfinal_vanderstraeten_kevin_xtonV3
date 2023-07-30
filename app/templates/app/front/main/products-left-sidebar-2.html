@@ -172,7 +172,7 @@
                                             {% if request.user.is_authenticated %}
                                             <li>
                                                 <div class="wishlist-btn">
-                                                    <a href="#">
+                                                    <a href="{% url 'add_to_wishlist' product.id %}">
                                                         <i class='bx bx-heart'></i>
                                                         <span class="tooltip-label">Add to Wishlist</span>
                                                     </a>

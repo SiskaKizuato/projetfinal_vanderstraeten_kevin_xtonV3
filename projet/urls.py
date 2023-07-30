@@ -21,8 +21,8 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     path('product-left-sidebar/', views.productLeftSideBar2, name='product_left_sidebar'),
 
-    # path('add-to-wishlist/<int:article_id>/', views.add_to_wishlist, name='add_to_wishlist'),
-    # path('remove-from-wishlist/<int:wish_item_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+    path('add-to-wishlist/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('remove-from-wishlist/<int:wish_item_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     
     
     path('single-blog-1/', views.singleBlog1, name="singleBlog1"),

@@ -35,7 +35,7 @@
         {% include 'app/front/modals/sideBar.html' %}
         {% include 'app/front/modals/quickView.html' %}
         {% include 'app/front/modals/shoppingCart.html' %}
-        {% include 'app/front/modals/wishlist.html' %}
+        {% include 'app/front/modals/wishlist.html' with wishlist_items=wishlist_items wish_items_count=wish_items_count %}
         {% include 'app/front/modals/sizeGuide.html' %}
         {% include 'app/front/modals/shipping.html' %}
         {% include 'app/front/modals/productsFilter.html' %}

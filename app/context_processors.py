@@ -1,4 +1,4 @@
-from .models import ContactInfo
+from .models import ContactInfo, Wishlist, WishlistItem
 
 def contact_info_processor(request):
     contact_info = ContactInfo.objects.first()
