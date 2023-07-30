@@ -123,9 +123,9 @@ def lostPassword(request):
         except Profile.DoesNotExist:
             error_message = "Invalid username."
         
-        return render(request, 'app/front/main/lostPassword.html', {'error_message': error_message, **wishlist_content(request)})
+        return render(request, 'app/front/main/lostPassword.html', {'error_message': error_message})
     else:
-        return render(request, 'app/front/main/lostPassword.html', {**wishlist_content(request),})
+        return render(request, 'app/front/main/lostPassword.html')
 
 def productLeftSideBar2(request):
     categories = Category.objects.all()
@@ -210,8 +210,39 @@ def productsType5Back(request, product_id):
 
     # Get all articles with the same category as the product
     related_articles = Article.objects.filter(category=product.category)
+    date_seuil = timezone.now() - timezone.timedelta(days=7)
+    
+    users = Profile.objects.all()
+    commentaire = Reviews.objects.all()
+    commentairevisiteure = ReviewsVisiteur.objects.all()
+    reviews = Reviews.objects.filter(produit_selected=product)
+    reviewsVisiteur = ReviewsVisiteur.objects.filter(produit_selected=product)
+    compteur = reviews.count() + reviewsVisiteur.count()
 
-    return render(request, 'app/back/main/productsType5Back.html', {'product': product, 'related_articles': related_articles, **wishlist_content(request)})
+    product.compteur = compteur
+    dateNow = datetime.now()
+    user = request.user
+    if user.is_active:
+        if request.method == "POST":
+            title = request.POST['title']
+            comment = request.POST['comment']
+            la_date = dateNow
+            new_review = Reviews(date_creation=la_date, titre=title, commentaire=comment, redacteure_id=user.id,produit_selected_id=product.id)
+            new_review.save()
+            return redirect("productsType5Back", product_id=product.id)
+
+    else:
+        if request.method == "POST":
+            name = request.POST['name']
+            email = request.POST['email']
+            title = request.POST['title']
+            comment = request.POST['comment']
+            la_date = dateNow
+            new_review = ReviewsVisiteur(date_creation=la_date, titre=title, commentaire=comment,name=name,adresseMail=email,produit_selected_id=product.id)
+            new_review.save()
+            return redirect("productsType5Back", product_id=product.id)
+
+    return render(request, 'app/back/main/productsType5Back.html',{'product': product, 'related_articles': related_articles, **wishlist_content(request), 'reviews': reviews, 'reviewsVisiteur': reviewsVisiteur, 'all_reviews': compteur, 'profile': users, 'date_seuil': date_seuil, 'compteur': compteur})
 
 def productsType5(request, product_id):
     # Retrieve the product using the product_id parameter
@@ -268,7 +299,7 @@ def signup(request):
             
     else:
         form = SignupForm()
-    return render(request, 'app/front/main/signup.html', {'form': form, **wishlist_content(request)})
+    return render(request, 'app/front/main/signup.html', {'form': form})
 
 def login_view(request):
     if request.method == "POST":
@@ -282,7 +313,7 @@ def login_view(request):
             error_message = "Nom d'utilisateur ou mot de passe incorrect."
             return render(request, 'app/front/main/login.html', {'error_message': error_message})
     else:
-        return render(request, 'app/front/main/login.html', {**wishlist_content(request),})
+        return render(request, 'app/front/main/login.html')
 
 def logout_view(request):
     logout(request)
@@ -367,13 +398,13 @@ def create_blog(request):
                     tag, _ = Tag.objects.get_or_create(name=tag_name)
                     blog.tags.add(tag)
 
-            return redirect('blog5', {**wishlist_content(request)})
+            return redirect('blog5')
     else:
         form = BlogForm()
 
     tag_form = TagForm()
 
-    return render(request, 'app/front/main/createBlog.html', {'form': form, 'tags': tags, 'tag_form': tag_form, **wishlist_content(request),})
+    return render(request, 'app/front/main/createBlog.html', {'form': form, 'tags': tags, 'tag_form': tag_form,})
 
 
 
@@ -387,14 +418,14 @@ def trackOrder(request):
 # xxxxxxxxxxxxxxxx
 
 def indexBack(request):
-    return render(request, 'app/back/main/indexBack.html', {**wishlist_content(request)})
+    return render(request, 'app/back/main/indexBack.html')
 
 
 # XXXXX ALL USERS XXXXX
 def allUsersBack(request):
     allUsers = Profile.objects.all()
 
-    return render(request, 'app/back/main/allUsersBack.html', {"allUsers": allUsers, **wishlist_content(request)})
+    return render(request, 'app/back/main/allUsersBack.html', {"allUsers": allUsers})
 
 def delete_user(request, id):
     user = get_object_or_404(Profile, id=id)
@@ -423,7 +454,7 @@ def update_user(request, user_id):
         role = request.POST.get('role')
         user.role = role
         user.save()
-    return redirect('allUsersBack', {**wishlist_content(request),})
+    return redirect('allUsersBack')
 
 
 
@@ -454,7 +485,7 @@ def blog5Back(request):
     tags = Tag.objects.annotate(blog_count=Count('blog'))
     popular_blogs = Blog.objects.order_by('-views')[:3]
 
-    return render(request, 'app/back/main/blog5Back.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs, **wishlist_content(request),})
+    return render(request, 'app/back/main/blog5Back.html', {'categories': categories, 'tags': tags, 'page': page, 'popular_blogs': popular_blogs})
 
 
 
@@ -474,7 +505,6 @@ def edit_blog(request, blog_id):
     context = {
         'form': form,
         'tags': blog.tags.all(),  # Inclure les tags du blog dans le contexte
-        **wishlist_content(request),
     }
 
     return render(request, 'app/back/main/single-blog-1-back.html', context)
@@ -495,7 +525,7 @@ def edit_product(request, product_id):
     else:
         form = ArticleForm(instance=product)
     
-    return render(request, 'app/back/main/editProduct.html', {'form': form, 'product': product, **wishlist_content(request),})
+    return render(request, 'app/back/main/editProduct.html', {'form': form, 'product': product})
 
 
 
@@ -513,7 +543,7 @@ def singleBlogValidation(request, blog_id):
     blog.save()
 
     # Redirect to the blog listing page (validationBlogBack)
-    return redirect('validationBlogBack', {**wishlist_content(request)})
+    return redirect('validationBlogBack')
 
 def singleBlog1Back(request):
     return render(request, 'app/back/main/single-blog-1-back.html')
@@ -530,13 +560,13 @@ def delete_blog(request, blog_id):
 def validationBlogBack(request):
     non_validated_blogs = Blog.objects.filter(validated=False)
 
-    return render(request, 'app/back/main/validationBlogBack.html', {'non_validated_blogs': non_validated_blogs, **wishlist_content(request),})
+    return render(request, 'app/back/main/validationBlogBack.html', {'non_validated_blogs': non_validated_blogs})
 
 # XXXXX CONTACT BACK XXXXX
 def contactBack(request):
     # contact_info = ContactInfo.objects.first()
     # context = {'contact_info': contact_info}
-    return render(request, 'app/back/main/contactBack.html', {**wishlist_content(request)})
+    return render(request, 'app/back/main/contactBack.html')
 
 def update_contact_info(request):
     contact_info = ContactInfo.objects.first()
@@ -549,19 +579,28 @@ def update_contact_info(request):
     else:
         form = ContactInfoForm(instance=contact_info)
 
-    return render(request, 'app/back/main/contactBack.html', {'form': form, **wishlist_content(request),})
+    return render(request, 'app/back/main/contactBack.html', {'form': form})
 
 # XXXXX ORDERS BACK XXXXX
 def ordersBack(request):
-    return render(request, 'app/back/main/ordersBack.html', {**wishlist_content(request),})
+    return render(request, 'app/back/main/ordersBack.html')
 
 def profileBack(request):
-    return render(request, 'app/back/main/profileBack.html', {**wishlist_content(request),})
+    return render(request, 'app/back/main/profileBack.html')
 
 def productLeftSideBar2Back(request):
     categories = Category.objects.all()
     products = Article.objects.all()
     partners = Partners.objects.all()
+    promo_products = products.filter(promo__gt=0)
+    promo_filter = request.GET.get('promo')
+
+    if promo_filter == 'true':
+        # Filtrer les produits avec une promotion supérieure à 0
+        products = products.filter(promo__gt=0)
+        promo_products = products  # Assigner les produits en promotion à une variable séparée
+    else:
+        promo_products = None  # Si le filtre promo n'est pas présent ou a une autre valeur, promo_products est None
 
     category = request.GET.get("category")
     main_category = request.GET.get("main_category")
@@ -613,8 +652,8 @@ def productLeftSideBar2Back(request):
             'partners': partners,
             'first_id': first_id,
             'last_id': last_id,
+            'promo_products': promo_products,  # Pass the promo products to the template
             'date_seuil': date_seuil,  # Pass the date_seuil to the template
-            **wishlist_content(request),
         })
     else:
         # Gérer le cas où la page demandée est invalide
@@ -624,10 +663,10 @@ def productLeftSideBar2Back(request):
 # XXXXX USER DETAILS ET PROFILE XXXXX
 def userDetailsBack(request, user_id):
     user = get_object_or_404(Profile, id=user_id)
-    return render(request, 'app/back/main/userDetailsBack.html', {'user': user, **wishlist_content(request),})
+    return render(request, 'app/back/main/userDetailsBack.html', {'user': user})
 
 def profileBack(request):
-    return render(request, 'app/back/main/profileBack.html', {**wishlist_content(request)})
+    return render(request, 'app/back/main/profileBack.html')
 
 def update_profile(request):
     if request.method == 'POST':
@@ -639,8 +678,8 @@ def update_profile(request):
         user.username = request.POST['username']  # Ajoutez cette ligne pour mettre à jour le nom d'utilisateur
         user.save()
         # Autres opérations de mise à jour si nécessaire
-        return redirect('profileBack', {**wishlist_content(request)})
-    return redirect('indexBack', {**wishlist_content(request)})
+        return redirect('profileBack')
+    return redirect('indexBack')
 
 
 # XXXX categories XXXXX
@@ -653,7 +692,7 @@ def categoriesBack(request):
             return redirect("categoriesBack")
     else : 
         form = CategoryForm()
-    return render(request, 'app/back/main/categoriesBack.html', {"form": form, "allCategory": allCategory,**wishlist_content(request),})
+    return render(request, 'app/back/main/categoriesBack.html', {"form": form, "allCategory": allCategory})
 
 def delete_category(request, id):
     category = get_object_or_404(Category, id=id)
@@ -671,7 +710,7 @@ def update_category(request, id):
     else:
         form = CategoryForm(instance=category)
 
-    return render(request, 'app/back/main/update_category.html', {'form': form, 'category': category, **wishlist_content(request)})
+    return render(request, 'app/back/main/update_category.html', {'form': form, 'category': category})
 
 # XXXXX PRODUCTSBACK XXXXX
 
@@ -686,7 +725,7 @@ def new_product(request):
             return redirect('productLeftSideBar2Back')
     else:
         form = ArticleForm()
-    return render(request, 'app/back/main/newProduct.html', {'form': form, **wishlist_content(request),})
+    return render(request, 'app/back/main/newProduct.html', {'form': form})
 
 
 def partnersBack(request):
@@ -703,7 +742,6 @@ def partnersBack(request):
     context = {
         'form': form,
         'allPartners': allPartners,
-        **wishlist_content(request),
     }
 
     return render(request, 'app/back/main/partnersBack.html', context)
@@ -722,7 +760,6 @@ def update_partner(request, partner_id):
 
     context = {
         'form': form,
-        **wishlist_content(request),
     }
     return render(request, 'app/back/main/partnersBack.html', context)
 
@@ -738,13 +775,13 @@ def delete_partner(request, id):
 
 def mailbox(request):
     mails = Contact.objects.all()
-    return render(request, "app/back/main/mailBox.html" , {"mails":mails, **wishlist_content(request),})
+    return render(request, "app/back/main/mailBox.html" , {"mails":mails})
 
 def lireMail(request, id):
     mail = Contact.objects.get(id=id)
     mail.lu = True
     mail.save()
-    return render(request, "app/back/main/lireValiderMail.html" , {"mail":mail, **wishlist_content(request),})
+    return render(request, "app/back/main/lireValiderMail.html" , {"mail":mail})
 
 def deleMail(request, id):
     destroy = Contact(id)
@@ -760,7 +797,7 @@ def response(request, id):
         send_mail(sujet, text_message, "xtonbackoffice@gmail.com", [email])
         print("erreur")
         return redirect('mailbox')
-    return render(request, "app/back/main/responce.html", {"contact":contact, **wishlist_content(request)})
+    return render(request, "app/back/main/responce.html", {"contact":contact})
 
 
 @login_required(login_url='login')

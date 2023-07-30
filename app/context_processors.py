@@ -17,4 +17,8 @@ def wishlist_content(request):
         except Wishlist.DoesNotExist:
             no_wish = "Your wishlist is currently empty."
 
-    return {'wishlist_items': wishlist_items, "no_wish": no_wish, "wish_items_count": wishlist_item_count}
+    return {
+        'wishlist_items': wishlist_items,
+        "no_wish": no_wish,
+        "wish_items_count": wishlist_item_count
+    }

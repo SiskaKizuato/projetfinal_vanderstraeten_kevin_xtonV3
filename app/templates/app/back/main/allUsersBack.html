@@ -32,9 +32,9 @@
                                                 <div class="usersMid">
                                                     <p class="txtList">{{x.last_name}}</p>
                                                 </div>
-                                                <form method="POST" action="{% url 'update_user' x.id %}" class="usersRight curPoint">
-                                                    <a href="{% url 'userDetailsBack' x.id %}" class="txtBtn">SHOW</a>
-                                                </form>
+                                                <a href="{% url 'userDetailsBack' x.id %}"  class="usersRight curPoint">
+                                                    <p class="txtBtn">SHOW</p>
+                                                </a>
                                             </div>
                                             <form method="POST" action="{% url 'update_user' x.id %}" class="ligneUsers">
                                                 {% csrf_token %}

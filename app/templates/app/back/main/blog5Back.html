@@ -52,9 +52,9 @@
                                 </div>
                                 <div class="containerCrudBlog">
                                     <div class="btnBlogCrud btnDeleteBlog">
-                                        <form method="POST" action="{% url 'delete_blog' x.id %}">
+                                        <form style="height: 100%; width: 100%; border-bottom-left-radius: 5px;" method="POST" action="{% url 'delete_blog' x.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="fontBtnBlog">DELETE</button>
+                                            <button type="submit" class="fontBtnBlog" style="height: 100%; width: 100%; border-bottom-left-radius: 5px;">DELETE</button>
                                         </form>
                                     </div>
                                     
