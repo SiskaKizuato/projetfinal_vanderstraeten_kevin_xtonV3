@@ -160,7 +160,9 @@
                                     </li> {% endcomment %}
                                 </ul>
                             </div>
+                            {% if x.created_at >= date_seuil %}
                             <div class="new-tag">New!</div>
+                            {% endif %}
                         </div>
 
                         <div class="products-content mb-5">
@@ -303,7 +305,9 @@
                                     </li> {% endcomment %}
                                 </ul>
                             </div>
-
+                            {% if x.created_at >= date_seuil %}
+                            <div class="new-tag">New!</div>
+                            {% endif %}
                         </div>
 
                         <div class="products-content mb-5">
