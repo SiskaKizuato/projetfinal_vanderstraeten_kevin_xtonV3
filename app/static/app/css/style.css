@@ -151,13 +151,6 @@ a{cursor: pointer;}
 
 }
 
-.size-link:active{
-  background-color: #f53f85;
-  color: #ffffff;
-}
-
-
-
 .containerTypeMail{
   width: 100%;
   display: flex;

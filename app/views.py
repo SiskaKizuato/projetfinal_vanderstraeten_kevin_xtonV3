@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
 from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm, NewsletterForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter, Wishlist, WishlistItem
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter, Wishlist, WishlistItem, Reviews, ReviewsVisiteur
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, F, Max
@@ -19,6 +19,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseForbidden)
 from django.db import transaction
 from django.db.models import ProtectedError
+import random
 from .context_processors import wishlist_content
 
 
@@ -34,26 +35,37 @@ def newsletter(request):
         send_mail('Newsletter', text_message, settings.DEFAULT_FROM_EMAIL, [email])
     return redirect('index')
 
+
+
 def index(request):
     partners = Partners.objects.all()
     popular_blogs = Blog.objects.order_by('-views')[:3]
-    
+
     # Fetch products with promo greater than 0
     promo_products = Article.objects.filter(promo__gt=0)
     max_promo = promo_products.aggregate(Max('promo'))['promo__max']
     seven_days_ago = timezone.now() - timezone.timedelta(days=7)
     recent_articles = Article.objects.filter(created_at__gte=seven_days_ago).order_by('-created_at')[:6]
 
-    
+    # Récupérer tous les articles avec le nombre total de reviews (reviews + reviewsVisiteur)
+    articles_with_reviews_count = Article.objects.annotate(
+        reviews_count=Count('reviews_produit_selected') + Count('reviewsvisiteur')
+    )
+
+    # Trier les articles par nombre de reviews décroissant en utilisant le champ reviews_count
+    most_reviewed = articles_with_reviews_count.order_by('-reviews_count')[:6]
+
     return render(request, 'app/front/main/index.html', {
         'popular_blogs': popular_blogs,
         'partners': partners,
         'promo_products': promo_products,
         'max_promo': max_promo,  # Passer la promotion maximale au template
         'recent_articles': recent_articles,
+        'most_reviewed': most_reviewed,  # Passer les 6 articles les plus populaires au template
         **wishlist_content(request),
     })
-
+    
+    
 def cart(request):
     return render(request, 'app/front/main/cart.html', {**wishlist_content(request),})
 
@@ -204,8 +216,39 @@ def productsType5(request, product_id):
 
     # Get all articles with the same category as the product
     related_articles = Article.objects.filter(category=product.category)
+    date_seuil = timezone.now() - timezone.timedelta(days=7)
+    
+    users = Profile.objects.all()
+    commentaire = Reviews.objects.all()
+    commentairevisiteure = ReviewsVisiteur.objects.all()
+    reviews = Reviews.objects.filter(produit_selected=product)
+    reviewsVisiteur = ReviewsVisiteur.objects.filter(produit_selected=product)
+    compteur = reviews.count() + reviewsVisiteur.count()
 
-    return render(request, 'app/front/main/productsType5.html', {'product': product, 'related_articles': related_articles, **wishlist_content(request),})
+    product.compteur = compteur
+    dateNow = datetime.now()
+    user = request.user
+    if user.is_active:
+        if request.method == "POST":
+            title = request.POST['title']
+            comment = request.POST['comment']
+            la_date = dateNow
+            new_review = Reviews(date_creation=la_date, titre=title, commentaire=comment, redacteure_id=user.id,produit_selected_id=product.id)
+            new_review.save()
+            return redirect("productsType5", product_id=product.id)
+
+    else:
+        if request.method == "POST":
+            name = request.POST['name']
+            email = request.POST['email']
+            title = request.POST['title']
+            comment = request.POST['comment']
+            la_date = dateNow
+            new_review = ReviewsVisiteur(date_creation=la_date, titre=title, commentaire=comment,name=name,adresseMail=email,produit_selected_id=product.id)
+            new_review.save()
+            return redirect("productsType5", product_id=product.id)
+
+    return render(request, 'app/front/main/productsType5.html',{'product': product, 'related_articles': related_articles, **wishlist_content(request), 'reviews': reviews, 'reviewsVisiteur': reviewsVisiteur, 'all_reviews': compteur, 'profile': users, 'date_seuil': date_seuil, 'compteur': compteur})
 
 # XXXXX COMPTE FRONT XXXXX
 

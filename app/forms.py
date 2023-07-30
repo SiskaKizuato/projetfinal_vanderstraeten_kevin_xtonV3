@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact, Newsletter
+from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact, Newsletter, Reviews, ReviewsVisiteur
 
 # XXXXX PARTIE BLOG XXXXX
 class CategoryBlogForm(forms.ModelForm):

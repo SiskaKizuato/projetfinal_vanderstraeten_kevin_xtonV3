@@ -145,3 +145,21 @@ class WishlistItem(models.Model):
 class Newsletter(models.Model):
     email = models.EmailField(max_length=500,unique=True)
     # subscribe = models.BooleanField(default=False)
+
+
+
+class Reviews(models.Model):
+    commentaire = models.CharField(max_length=400)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    produit_selected = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='reviews_produit_selected')
+    redacteure = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='reviews_redacteure')
+    titre = models.CharField(max_length=100)
+
+
+class ReviewsVisiteur(models.Model):
+    commentaire = models.CharField(max_length=400)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    produit_selected = models.ForeignKey(Article, on_delete=models.CASCADE)
+    titre = models.CharField(max_length=100)
+    adresseMail = models.EmailField()
+    name = models.CharField(max_length=50)

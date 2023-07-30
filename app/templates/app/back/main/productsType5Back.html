@@ -21,15 +21,15 @@
             <div class="container">
                 <div class="products-details-image-slider owl-carousel owl-theme">
                     <div class="image">
-                        <img src={{product.image1.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image1.url}} alt="image">
                     </div>
 
                     <div class="image">
-                        <img src={{product.image2.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image2.url}} alt="image">
                     </div>
 
                     <div class="image">
-                        <img src={{product.image3.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image3.url}} alt="image">
                     </div>
 
                 </div>
@@ -484,15 +484,7 @@
                         handleButtonClick(this);
                     });
         
-                    button.addEventListener('mousedown', function() {
-                        // Mettre à jour la couleur du texte en blanc (#ffffff)
-                        this.querySelector('a').style.color = '#ffffff';
-                    });
-        
-                    button.addEventListener('mouseup', function() {
-                        // Rétablir la couleur du texte à sa valeur d'origine
-                        this.querySelector('a').style.color = ''; // Laisser la valeur vide pour rétablir la couleur par défaut du texte
-                    });
+
                 });
             });
         </script>

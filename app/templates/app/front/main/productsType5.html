@@ -21,15 +21,15 @@
             <div class="container">
                 <div class="products-details-image-slider owl-carousel owl-theme">
                     <div class="image">
-                        <img src={{product.image1.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image1.url}} alt="image">
                     </div>
 
                     <div class="image">
-                        <img src={{product.image2.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image2.url}} alt="image">
                     </div>
 
                     <div class="image">
-                        <img src={{product.image3.url}} alt="image">
+                        <img style="border-radius: 5px;" src={{product.image3.url}} alt="image">
                     </div>
 
                 </div>
@@ -56,7 +56,7 @@
                             <i class='bx bx-star'></i>
                             <i class='bx bx-star'></i>
                         </div>
-                        <a href="#" class="rating-count">3 reviews</a>
+                        <a href="#" class="rating-count">{{product.compteur}} comments</a>
                     </div>
 
                     <ul class="products-info">
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="wishlist-compare-btn">
-                        <a href="#" class="optional-btn"><i class='bx bx-heart'></i> Add to Wishlist</a>
+                        <a href="{% url 'add_to_wishlist' product.id %}" class="optional-btn"><i class='bx bx-heart'></i> Add to Wishlist</a>
                     </div>
                 </div>
 
@@ -97,18 +97,6 @@
                     <ul class="tabs">
                         <li><a href="#">
                             <div class="dot"></div> Description
-                        </a></li>
-                        
-                        <li><a href="#">
-                            <div class="dot"></div> Additional Information
-                        </a></li>
-
-                        <li><a href="#">
-                            <div class="dot"></div> Shipping
-                        </a></li>
-
-                        <li><a href="#">
-                            <div class="dot"></div> Why Buy From Us
                         </a></li>
 
                         <li><a href="#">
@@ -143,180 +131,202 @@
 
                         <div class="tabs-item">
                             <div class="products-details-tab-content">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <tbody>
-                                            <tr>
-                                                <td>Color:</td>
-                                                <td>Blue, Purple, White</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Size:</td>
-                                                <td>20, 24</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Material:</td>
-                                                <td>100% Polyester</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Height:</td>
-                                                <td>180 cm - 5' 11”</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bust:</td>
-                                                <td>83 cm - 32”</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Waist:</td>
-                                                <td>57 cm - 22”</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Hips:</td>
-                                                <td>88 cm - 35</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shipping:</td>
-                                                <td>Free</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                              <div class="table-responsive">
+                                <table class="table table-striped">
+                  
+                                  <!-- Start commentaire Area -->
+                                  <div class="comments-area">
+                                    <h3 class="comments-title"> {{all_reviews}} Comments:</h3>
+                  
+                                    <ol class="comment-list">
+                                      {% for commentaire in reviews %}
+                                      <li class="comment">
+                                        <article class="comment-body">
+                                          <footer class="comment-meta">
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <div class="comment-author vcard">
+                                              
+                                                    <b class="fn">Author : <span style="font-weight: 400;">{{commentaire.redacteure.username}}</span> </b>
+                                                    <span class="says">says:</span>
+                                                  </div>
+                        
+                                                  <div class="comment-metadata">
+                                                    <a href="#">
+                                                      <span>{{commentaire.date_creation}} </span>
+                                                    </a>
+                                                  </div>
+                                            </div>
 
-                        <div class="tabs-item">
-                            <div class="products-details-tab-content">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td>Shipping</td>
-                                                <td>This item Ship to USA</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Delivery</td>
-                                                <td>
-                                                    Estimated between Wednesday 07/31/2021 and Monday 08/05/2021 <br>
-                                                    Will usually ship within 1 bussiness day.
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tabs-item">
-                            <div class="products-details-tab-content">
-                                <p>Here are 5 more great reasons to buy from us:</p>
-
-                                <ol>
-                                    <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</li>
-                                    <li> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</li>
-                                    <li>When an unknown printer took a galley of type and scrambled it to make a type specimen book.</li>
-                                    <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-                                    <li>When an unknown printer took a galley of type and scrambled it to make a type specimen book.</li>
-                                </ol>
-                            </div>
-                        </div>
-
-                        <div class="tabs-item">
-                            <div class="products-details-tab-content">
-                                <div class="products-review-form">
-                                    <h3>Customer Reviews</h3>
-
-                                    <div class="review-title">
-                                        <div class="rating">
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bx-star'></i>
-                                        </div>
-                                        <p>Based on 3 reviews</p>
-                                        <a href="#" class="default-btn">Write a Review</a>
+                                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                                <div class="comment-metadata">
+                                                    <a href="#">
+                                                      <b style="font-weight: bold; color: black;">Topic : </b><span>{{commentaire.titre}} </span>
+                                                    </a>
+                                                </div>
+    
+                                                <div class="reply">
+                                                    <a href="#" class="default-btn ">Reply</a>
+                                                </div>
+                                            </div>
+                                          </footer>
+                  
+                                          <div class="comment-content" style="padding-right: 15px; flex-wrap: wrap; overflow: hidden;">
+                                            <p>
+                                              {{commentaire.commentaire}}
+                                            </p>
+                                          </div>
+                  
+                                          
+                                        </article>
+                  
+                                      </li>
+                                      {% endfor %}
+                                      {% for commentaire in reviewsVisiteur %}
+                                      <li class="comment">
+                                        <article class="comment-body">
+                                          <footer class="comment-meta">
+                                            <div class="comment-author vcard">
+                                              
+                                              <b class="fn"> {{commentaire.name}} </b>
+                                              <span class="says">says:</span>
+                                            </div>
+                  
+                                            <div class="comment-metadata">
+                                              <a href="#">
+                                                <span> {{commentaire.date_creation}} </span>
+                                              </a>
+                                            </div>
+                                            
+                                            <div class="comment-metadata">
+                                                <a href="#">
+                                                  <span> {{commentaire.titre}} </span>
+                                                </a>
+                                            </div>
+                                          </footer>
+                  
+                                          <div class="comment-content">
+                                            <p>
+                                              {{commentaire.commentaire}}
+                                            </p>
+                                          </div>
+                  
+                                          <div class="reply">
+                                            <a href="#" class="comment-reply-link">Reply</a>
+                                          </div>
+                                        </article>
+                  
+                                      </li>
+                                      {% endfor %}
+                  
+                                      
+                                        </ol>
+                                      </li>
+                                    </ol>
+                  
+                                    <div class="comment-respond">
+                                      <h3 class="comment-reply-title">Leave a Reply</h3>
+                  
+                  
+                                      {% if user.is_active == False %}
+                                      <form method="POST" action="{% url 'productsType5' product.id  %}">
+                                          {% csrf_token %}
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6">
+                  
+                                                  
+                                                  <div class="form-group">
+                                                      <input type="text" id="name" name="name" placeholder="Enter your name" class="form-control">
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="col-lg-6 col-md-6">
+                                                  <div class="form-group">
+                                                      <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control">
+                                                  </div>
+                                              </div>
+                                              
+                                             
+                  
+                                              <div class="col-lg-12 col-md-12">
+                                                  <div class="form-group">
+                                                      <input type="text" id="review-title" name="title" placeholder="Enter your a title" class="form-control">
+                                                  </div>
+                                              </div>
+                                              <br>
+                                              <hr>
+                                              <br>
+                  
+                                              <div class="col-lg-12 col-md-12">
+                                                  <div class="form-group">
+                                                      <textarea name="comment" id="review-body" cols="30" rows="6" placeholder="Write your comments here" class="form-control"></textarea>
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="col-lg-12 col-md-12" style="margin-top: 15px;">
+                                                  <button type="submit" class="default-btn">Submit Review</button>
+                                              </div>
+                                          </div>
+                                        
+                                      </form>
+                                      
+                                      {% elif user.is_active %}
+                                      <form method="POST" action="{% url 'productsType5' product.id  %}">
+                                              {% csrf_token %}
+                                              <div class="row">
+                                                  <div class="col-lg-6 col-md-6">
+                                                      <div class="col-lg-12 col-md-12">
+                                                          <div class="form-group">
+                                                              <input type="text" id="review-title" name="title" placeholder="Enter your review a title" class="form-control">
+                                                          </div>
+                                                      </div>
+                  
+                                                      <div class="col-lg-12 col-md-12">
+                                                          <div class="form-group">
+                                                              <textarea name="comment" id="review-body" cols="30" rows="6" placeholder="Write your comments here" class="form-control"></textarea>
+                                                          </div>
+                                                      </div>
+                                                      
+                                                      <div class="col-lg-12 col-md-12" style="margin-top: 15px;">
+                                                        <button type="submit" class="default-btn">Submit Review</button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          
+                                          </form>
+                                      {% endif %}
+                  
+                  
+                  
                                     </div>
-
-                                    <div class="review-comments">
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bx-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2021</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bx-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2021</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bx-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2021</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="review-form">
-                                        <h3>Write a Review</h3>
-
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text" id="name" name="name" placeholder="Enter your name" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <input type="text" id="review-title" name="review-title" placeholder="Enter your review a title" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <textarea name="review-body" id="review-body" cols="30" rows="6" placeholder="Write your comments here" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 col-md-12">
-                                                    <button type="submit" class="default-btn">Submit Review</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                  </div>
+                                </table>
+                              </div>
                             </div>
-                        </div>
+                          </div>
+                  
+                          <div class="tabs-item">
+                            <div class="products-details-tab-content">
+                              <div class="table-responsive">
+                                <table class="table table-bordered">
+                                  <tbody>
+                                    <tr>
+                                      <td>Shipping</td>
+                                      <td>This item Ship to USA</td>
+                                    </tr>
+                  
+                                    <tr>
+                                      <td>Delivery</td>
+                                      <td>
+                                        Estimated between Wednesday 07/31/2021 and Monday
+                                        08/05/2021 <br />
+                                        Will usually ship within 1 bussiness day.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -333,62 +343,65 @@
                         <div class="single-products-box">
                             <div class="products-image">
                                 <a class="cadreImgProducts" href="{% url 'productsType5' product.id %}">
-                                    <img src="{{product.image1.url }}" class="imgGoodSize main-image" alt="image" />
+                                    <img style="border-radius: 5px;" src="{{product.image1.url }}" class="imgGoodSize main-image" alt="image" />
                                     <img src="{{product.image1.url }}" class="imgGoodSize hover-image" alt="image" />
                                 </a>
 
                                 <div class="products-button">
                                     <ul>
+                                        {% if request.user.is_authenticated %}
                                         <li>
                                             <div class="wishlist-btn">
-                                                <a href="#">
+                                                <a href="{% url 'add_to_wishlist' product.id %}">
                                                     <i class='bx bx-heart'></i>
                                                     <span class="tooltip-label">Add to Wishlist</span>
                                                 </a>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="compare-btn">
-                                                <a href="#">
-                                                    <i class='bx bx-refresh'></i>
-                                                    <span class="tooltip-label">Compare</span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
+                                        {% endif %}
+                                        {% comment %} <li>
                                             <div class="quick-view-btn">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#productsQuickView">
+                                                <a data-bs-toggle="modal"
+                                                data-bs-target="#productsQuickView{{product.id}}">
                                                     <i class='bx bx-search-alt'></i>
                                                     <span class="tooltip-label">Quick View</span>
                                                 </a>
                                             </div>
-                                        </li>
+                                        </li> {% endcomment %}
                                     </ul>
                                 </div>
+                                {% if product.created_at >= date_seuil %}
+                                    <div class="new-tag">New!</div>
+                                {% endif %}
                             </div>
 
                             <div class="products-content">
-                                <h3><a href="{% url 'productsType5' product.id %}">{{product.name}}</a></h3>
-                                <a href="#">{{product.category}}</a>
-                                {% if product.promo > 0 %}
+                                <span class="" style="color: #f53f85; font-weight: 600; font-size: 16px; padding-bottom: 15px;">{{product.category}}</span>
+                                <h3 class="containereTitreHidden"><a href="{% url 'productsType5' product.id %}">{{product.name}}</a></h3>
+                                <div class="fleee">
+                                    {% if product.promo > 0 %}
                                     <div class="price">
                                         <span class="old-price">$ {{ product.price }} </span>
                                         <span class="new-price">$ {{ product.get_discounted_price }} </span>
                                     </div>
-                                {% else %}
+                                    {% else %}
                                     <div class="price">
                                         <span class="new-price">$ {{ product.price }} </span>
                                     </div>
-                                {% endif %}
-                                <div class="star-rating">
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
-                                    <i class='bx bxs-star'></i>
+                                    {% endif %}
+                                    <div class="star-rating">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                    </div>
                                 </div>
+                                
                                 <a href="#" class="add-to-cart">Add to Cart</a>
                             </div>
+
+                            
                         </div>
 
                         {% endfor %}
@@ -484,15 +497,9 @@
                         handleButtonClick(this);
                     });
         
-                    button.addEventListener('mousedown', function() {
-                        // Mettre à jour la couleur du texte en blanc (#ffffff)
-                        this.querySelector('a').style.color = '#ffffff';
-                    });
+
         
-                    button.addEventListener('mouseup', function() {
-                        // Rétablir la couleur du texte à sa valeur d'origine
-                        this.querySelector('a').style.color = ''; // Laisser la valeur vide pour rétablir la couleur par défaut du texte
-                    });
+
                 });
             });
         </script>
