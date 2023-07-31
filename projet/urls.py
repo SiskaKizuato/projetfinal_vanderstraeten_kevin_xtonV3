@@ -76,7 +76,7 @@ urlpatterns = [
     path('edit_blog/<int:blog_id>/', views.edit_blog, name='edit_blog'),
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('update_partner/<int:partner_id>/', views.update_partner, name='update_partner'),
-
+    path('validation_commande/<int:id>', views.validation_commande, name='validation_commande'),
 
 
     # XXXXX DELETE XXXXX

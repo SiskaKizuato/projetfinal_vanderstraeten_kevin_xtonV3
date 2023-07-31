@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
 from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm, NewsletterForm, checkoutForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter, Wishlist, WishlistItem, Reviews, ReviewsVisiteur, Cart, CartItem, Order
+from .models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, F, Max
@@ -575,13 +575,13 @@ def update_contact_info(request):
 # XXXXX ORDERS BACK XXXXX
 def ordersBack(request):
     orders = Order.objects.all()
+    cart_items = CartItem.objects.all()  # Retrieve all cart items
 
-    return render(request, 'app/back/main/ordersBack.html', {'orders':orders})
+    return render(request, 'app/back/main/ordersBack.html', {'orders': orders, 'cart_items': cart_items})
 
 
-def recapitulation(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    return render(request, 'app/back/main/recapitulation.html', {'order': order})
+
+
 
 def profileBack(request):
     return render(request, 'app/back/main/profileBack.html')
@@ -1003,7 +1003,12 @@ def remove_from_cart(request, cart_item_id):
     
     
     
-    
+def recapitulation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    items_ordered = CartItem.objects.filter(cart=order.cart)
+
+    return render(request, 'app/back/main/recapitulation.html', {'order': order, 'items_ordered': items_ordered})
+
     
 
 def checkout(request):
@@ -1049,23 +1054,38 @@ def checkout(request):
             )
             order.save()
             
-            # # Création du récapitulatif des achats
-            # recapitulation = render_to_string('xton/backend/recapitulation.html', {"cart_items": cart_items})
+            # Création du récapitulatif des achats
+            recapitulation = render_to_string('app/back/main/recapitulation.html', {"cart_items": cart_items})
             
-            # # Envoi du mail avec récapitulatif des achats
-            # subject = 'Statut de la commande'
-            # message = 'Votre commande a été effectuée et est en cours de validation.\n\n' + recapitulation
-            # from_email = 'xtonbackoffice@gmail.com'           
-            # to_email = order.email
-            # send_mail(subject, message, from_email, [to_email], html_message=message)
+            # Envoi du mail avec récapitulatif des achats
+            subject = 'Statut de la commande'
+            message = 'Votre commande a été effectuée et est en cours de validation.\n\n' + recapitulation
+            from_email = 'xtonbackoffice@gmail.com'           
+            to_email = order.email
+            send_mail(subject, message, from_email, [to_email], html_message=message)
             
-            try:
-                cart_items.delete()  # Supprimer les cart_items associés au panier
-            except ProtectedError:
-                # Gérer l'erreur si les cart_items sont protégés
-                pass
-    
+            # try:
+            #     cart_items.delete()  # Supprimer les cart_items associés au panier
+            # except ProtectedError:
+            #     # Gérer l'erreur si les cart_items sont protégés
+            #     pass
+            return redirect("index")
     show = Article.objects.get(id=1)  # Remplacez 1 par votre logique de récupération du produit à afficher
 
     return render(request,'app/front/main/checkout.html',{"cart_items": cart_items, "total": total, "show": show, 'allProducts': allProducts})
 
+def validation_commande(request, id):
+    order = Order.objects.get(id=id)
+    
+    if request.method == "POST":
+        order.validate = True
+        order.save()
+        
+        # Envoi du mail avec récapitulatif des achats
+        subject = 'Statut de la commande'
+        message = 'Votre commande a été validée.\n\n'
+        from_email = 'xtonbackoffice@gmail.com'           
+        to_email = order.email
+        send_mail(subject, message, from_email, [to_email], html_message=message)
+        
+        return redirect("ordersBack")
