@@ -894,7 +894,7 @@ def add_to_cart_quantity(request, product_id):
 
         if cart_item:
             # Vérifier si la quantité spécifiée + la quantité existante est inférieure au stock taille M
-            if product.stock_M >= (cart_item.quantity + quantity):
+            if product.stock_M >= quantity:
                 with transaction.atomic():
                     cart_item.quantity += quantity  # Ajouter la quantité spécifiée à la quantité existante
                     cart_item.save()
@@ -921,6 +921,38 @@ def add_to_cart_quantity(request, product_id):
         return HttpResponseBadRequest("Unable to determine the previous page.")
 
 
+
+def remove_from_cart_quantity(request, product_id):
+    product = Article.objects.get(id=product_id)
+
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        cart = Cart.objects.get(user=request.user)
+        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+
+        if cart_item:
+            # Vérifier si la quantité spécifiée est inférieure ou égale à la quantité existante dans le panier
+            if quantity <= cart_item.quantity:
+                with transaction.atomic():
+                    cart_item.quantity -= quantity  # Soustraire la quantité spécifiée de la quantité existante
+                    cart_item.save()
+                    product.stock_M += quantity  # Rétablir le stock du produit
+                    product.save()
+                    # Supprimer l'article du panier si la quantité atteint 0
+                    if cart_item.quantity == 0:
+                        cart_item.delete()
+            else:
+                # Afficher un message d'erreur si la quantité spécifiée est supérieure à la quantité existante dans le panier
+                messages.error(request, f"Cannot remove {quantity} x '{product.name}' from the cart. Invalid quantity.")
+        else:
+            # Afficher un message d'erreur si l'article n'est pas dans le panier
+            messages.error(request, f"Cannot remove '{product.name}' from the cart. Item not found in the cart.")
+
+    previous_page = request.META.get('HTTP_REFERER')
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine the previous page.")
 
 @login_required(login_url='login')
 def update_quantity(request):

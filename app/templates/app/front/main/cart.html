@@ -65,13 +65,13 @@
                                 {% for item in cart_items %}
                                     <tr style="display: flex; align-items: center; justify-content: space-between;">
                                         <td class="product-thumbnail" style="margin-left: 30px;">
-                                            <a style="height: 100px; width: 80px; overflow: hidden; display: flex; align-items: center; justify-content: center;" href="#">
+                                            <a style="height: 100px; width: 80px; overflow: hidden; display: flex; align-items: center; justify-content: center;" href="{% url 'productsType5' item.product.id %}">
                                                 <img style="height: 100%; width: auto;" src={{item.product.image1.url}} alt="item">
                                             </a>
                                         </td>
 
-                                        <td class="product-name" style="height: 100px; width: 400px; margin-right: 30px; display: flex; flex-direction: column; padding: 0px 0px 0px 30px; overflow: hidden; justify-content: space-between;">
-                                            <a href="#" >{{item.product.name}}</a>
+                                        <td class="product-name" style="height: 100px; width: 200px; margin-right: 30px; display: flex; flex-direction: column; padding: 0px 0px 0px 30px; overflow: hidden; justify-content: space-between;">
+                                            <a href="{% url 'productsType5' item.product.id %}" >{{item.product.name}}</a>
                                             <ul style="width: 200px;">
                                                 <li style="width: 200px;">Size: <span>M</span></li>
                                                 <li style="width: 200px;">Category: <span>{{item.product.category}}</span></li>
@@ -95,6 +95,22 @@
                                                 <p>Quantity</p>
                                                 <input style=" width: 40px;" type="text" name="quantity_{{item.id}}" min="1" max="{{ item.product.stock_M }}" value="{{ item.quantity }}">
                                             </div> 
+
+                                            <div style=" display: flex;align-items: center;justify-content: center; height: 85px; width: 100%; margin-right: 30px;">
+                                                <form action="{% url 'remove_from_cart_quantity' item.product.id %}" method="post" style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
+                                                    {% csrf_token %}
+                                                    <div class="products-add-to-cart" style="height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                                                        <button type="submit" class="default-btn"><i class="fas fa-cart-plus"></i>SUB</button>
+
+                                                        <div class="input-counter">
+                                                            <span class="minus-btn"><i class='bx bx-minus'></i></span>
+                                                            <input type="text" name="quantity" id="quantity_{{item.product.id}}" min="1" value=1>
+                                                            <span class="plus-btn"><i class='bx bx-plus'></i></span>
+                                                        </div>
+                                      
+                                                    </div>
+                                                </form>
+                                            </div>
                                             <div style=" display: flex;align-items: center;justify-content: center; height: 85px; width: 100%; margin-right: 30px;">
                                                 <form action="{% url 'add_to_cart_quantity' item.product.id %}" method="post" style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
                                                     {% csrf_token %}
@@ -138,9 +154,9 @@
                         <h3>Cart Totals</h3>
 
                         <ul>
-                            <li>Subtotal <span> {{sub_total}} </span></li>
+                            <li>Subtotal <span>${{sub_total}} </span></li>
                             <li>Shipping <span>$30.00</span></li>
-                            <li>Total <span> {{sub_total|add:30}} </span></li>
+                            <li>Total <span>${{sub_total|add:30}} </span></li>
                         </ul>
                         <div style="width: 100%;display: flex; justify-content: center;">
                             <a href={% url 'checkout' %} class="default-btn">Proceed to Checkout</a>
