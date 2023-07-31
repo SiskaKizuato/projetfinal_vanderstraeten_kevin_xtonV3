@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact, Newsletter, Reviews, ReviewsVisiteur
+from .models import Profile, Article, Category, ContactInfo, Blog, Comment, CategoryBlog, Tag, Partners, Contact, Newsletter, Reviews, ReviewsVisiteur, Order
 
 # XXXXX PARTIE BLOG XXXXX
 class CategoryBlogForm(forms.ModelForm):
@@ -105,3 +105,8 @@ class NewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
         fields = '__all__'    
+        
+class checkoutForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ["first_name","last_name","country","company","address","city","state","postcode","email","phone","promo"]

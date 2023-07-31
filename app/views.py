@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm, NewsletterForm
-from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter, Wishlist, WishlistItem, Reviews, ReviewsVisiteur
+from .forms import SignupForm, ContactInfoForm, CategoryForm, BlogForm, CategoryBlogForm, TagForm, ArticleForm, PartnersForm, ContactForm, NewsletterForm, checkoutForm
+from .models import Profile, ContactInfo, Category, Blog, CategoryBlog, Tag, Partners, Contact, Article, Newsletter, Wishlist, WishlistItem, Reviews, ReviewsVisiteur, Cart, CartItem, Order
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, F, Max
@@ -93,7 +93,7 @@ def contact(request):
             user = form.save()
             #send mail notification
             subject = "avis de reception"
-            message = f'Hello {{user.psodo}}, nous avons bien recu votre meail et nous vous repondrons dans les plus bref délé'
+            message = f'Hello {{user.psodo}}, nous avons bien recu votre email et nous vous repondrons dans les plus bref delais'
             from_email = 'xtonbacbackoffice@gmail.com'
             to_email = user.email
             msg = EmailMultiAlternatives(
@@ -174,7 +174,7 @@ def productLeftSideBar2(request):
     # Obtenir la date d'il y a 7 jours
     date_seuil = timezone.now() - timezone.timedelta(days=7)
 
-    paginator = Paginator(products, 18)
+    paginator = Paginator(products, 12)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
 
@@ -635,7 +635,7 @@ def productLeftSideBar2Back(request):
     # Obtenir la date d'il y a 7 jours
     date_seuil = timezone.now() - timezone.timedelta(days=7)
 
-    paginator = Paginator(products, 18)
+    paginator = Paginator(products, 12)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
 
