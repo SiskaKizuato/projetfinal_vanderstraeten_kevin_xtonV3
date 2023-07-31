@@ -944,9 +944,7 @@ def remove_from_cart_quantity(request, product_id):
             else:
                 # Afficher un message d'erreur si la quantité spécifiée est supérieure à la quantité existante dans le panier
                 messages.error(request, f"Cannot remove {quantity} x '{product.name}' from the cart. Invalid quantity.")
-        else:
-            # Afficher un message d'erreur si l'article n'est pas dans le panier
-            messages.error(request, f"Cannot remove '{product.name}' from the cart. Item not found in the cart.")
+
 
     previous_page = request.META.get('HTTP_REFERER')
     if previous_page:
