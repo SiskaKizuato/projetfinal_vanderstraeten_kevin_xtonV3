@@ -52,35 +52,35 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    {% comment %} <th scope="col">Product</th>
+                                    <th scope="col">Product</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Unit Price</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th> {% endcomment %}
+                                    <th scope="col">Total</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 
                                 {% for item in cart_items %}
-                                    <tr style="display: flex; align-items: center; justify-content: space-between;">
-                                        <td class="product-thumbnail" style="margin-left: 30px;">
-                                            <a style="height: 100px; width: 80px; overflow: hidden; display: flex; align-items: center; justify-content: center;" href="#">
-                                                <img style="height: 100%; width: auto;" src={{item.product.image1.url}} alt="item">
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href="#">
+                                                <img src={{item.product.image1.url}} alt="item">
                                             </a>
                                         </td>
 
-                                        <td class="product-name" style="height: 100px; width: 400px; margin-right: 30px; display: flex; flex-direction: column; padding: 0px 0px 0px 30px; overflow: hidden; justify-content: space-between;">
-                                            <a href="#" >{{item.product.name}}</a>
-                                            <ul style="width: 200px;">
-                                                <li style="width: 200px;">Size: <span>M</span></li>
-                                                <li style="width: 200px;">Category: <span>{{item.product.category}}</span></li>
+                                        <td class="product-name">
+                                            <a href="#"> {{item.product.name}} </a>
+                                            <ul>
+                                                <li>Size: <span>M</span></li>
                                             </ul>
                                         </td>
 
-                                        <td class="product-price" style="width: 80px;">
+                                        <td class="product-price">
                                             {% if item.product.promo > 0 %}
                                             <div class="price">
+                                                <span class="old-price">$ {{ item.product.price }} </span>
                                                 <span class="new-price">$ {{ item.product.get_discounted_price }} </span>
                                             </div>
                                             {% else %}
@@ -91,31 +91,29 @@
                                         </td>
 
                                         <td class="product-quantity d-flex">
-                                            <div class="input-counter" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 15px;">
-                                                <p>Quantity</p>
-                                                <input style=" width: 40px;" type="text" name="quantity_{{item.id}}" min="1" max="{{ item.product.stock_M }}" value="{{ item.quantity }}">
+                                            <div class="input-counter">
+                                                <input type="text" name="quantity_{{item.id}}" min="1" max="{{ item.product.stock_M }}" value="{{ item.quantity }}">
                                             </div> 
-                                            <div style=" display: flex;align-items: center;justify-content: center; height: 85px; width: 100%; margin-right: 30px;">
-                                                <form action="{% url 'add_to_cart_quantity' item.product.id %}" method="post" style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
+                                            <div>
+                                                <form action="{% url 'add_to_cart_quantity' item.product.id %}" method="post">
                                                     {% csrf_token %}
-                                                    <div class="products-add-to-cart" style="height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                                                        <button type="submit" class="default-btn"><i class="fas fa-cart-plus"></i>Add</button>
-
+                                                    <div class="products-add-to-cart">
                                                         <div class="input-counter">
                                                             <span class="minus-btn"><i class='bx bx-minus'></i></span>
                                                             <input type="text" name="quantity" id="quantity_{{item.product.id}}" min="1" value=1>
                                                             <span class="plus-btn"><i class='bx bx-plus'></i></span>
                                                         </div>
                                       
+                                                        <button type="submit" class="default-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </td>
 
-                                        <td class="product-subtotal" style="width: 150px;">
+                                        <td class="product-subtotal">
                                             <span class="subtotal-amount"> {{item.total}} </span>
 
-                                            <a href={% url 'remove_from_cart' item.id %} class="remove" style="margin-right: 30px; margin-left: 30px;"><i class='bx bx-trash'></i></a>
+                                            <a href={% url 'remove_from_cart' item.id %} class="remove"><i class='bx bx-trash'></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -142,10 +140,8 @@
                             <li>Shipping <span>$30.00</span></li>
                             <li>Total <span> {{sub_total|add:30}} </span></li>
                         </ul>
-                        <div style="width: 100%;display: flex; justify-content: center;">
-                            <a href={% url 'checkout' %} class="default-btn">Proceed to Checkout</a>
-
-                        </div>
+                        
+                        <a href={% url 'checkout' %} class="default-btn">Proceed to Checkout</a>
                     </div>
                 </form>
             </div>
