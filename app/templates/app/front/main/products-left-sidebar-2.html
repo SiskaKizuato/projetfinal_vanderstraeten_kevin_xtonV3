@@ -227,7 +227,7 @@
                                         {% endif %}
                                     </div>
                                     
-                                    <a href="#" class="add-to-cart">Add to Cart</a>
+                                    <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
                                 </div>
 
                                 {% if product.promo > 0 %}
