@@ -1,4 +1,36 @@
-from .models import ContactInfo, Wishlist, WishlistItem
+from .models import *
+
+from django.db.models import Sum
+
+def cart_modal(request):
+    message_empty = None
+    if request.user.is_authenticated:
+        try:
+            cart = Cart.objects.get(user=request.user)
+            cart_items = CartItem.objects.filter(cart=cart)
+
+            for cart_item in cart_items:
+                if cart_item.product.promo == 0:
+                    cart_item.total = cart_item.product.price * cart_item.quantity
+                else:
+                    cart_item.total = (cart_item.product.price - (cart_item.product.price * cart_item.product.promo / 100)) * cart_item.quantity
+            sub_total = sum(cart_item.total for cart_item in cart_items)
+
+            return {'cart_items': cart_items, "sub_total": sub_total}
+        
+        except Cart.DoesNotExist:
+            message_empty = "Your cart is currently empty."
+    return {'message_empty': message_empty}
+    
+
+def cart_counter(request):
+    cart_count = 0
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user).first()
+        if cart:
+            cart_count = cart.products.aggregate(total_quantity=Sum('cartitem__quantity'))['total_quantity'] or 0
+    return {'cart_counter': cart_count}
+
 
 def contact_info_processor(request):
     contact_info = ContactInfo.objects.first()

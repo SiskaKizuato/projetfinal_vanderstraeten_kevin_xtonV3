@@ -67,15 +67,6 @@ def index(request):
         'most_reviewed': most_reviewed,  # Passer les 6 articles les plus populaires au template
         **wishlist_content(request),
     })
-    
-    
-def cart(request):
-    return render(request, 'app/front/main/cart.html', {**wishlist_content(request),})
-
-def checkout(request):
-    return render(request, 'app/front/main/checkout.html', {**wishlist_content(request),})
-
-
 
 def contact(request):
     # contact_info = ContactInfo.objects.first()
@@ -830,3 +821,214 @@ def remove_from_wishlist(request, wish_item_id):
         return redirect(previous_page)
     else:
         return HttpResponseBadRequest("Unable to determine previous page.")
+    
+    
+    
+    
+    
+    
+    
+    
+def cart(request):
+    return render(request, 'app/front/main/cart.html')   
+    
+
+@login_required(login_url='login')
+def cartHome(request):
+    try:
+        cart = Cart.objects.get(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+
+        for cart_item in cart_items:
+            if cart_item.product.promo == 0:
+                cart_item.total = cart_item.product.price * cart_item.quantity
+            else:
+                cart_item.total = (cart_item.product.price - (cart_item.product.price * cart_item.product.promo / 100)) * cart_item.quantity
+
+        sub_total = sum(cart_item.total for cart_item in cart_items)
+        prixTotal = sub_total + 30
+        
+        return render(request, "app/front/main/cart.html", {'cart_items': cart_items, "sub_total": sub_total, 'prixTotal': prixTotal})
+    except Cart.DoesNotExist:
+        message_empty = "Your cart is currently empty."
+        return render(request, "app/front/main/cart.html", {'message_empty': message_empty})
+
+
+
+
+@login_required(login_url='login')
+def add_to_cart(request, product_id):
+    product = Article.objects.get(pk=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    # Vérifie si le stock_M est suffisant pour ajouter un autre produit au panier
+    if product.stock_M > 0:
+        # Si l'article est déjà dans le panier, augmentez simplement la quantité
+        if not item_created:
+            cart_item.quantity += 1
+        else:
+            cart_item.quantity = 1  # Sinon, initialisez la quantité à 1
+        cart_item.save()
+
+        # Mettez à jour le stock_M du produit
+        product.stock_M -= 1
+        product.save()
+
+    previous_page = request.META.get('HTTP_REFERER')
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine previous page.")
+
+
+
+@login_required(login_url='login')
+def add_to_cart_quantity(request, product_id):
+    product = Article.objects.get(id=product_id)
+
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+
+        if cart_item:
+            # Vérifier si la quantité spécifiée + la quantité existante est inférieure au stock taille M
+            if product.stock_M >= (cart_item.quantity + quantity):
+                with transaction.atomic():
+                    cart_item.quantity += quantity  # Ajouter la quantité spécifiée à la quantité existante
+                    cart_item.save()
+                    product.stock_M -= quantity  # Décrémenter le stock du produit
+                    product.save()
+            else:
+                # Afficher un message d'erreur si la quantité dépasse le stock taille M
+                messages.error(request, f"Cannot add {quantity} x '{product.name}' to the cart. Insufficient stock ({product.stock_M} left).")
+        else:
+            # Vérifier si la quantité spécifiée est inférieure ou égale au stock taille M
+            if product.stock_M >= quantity:
+                with transaction.atomic():
+                    cart_item = CartItem.objects.create(cart=cart, product=product, quantity=quantity)
+                    product.stock_M -= quantity  # Décrémenter le stock du produit
+                    product.save()
+            else:
+                # Afficher un message d'erreur si la quantité dépasse le stock taille M
+                messages.error(request, f"Cannot add {quantity} x '{product.name}' to the cart. Insufficient stock ({product.stock_M} left).")
+
+    previous_page = request.META.get('HTTP_REFERER')
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine the previous page.")
+
+
+
+@login_required(login_url='login')
+def update_quantity(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    if request.method == 'POST':
+        with transaction.atomic():
+            for item in cart_items:
+                old_quantity = item.quantity
+                quantity = int(request.POST[f'quantity_{item.id}'])
+                difference = quantity - old_quantity
+                if quantity > 0:
+                    item.quantity = quantity
+                    item.save()
+                    #* Update stock
+                    product = item.product
+                    product.stock_M -= difference
+                    product.save()
+                else:
+                    item.delete()
+    return redirect('cartHome')
+    
+
+
+@login_required(login_url='login')
+def remove_from_cart(request, cart_item_id):
+    cart_item = CartItem.objects.get(pk=cart_item_id)
+    #* Update stock before deleting cart_item
+    with transaction.atomic():
+        product = cart_item.product
+        product.stock_M += cart_item.quantity
+        product.save()
+        cart_item.delete()
+
+    previous_page = request.META.get('HTTP_REFERER')
+    if previous_page:
+        return redirect(previous_page)
+    else:
+        return HttpResponseBadRequest("Unable to determine previous page.")
+    
+    
+    
+    
+    
+    
+    
+    
+
+def checkout(request):
+    allProducts = Article.objects.all()
+    cart_items = []
+    total = 0
+    print("1")
+    if request.user.is_authenticated:
+        print("2")
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = cart.cartitem_set.all()
+        user = request.user
+        for cart_item in cart_items:
+            cart_item.total = cart_item.quantity * cart_item.product.prix
+            total += cart_item.total
+        print("4")    
+        if request.method == 'POST':
+            print("5")
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            user.country = request.POST['country']
+            user.company = request.POST['company']
+            user.address = request.POST['address']
+            user.city = request.POST['city']
+            user.state = request.POST['state']
+            user.postcode = request.POST['postcode']
+            email = request.POST['email']
+            user.phone = request.POST['phone']
+            user.save()
+            
+            order = Order(
+                cart=cart,
+                first_name=first_name,
+                last_name=last_name,
+                country=user.country,
+                company=user.company,
+                address=user.address,
+                city=user.city,
+                state=user.state,
+                postcode=user.postcode,
+                email=email,
+                phone=user.phone
+            )
+            order.save()
+            
+            # # Création du récapitulatif des achats
+            # recapitulation = render_to_string('xton/backend/recapitulation.html', {"cart_items": cart_items})
+            
+            # # Envoi du mail avec récapitulatif des achats
+            # subject = 'Statut de la commande'
+            # message = 'Votre commande a été effectuée et est en cours de validation.\n\n' + recapitulation
+            # from_email = 'xtonbackoffice@gmail.com'           
+            # to_email = order.email
+            # send_mail(subject, message, from_email, [to_email], html_message=message)
+            
+            try:
+                cart_items.delete()  # Supprimer les cart_items associés au panier
+            except ProtectedError:
+                # Gérer l'erreur si les cart_items sont protégés
+                pass
+    
+    show = Product.objects.get(id=1)  # Remplacez 1 par votre logique de récupération du produit à afficher
+
+    return render(eequest,'app/front/main/checkout.html',{"cart_items": cart_items, "total": total, "show": show, 'allProducts': allProducts})
+

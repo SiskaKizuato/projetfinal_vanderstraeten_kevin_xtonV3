@@ -180,7 +180,7 @@
                             <div class="star-rating">
                                 <p>{{x.created_at}}</p>
                             </div>
-                            <a href="#" class="add-to-cart">Add to Cart</a>
+                            <a href="{% url 'add_to_cart' x.id %}" class="add-to-cart">Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -325,7 +325,7 @@
                             <div class="star-rating">
                                 <p>{{ x.reviews_count }} comments</p>
                             </div>
-                            <a href="#" class="add-to-cart">Add to Cart</a>
+                            <a href="{% url 'add_to_cart' x.id %}" class="add-to-cart">Add to Cart</a>
                         </div>
                     </div>
                 </div>

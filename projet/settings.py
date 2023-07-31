@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'bootstrap5',
+    "mathfilters",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "app.context_processors.cart_modal",
+                "app.context_processors.cart_counter",
+                "app.context_processors.wishlist_content",
                 'app.context_processors.contact_info_processor',
             ],
         },
