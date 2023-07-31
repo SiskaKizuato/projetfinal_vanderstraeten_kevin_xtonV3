@@ -61,6 +61,12 @@ body {
   font-size: 15px;
 }
 
+.liSideBarContainer{
+  height: 81px;
+  width: 69.5px;
+  overflow: hidden;
+}
+
 .containereTitreHidden{
   height: 25px;
   overflow: hidden;

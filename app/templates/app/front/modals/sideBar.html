@@ -16,9 +16,9 @@
                             <p>One of the most popular on the web is shopping. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             
                             <ul class="sidebar-contact-info">
-                                <li><i class='bx bx-map'></i> <a href="#" target="_blank">Wonder Street, USA, New York</a></li>
-                                <li><i class='bx bx-phone-call'></i> <a href="tel:+01321654214">+01 321 654 214</a></li>
-                                <li><i class='bx bx-envelope'></i> <a href="mailto:hello@xton.com">hello@xton.com</a></li>
+                                <li><i class='bx bx-map'></i> <a href="#" target="_blank">{{ contact_info.location }}</a></li>
+                                <li><i class='bx bx-phone-call'></i> <a href="tel:+01321654214">{{ contact_info.phone }}</a></li>
+                                <li><i class='bx bx-envelope'></i> <a href="mailto:hello@xton.com">{{ contact_info.email }}</a></li>
                             </ul>
                         </div>
 
@@ -35,25 +35,18 @@
                         <h3>New In Store</h3>
 
                         <ul class="products-list">
+                            {% for x in recent_products %}
                             <li>
-                                <a href="#"><img src="{% static 'app/img/products/img1.jpg' %}" alt="image"></a>
+                                <a class="liSideBarContainer" href="{% url 'productsType5' x.id %}">
+                                    <img style="height: 100%; width: 100%;" src="{{x.image1.url}}" alt="image">
+                                </a>
                             </li>
+                            {% endfor %}
 
-                            <li>
-                                <a href="#"><img src="{% static 'app/img/products/img2.jpg' %}" alt="image"></a>
-                            </li>
-
-                            <li>
-                                <a href="#"><img src="{% static 'app/img/products/img3.jpg' %}" alt="image"></a>
-                            </li>
-
-                            <li>
-                                <a href="#"><img src="{% static 'app/img/products/img4.jpg' %}" alt="image"></a>
-                            </li>
                         </ul>
 
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <a href="#" class="shop-now-btn">Shop Now</a>
+                        <a href="{% url 'productLeftSideBar2' %}" class="shop-now-btn">Shop Now</a>
                     </div>
                 </div>
             </div>

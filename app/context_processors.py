@@ -1,4 +1,5 @@
 from .models import *
+from datetime import datetime, timedelta  # Import timedelta here
 
 from django.db.models import Sum
 
@@ -35,6 +36,12 @@ def cart_counter(request):
 def contact_info_processor(request):
     contact_info = ContactInfo.objects.first()
     return {'contact_info': contact_info}
+
+def recent_products_processor(request):
+    seven_days_ago = datetime.now() - timedelta(days=7)
+    recent_products = Article.objects.filter(created_at__gte=seven_days_ago).order_by('-created_at')[:4]
+    return {'recent_products': recent_products}
+
 
 def wishlist_content(request):
     wishlist_items = []
