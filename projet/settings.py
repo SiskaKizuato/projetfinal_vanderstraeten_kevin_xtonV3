@@ -62,6 +62,9 @@ TEMPLATES = [
                 "app.context_processors.wishlist_content",
                 'app.context_processors.contact_info_processor',
                 'app.context_processors.recent_products_processor',
+                'app.context_processors.cart_modal',
+                'app.context_processors.cart_counter',
+
             ],
         },
     },

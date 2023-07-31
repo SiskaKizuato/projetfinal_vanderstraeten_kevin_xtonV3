@@ -980,7 +980,7 @@ def checkout(request):
         cart_items = cart.cartitem_set.all()
         user = request.user
         for cart_item in cart_items:
-            cart_item.total = cart_item.quantity * cart_item.product.prix
+            cart_item.total = cart_item.quantity * cart_item.product.price
             total += cart_item.total
         print("4")    
         if request.method == 'POST':
@@ -1028,7 +1028,7 @@ def checkout(request):
                 # Gérer l'erreur si les cart_items sont protégés
                 pass
     
-    show = Product.objects.get(id=1)  # Remplacez 1 par votre logique de récupération du produit à afficher
+    show = Article.objects.get(id=1)  # Remplacez 1 par votre logique de récupération du produit à afficher
 
-    return render(eequest,'app/front/main/checkout.html',{"cart_items": cart_items, "total": total, "show": show, 'allProducts': allProducts})
+    return render(request,'app/front/main/checkout.html',{"cart_items": cart_items, "total": total, "show": show, 'allProducts': allProducts})
 

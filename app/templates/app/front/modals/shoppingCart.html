@@ -1,81 +1,79 @@
-{% comment %} 
 {% load static %}
 {% load mathfilters %}
-
-    <!-- Start Shopping Cart Modal -->
-<div
-class="modal right fade shoppingCartModal"
-id="shoppingCartModal"
-tabindex="-1"
-role="dialog"
->
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <button
-      type="button"
-      class="close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-    >
-      <span aria-hidden="true"><i class="bx bx-x"></i></span>
-    </button>
-
-    <div class="modal-body">
-      <h3>My Cart</h3>
-        {% if cart_items %}
-            
-      <div class="products-cart-content">
-        
-        {% for item in cart_items %}
-            {% if forloop.counter0 < 4 %}
-            <div class="products-cart">
-                <div class="products-image">
-              <a href={% url 'productType1' item.product.id %}
-              ><img src={{item.product.image1.url}} alt="image"
-              /></a>
-            </div>
-            
-            <div class="products-content">
-              <h3><a href={% url 'productsType1' item.product.id %}> {{item.product.name}} </a></h3>
-              <div class="products-price">
-                  <span>1</span>
-                  <span>x</span>
-                  {% if item.product.promo > 0 %}
-                    <div class="price">
-                      <span class="old-price">$ <strike>{{item.product.price}}</strike> </span>
-                      <span class="new-price"
-                        >$ {{item.product.prix|div:100|mul:item.product.promo}}
-                      </span>
-                    </div>
-                    {% else %}
-                    <div class="price">
-                      <span class="new-price">$ {{produit.price}} </span>
-                    </div>
-                    {% endif %}
-                </div>
-                <a href="#" class="remove-btn"><i class="bx bx-trash"></i></a>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-        
-
-       
-      </div>
-
-      <div class="products-cart-subtotal">
-        <span>Subtotal</span>
-
-        <span class="subtotal">$ {{sub_total}} </span>
-      </div>
-
-      <div class="products-cart-btn">
-        <a href={% url 'checkout' %} class="default-btn">Proceed to Checkout</a>
-        <a href={% url 'cartHome' %} class="optional-btn">View Shopping Cart</a>
-      </div>
-        {% endif %}
-    </div>
-  </div>
-</div>
-</div>
-<!-- End Shopping Cart Modal --> {% endcomment %}
+           <!-- Start Shopping Cart Modal -->
+           <div
+           class="modal right fade shoppingCartModal"
+           id="shoppingCartModal"
+           tabindex="-1"
+           role="dialog"
+           >
+           <div class="modal-dialog" role="document">
+             <div class="modal-content">
+               <button
+                 type="button"
+                 class="close"
+                 data-bs-dismiss="modal"
+                 aria-label="Close"
+               >
+                 <span aria-hidden="true"><i class="bx bx-x"></i></span>
+               </button>
+           
+               <div class="modal-body">
+                 <h3>My Cart (3)</h3>
+                   {% if cart_items %}
+                       
+                 <div class="products-cart-content">
+                   
+                   {% for item in cart_items %}
+                       {% if forloop.counter0 < 4 %}
+                       <div class="products-cart">
+                           <div class="products-image">
+                         <a href={% url 'productsType5' item.product.id %}
+                         ><img src={{item.product.image1.url}} alt="image"
+                         /></a>
+                       </div>
+                       
+                       <div class="products-content">
+                         <h3><a href={% url 'productsType5' item.product.id %}> {{item.product.name}} </a></h3>
+                         <div class="products-price">
+                             <span>1</span>
+                             <span>x</span>
+                             {% if item.product.promo > 0 %}
+                               <div class="price">
+                                 <span class="old-price">$ <strike>{{item.product.price}}</strike> </span>
+                                 <span class="new-price"
+                                   >$ {{item.product.price|div:100|mul:item.product.promo}}
+                                 </span>
+                               </div>
+                               {% else %}
+                               <div class="price">
+                                 <span class="new-price">$ {{item.product.price}} </span>
+                               </div>
+                               {% endif %}
+                           </div>
+                           <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn"><i class="bx bx-trash"></i></a>
+                          </div>
+                   </div>
+                   {% endif %}
+                   {% endfor %}
+                   
+           
+                  
+                 </div>
+           
+                 <div class="products-cart-subtotal">
+                   <span>Subtotal</span>
+           
+                   <span class="subtotal">$ {{sub_total}} </span>
+                 </div>
+           
+                 <div class="products-cart-btn">
+                   <a href={% url 'checkout' %} class="default-btn">Proceed to Checkout</a>
+                   <a href={% url 'cartHome' %} class="optional-btn">View Shopping Cart</a>
+                 </div>
+                   {% endif %}
+               </div>
+             </div>
+           </div>
+           </div>
+           <!-- End Shopping Cart Modal -->

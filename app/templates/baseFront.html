@@ -36,13 +36,13 @@
 
         {% include 'app/front/modals/sideBar.html' %}
         {% include 'app/front/modals/quickView.html' %}
-        {% comment %} {% include 'app/front/modals/shoppingCart.html' with cart_items=cart_items sub_total=sub_total %} {% endcomment %}
+        {% include 'app/front/modals/shoppingCart.html' %}
         {% include 'app/front/modals/wishlist.html' with wishlist_items=wishlist_items wish_items_count=wish_items_count %}
         {% include 'app/front/modals/sizeGuide.html' %}
         {% include 'app/front/modals/shipping.html' %}
         {% include 'app/front/modals/productsFilter.html' %}
 
-        {% include 'app/front/footer/footer.html' %}
+        {% comment %} {% include 'app/front/footer/footer.html' %}
            <!-- Start Shopping Cart Modal -->
 <div
 class="modal right fade shoppingCartModal"
@@ -119,7 +119,7 @@ role="dialog"
   </div>
 </div>
 </div>
-<!-- End Shopping Cart Modal -->
+<!-- End Shopping Cart Modal --> {% endcomment %}
         <div class="go-top"><i class='bx bx-up-arrow-alt'></i></div>
 
         <!-- Links of JS files -->
