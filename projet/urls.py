@@ -40,6 +40,8 @@ urlpatterns = [
     path('productsType5/<int:product_id>/', views.productsType5, name='productsType5'),
     path('productsType5Back/<int:product_id>/', views.productsType5Back, name='productsType5Back'),
     path("envoimail/",views.newsletter , name="newsletter"),
+    path('recapitulation/<int:order_id>/', views.recapitulation, name='recapitulation'),
+
 
     # URL pour la vue validate_blog
 

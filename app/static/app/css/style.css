@@ -61,6 +61,132 @@ body {
   font-size: 15px;
 }
 
+.imitationInput{
+  height: 47px;
+  background-color: #f5f5f5;
+  width: 100%;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+.imitationInput p{
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.containerOrdersBarck{
+  width: 100%;
+  height: fit-content;
+  padding: 100px 200px 100px 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.divisionOrdersBack{
+  width: 100%;
+  height: fit-content;
+}
+
+.titreOrders{
+  background-color: #f53f85;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 7px;
+}
+
+.titreOrders h3{
+  margin: 0;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.containerListeOrders{
+  width: 100%;
+  height: fit-content;
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.rowOrder{
+  width: 100%;
+  height: 45px;
+  background-color: #f5f5f5;
+  margin-bottom: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerIdOrder{
+  height: 100%;
+  width: 11%;
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerFirstOrder{
+  height: 100%;
+  width: 32%;
+  border: 1.5px solid #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContainerLastOrder{
+  height: 100%;
+  width: 37%;
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerBtnShow{
+  height: 96%;
+  width: 18%;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  border: 1px solid #f53f85;
+  background-color: #f53f85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease-in-out;
+}
+
+.containerBtnShow:hover{
+  border: 1px solid black;
+  background-color: #ffffff;
+}
+
+
+.containerBtnShow p{
+  color:  #ffffff;
+  transition: 0.2s ease-in-out;
+}
+
+.containerBtnShow:hover p{
+  color: black;
+}
+
+.txtCelluleOrderListe{
+  font-size: 17px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.636);
+  letter-spacing: 1px;
+}
+
+
 .liSideBarContainer{
   height: 81px;
   width: 69.5px;
@@ -176,7 +302,6 @@ a{cursor: pointer;}
   border: 1px solid black;
 }
 #aieaie{
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;

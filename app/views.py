@@ -574,7 +574,14 @@ def update_contact_info(request):
 
 # XXXXX ORDERS BACK XXXXX
 def ordersBack(request):
-    return render(request, 'app/back/main/ordersBack.html')
+    orders = Order.objects.all()
+
+    return render(request, 'app/back/main/ordersBack.html', {'orders':orders})
+
+
+def recapitulation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'app/back/main/recapitulation.html', {'order': order})
 
 def profileBack(request):
     return render(request, 'app/back/main/profileBack.html')

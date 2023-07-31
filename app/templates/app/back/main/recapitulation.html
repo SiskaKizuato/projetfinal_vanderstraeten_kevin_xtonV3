@@ -1,0 +1,191 @@
+{% extends 'baseBack.html' %}
+
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+
+
+        <!-- Start Page Title -->
+        <div class="page-title-area">
+            <div class="container">
+                <div class="page-title-content">
+                    <h2>Order Details</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li>Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+                <!-- Start Checkout Area -->
+		<section class="checkout-area ptb-100">
+            <div class="container">
+
+
+                <form action={% url 'checkout' %} method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="billing-details">
+                                <h3 class="title">Billing Details</h3>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+										    <label>Country </label>
+										
+                                            <div class="select-box">
+                                                <select class="form-control" name='country'>
+                                                    <option>United Arab Emirates</option>
+                                                    <option>China</option>
+                                                    <option>United Kingdom</option>
+                                                    <option>Germany</option>
+                                                    <option>France</option>
+                                                    <option>Japan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name </label>
+                                            <div class="imitationInput">
+                                                <p>{{order.first_name}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name </label>
+                                            <div class="imitationInput">
+                                                <p>{{order.last_name}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label>Company Name</label>
+                                            <input type="text" class="form-control" name="company">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Address </label>
+                                            <input type="text" class="form-control" name="address" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Town / City </label>
+                                            <input type="text" class="form-control" name="city" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>State / County </label>
+                                            <input type="text" class="form-control" name="state" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Postcode / Zip </label>
+                                            <input type="text" class="form-control" name="postcode" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Email Address </label>
+                                            <input type="email" class="form-control" name="email" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone </label>
+                                            <input type="text" class="form-control" name="phone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12">
+                            <div class="order-details">
+                                <h3 class="title">Your Order</h3>
+                                
+                                <div class="order-table table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            {% for cart_item in cart_items %}
+                                            <tr>
+                                                <td class="product-name">
+                                                    <a href="#">{{ cart_item.product.name }} x {{cart_item.quantity}}</a>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="subtotal-amount">${{ cart_item.total }}</span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            
+                                            <tr>
+                                                <td class="order-subtotal">
+                                                    <span>Cart Subtotal</span>
+                                                </td>
+                                                
+                                                <td class="order-subtotal-price">
+                                                    <span class="order-subtotal-amount">${{ total }}</span>
+                                                </td>
+                                            </tr>
+                            
+                                            <!-- Autres lignes de tableau pour l'expédition, le total de la commande, etc. -->
+                            
+                                            <tr>
+                                                <td class="total-price">
+                                                    <span>Total</span>
+                                                </td>
+                            
+                                                <td class="product-subtotal">
+                                                    <span class="subtotal-amount" id="total-amount">${{ total }}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="promo-code">
+                                        <input type="text" id="promo-input" name="promo" placeholder="Enter promo code">
+                                        <button type="button" id="apply-promo-btn">Apply</button>
+                                    </div>
+                                </div>
+                            
+                                {% if cart_items %}
+                                    <div class="payment-box">
+                                        <!-- Options de paiement -->
+                                        <button type='submit' class="default-btn">Place Order</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
+
+
+{% endblock content %}
