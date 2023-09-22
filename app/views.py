@@ -1003,13 +1003,12 @@ def remove_from_cart(request, cart_item_id):
     
     
     
+
 def recapitulation(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     items_ordered = CartItem.objects.filter(cart=order.cart)
 
     return render(request, 'app/back/main/recapitulation.html', {'order': order, 'items_ordered': items_ordered})
-
-    
 
 def checkout(request):
     allProducts = Article.objects.all()

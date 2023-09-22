@@ -23,8 +23,8 @@
 		<section class="checkout-area ptb-100">
             <div class="container">
 
-
-                <form action={% url 'validation_commande' order.id %} method="POST">
+                <form action="{% url 'validation_commande' order.id %}" method="POST">
+                {% comment %} <form action={% url 'validation_commande' order.id %} method="POST"> {% endcomment %}
                     {% csrf_token %}
                     <div class="row">
                         <p>{{order.id}}</p>
